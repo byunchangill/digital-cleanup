@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
  * 홈/정리/마이는 타 모듈 소관이라 라우트 미정 → [가정] 라이브러리/즐겨찾기 계열만 연결.
  */
 const ITEMS = [
-  { key: 'home', icon: 'home', label: '홈', to: '/' },
+  { key: 'home', icon: 'home', label: '홈', to: '/home' },
   { key: 'library', icon: 'grid_view', label: '라이브러리', to: '/library' },
   null, // FAB 자리 스페이서
   { key: 'cleanup', icon: 'auto_delete', label: '정리', to: '/cleanup' },

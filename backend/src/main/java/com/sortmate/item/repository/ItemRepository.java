@@ -16,6 +16,9 @@ public interface ItemRepository extends JpaRepository<Item, Long>, JpaSpecificat
 
     long countByOwnerId(Long ownerId);
 
+    /** 소유자의 전체 아이템(home 대시보드 집계·자연어 검색 인메모리 스캔용). */
+    List<Item> findByOwnerId(Long ownerId);
+
     /** 관련 아이템: 같은 소유자·같은 카테고리, 자기 자신 제외, 최신순. */
     List<Item> findByOwnerIdAndCategoryAndIdNotOrderBySavedAtDesc(
             Long ownerId, String category, Long id, Pageable pageable);

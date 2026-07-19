@@ -91,7 +91,23 @@ public class ItemDemoDataInitializer implements ApplicationRunner {
                         .thumbnailUrl("/media/demo/gift/thumb").mimeType("image/png").fileSize(150_000L)
                         .aiClassified(true).expiryDate(LocalDate.now().plusDays(5))
                         .tags(List.of("쿠폰", "기프티콘"))
-                        .savedAt(now.minus(14, ChronoUnit.DAYS)).build()
+                        .savedAt(now.minus(14, ChronoUnit.DAYS)).build(),
+                // ── HOME-01 중복 사진 제안 시연용: 동일 제목 스크린샷 3장(→ 중복 2건) ──
+                Item.builder().ownerId(owner).type(ItemType.SCREENSHOT).title("카카오톡 대화 캡처")
+                        .category("사진").sourceApp("카카오톡").sourceType(SourceType.SCREENSHOT)
+                        .thumbnailUrl("/media/demo/dup1/thumb").mimeType("image/png").fileSize(220_000L)
+                        .tags(List.of("대화", "캡처"))
+                        .savedAt(now.minus(6, ChronoUnit.HOURS)).build(),
+                Item.builder().ownerId(owner).type(ItemType.SCREENSHOT).title("카카오톡 대화 캡처")
+                        .category("사진").sourceApp("카카오톡").sourceType(SourceType.SCREENSHOT)
+                        .thumbnailUrl("/media/demo/dup2/thumb").mimeType("image/png").fileSize(221_000L)
+                        .tags(List.of("대화", "캡처"))
+                        .savedAt(now.minus(5, ChronoUnit.HOURS)).build(),
+                Item.builder().ownerId(owner).type(ItemType.SCREENSHOT).title("카카오톡 대화 캡처")
+                        .category("사진").sourceApp("카카오톡").sourceType(SourceType.SCREENSHOT)
+                        .thumbnailUrl("/media/demo/dup3/thumb").mimeType("image/png").fileSize(219_500L)
+                        .tags(List.of("대화", "캡처"))
+                        .savedAt(now.minus(4, ChronoUnit.HOURS)).build()
         );
         itemRepository.saveAll(seeds);
         log.info("[DEMO SEED] item {}건 시딩 완료 (owner={})", seeds.size(), owner);
