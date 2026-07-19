@@ -107,8 +107,8 @@ export default function SignupPage() {
                 <input id="terms" type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} className="mt-0.5 h-5 w-5 accent-primary border-outline-variant rounded-md focus:ring-primary cursor-pointer" />
                 <div className="text-caption font-caption text-on-surface-variant">
                   <label htmlFor="terms" className="cursor-pointer">
-                    <button type="button" onClick={() => navigate('/legal')} className="text-primary font-semibold hover:underline">이용 약관</button> 및{' '}
-                    <button type="button" onClick={() => navigate('/legal')} className="text-primary font-semibold hover:underline">개인정보 처리방침</button>에 동의합니다.
+                    <button type="button" onClick={(e) => { e.stopPropagation(); navigate('/legal'); }} className="text-primary font-semibold hover:underline">이용 약관</button> 및{' '}
+                    <button type="button" onClick={(e) => { e.stopPropagation(); navigate('/legal'); }} className="text-primary font-semibold hover:underline">개인정보 처리방침</button>에 동의합니다.
                   </label>
                 </div>
               </div>

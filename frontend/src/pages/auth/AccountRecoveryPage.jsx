@@ -11,19 +11,21 @@ export default function AccountRecoveryPage() {
   const navigate = useNavigate();
   const { toast, show } = useToast();
   const [busy, setBusy] = useState(false);
+  const [showEmailForm, setShowEmailForm] = useState(false);
+  const [email, setEmail] = useState('');
 
-  // AUTH-06: 이메일 매직 링크. 대상 이메일 입력 화면이 이 화면엔 없음 →
-  // [자율결정] 매직 링크 발송은 대상 이메일이 필요하므로 재설정 화면으로 위임하는 대신,
-  // 화면 동작(무조건 성공 토스트)을 유지하되 이메일이 없으면 재설정 화면으로 안내.
-  const handleEmailRecovery = async () => {
+  // AUTH-06: 이메일 매직 링크. QA-02 해소 — 인라인 이메일 입력 폼으로 대상 이메일을 받아 전송.
+  const handleEmailSubmit = async (e) => {
+    e.preventDefault();
     if (busy) return;
     setBusy(true);
     try {
-      // 이메일 입력 UI가 이 화면에 없어 계약 필드(email)를 채울 수 없음 →
-      // 재설정(/password/reset)에서 이메일을 받도록 라우팅. 화면 토스트도 함께 노출.
+      await recoverByEmail({ email });
       show('이메일로 복구 링크를 보냈습니다.', { icon: 'info', iconClassName: 'text-primary-fixed-dim' });
-      await recoverByEmail({ email: '' }).catch(() => {});
-      setTimeout(() => navigate('/password/reset'), 900);
+      setShowEmailForm(false);
+      setEmail('');
+    } catch (err) {
+      show(err.message || '요청을 처리하지 못했습니다.', { icon: 'error' });
     } finally {
       setBusy(false);
     }
@@ -78,22 +80,47 @@ export default function AccountRecoveryPage() {
           {/* Recovery Options */}
           <div className="space-y-4">
             {/* Email */}
-            <button
-              onClick={handleEmailRecovery}
-              disabled={busy}
-              className="w-full group relative flex items-center p-5 bg-bg-primary rounded-xl border border-surface-border hover:border-primary/30 transition-all duration-200 text-left shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-70"
-            >
-              <div className="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors duration-200">
-                <span className="material-symbols-outlined">mail</span>
-              </div>
-              <div className="ml-4 flex-1">
-                <p className="font-headline-sm text-headline-sm text-text-main">이메일로 인증</p>
-                <p className="text-caption text-text-muted">수신함으로 매직 링크를 보내드립니다</p>
-              </div>
-              <span className="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">
-                chevron_right
-              </span>
-            </button>
+            <div className="w-full bg-bg-primary rounded-xl border border-surface-border shadow-sm overflow-hidden">
+              <button
+                onClick={() => setShowEmailForm((v) => !v)}
+                className="w-full group relative flex items-center p-5 text-left transition-colors duration-200"
+              >
+                <div className="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors duration-200">
+                  <span className="material-symbols-outlined">mail</span>
+                </div>
+                <div className="ml-4 flex-1">
+                  <p className="font-headline-sm text-headline-sm text-text-main">이메일로 인증</p>
+                  <p className="text-caption text-text-muted">수신함으로 매직 링크를 보내드립니다</p>
+                </div>
+                <span className="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">
+                  {showEmailForm ? 'expand_less' : 'chevron_right'}
+                </span>
+              </button>
+              {showEmailForm && (
+                <form onSubmit={handleEmailSubmit} className="px-5 pb-5 space-y-3 border-t border-surface-border pt-4">
+                  <label htmlFor="recovery-email" className="block font-label-caps text-label-caps text-on-surface-variant">
+                    이메일 주소
+                  </label>
+                  <input
+                    id="recovery-email"
+                    type="email"
+                    required
+                    autoFocus
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="예: name@company.com"
+                    className="w-full h-12 px-4 bg-surface-container-lowest border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-body-md text-on-surface"
+                  />
+                  <button
+                    type="submit"
+                    disabled={busy}
+                    className="w-full h-12 bg-primary text-on-primary font-headline-sm text-headline-sm rounded-xl hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-70"
+                  >
+                    {busy ? '전송 중...' : '복구 링크 보내기'}
+                  </button>
+                </form>
+              )}
+            </div>
 
             {/* Recovery Code */}
             <button
