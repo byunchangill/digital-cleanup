@@ -289,7 +289,7 @@
 { "success": true, "data": { "shareUrl": "string", "expiresAt": "string(ISO 8601)|null" }, "error": null }
 ```
 - **에러**: `400 VALIDATION_ERROR`, `404 ITEM_NOT_FOUND`
-- **비고**: vaulted Item은 공유 불가(`[가정]` — 보안). 포함 시 `400 VALIDATION_ERROR`.
+- **비고**: vaulted Item은 기본 공유 불가 — 포함 시 `400 VALIDATION_ERROR`. 단, **유효한 볼트 세션(`X-Vault-Token` 헤더, vault.VAULT-03 발급) 동봉 시 조건부 허용** (2026-07-19 사용자 확정, vault 계약 참조). 토큰 부재/만료 상태로 vaulted 포함 시 `403 VAULT_LOCKED`.
 
 ---
 

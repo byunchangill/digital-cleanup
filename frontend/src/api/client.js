@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getVaultToken, clearVaultToken } from './vaultToken';
 
 /**
  * 단일 axios 인스턴스.
@@ -22,6 +23,11 @@ client.interceptors.request.use((config) => {
   const token = localStorage.getItem(TOKEN_KEYS.access);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+  }
+  // 볼트 세션 활성 시 X-Vault-Token 동봉 (VAULT-04 열람, ITEM-13 vaulted 공유 등)
+  const vaultToken = getVaultToken();
+  if (vaultToken) {
+    config.headers['X-Vault-Token'] = vaultToken;
   }
   return config;
 });
@@ -52,6 +58,8 @@ client.interceptors.response.use(
     const res = error.response;
     if (res && res.data && res.data.error) {
       const err = res.data.error;
+      // 볼트 세션 만료/무효 → 로컬 토큰 폐기 (다음 진입 시 재잠금 유도)
+      if (err.code === 'VAULT_LOCKED') clearVaultToken();
       return Promise.reject(new ApiError(err.code, err.message, res.status));
     }
     return Promise.reject(new ApiError('NETWORK_ERROR', '서버에 연결할 수 없습니다.', res?.status));

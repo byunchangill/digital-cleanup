@@ -167,24 +167,35 @@ class ItemServiceTest {
         assertThat(res.items().get(0).type()).isEqualTo("SCREENSHOT");
     }
 
-    // ── ITEM-13 공유(vaulted 불가) ────────────────────────────
+    // ── ITEM-13 공유(vaulted는 볼트 세션 조건부) ──────────────
     @Test
-    @DisplayName("공유: vaulted 아이템 포함 시 VALIDATION_ERROR")
-    void shareVaultedRejected() {
+    @DisplayName("공유: vaulted 포함 + 볼트 세션 없음이면 VAULT_LOCKED")
+    void shareVaultedLocked() {
         Item vaulted = item(1L, OWNER);
         vaulted.setVaulted(true);
         when(itemRepository.findByIdAndOwnerId(1L, OWNER)).thenReturn(Optional.of(vaulted));
 
-        assertThatThrownBy(() -> itemService.share(OWNER, List.of(1L)))
+        assertThatThrownBy(() -> itemService.share(OWNER, List.of(1L), false))
                 .isInstanceOf(BusinessException.class)
-                .extracting("errorCode").isEqualTo(ErrorCode.VALIDATION_ERROR);
+                .extracting("errorCode").isEqualTo(ErrorCode.VAULT_LOCKED);
     }
 
     @Test
-    @DisplayName("공유: 정상 아이템은 shareUrl 발급")
+    @DisplayName("공유: vaulted 포함 + 볼트 세션 활성이면 조건부 허용")
+    void shareVaultedUnlocked() {
+        Item vaulted = item(1L, OWNER);
+        vaulted.setVaulted(true);
+        when(itemRepository.findByIdAndOwnerId(1L, OWNER)).thenReturn(Optional.of(vaulted));
+
+        var res = itemService.share(OWNER, List.of(1L), true);
+        assertThat(res.shareUrl()).startsWith("https://sortmate.app/s/");
+    }
+
+    @Test
+    @DisplayName("공유: 정상(비-vaulted) 아이템은 shareUrl 발급")
     void shareSuccess() {
         when(itemRepository.findByIdAndOwnerId(1L, OWNER)).thenReturn(Optional.of(item(1L, OWNER)));
-        var res = itemService.share(OWNER, List.of(1L));
+        var res = itemService.share(OWNER, List.of(1L), false);
         assertThat(res.shareUrl()).startsWith("https://sortmate.app/s/");
         assertThat(res.expiresAt()).isNotNull();
     }

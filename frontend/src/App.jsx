@@ -15,6 +15,9 @@ import DuplicateReviewPage from './pages/cleanup/DuplicateReviewPage';
 import ScreenshotCleanupPage from './pages/cleanup/ScreenshotCleanupPage';
 import CleanupReportPage from './pages/cleanup/CleanupReportPage';
 import CleanupSettingsPage from './pages/cleanup/CleanupSettingsPage';
+import PinEntryPage from './pages/vault/PinEntryPage';
+import SecretItemDetailPage from './pages/vault/SecretItemDetailPage';
+import PrivacyControlsPage from './pages/vault/PrivacyControlsPage';
 
 export default function App() {
   return (
@@ -40,6 +43,10 @@ export default function App() {
         <Route path="/cleanup/screenshots" element={<ScreenshotCleanupPage />} />
         <Route path="/cleanup/report" element={<CleanupReportPage />} />
         <Route path="/cleanup/settings" element={<CleanupSettingsPage />} />
+        {/* vault 모듈 */}
+        <Route path="/vault/unlock" element={<PinEntryPage />} />
+        <Route path="/vault/items/:id" element={<SecretItemDetailPage />} />
+        <Route path="/my/privacy" element={<PrivacyControlsPage />} />
         {/* 미정의 경로는 로그인으로 */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>

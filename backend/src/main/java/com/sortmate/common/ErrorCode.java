@@ -29,6 +29,13 @@ public enum ErrorCode {
     CLEANUP_GROUP_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 중복 그룹입니다."),
     CLEANUP_GROUP_ALREADY_RESOLVED(HttpStatus.CONFLICT, "이미 처리된 중복 그룹입니다."),
 
+    // ── vault 모듈 (contracts/vault.md) ────────────────────────
+    PIN_INVALID(HttpStatus.UNAUTHORIZED, "PIN이 일치하지 않습니다."),
+    VAULT_LOCKED(HttpStatus.FORBIDDEN, "볼트가 잠겨 있습니다. 먼저 PIN으로 잠금을 해제하세요."),
+    PIN_ALREADY_SET(HttpStatus.CONFLICT, "이미 PIN이 설정되어 있습니다. 현재 PIN을 함께 제출하세요."),
+    ITEM_NOT_VAULTED(HttpStatus.UNPROCESSABLE_ENTITY, "비밀 보관함 아이템이 아닙니다."),
+    VAULT_LOCKED_OUT(HttpStatus.TOO_MANY_REQUESTS, "PIN 시도 횟수를 초과했습니다. 잠시 후 다시 시도하세요."),
+
     INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류가 발생했습니다.");
 
     private final HttpStatus status;

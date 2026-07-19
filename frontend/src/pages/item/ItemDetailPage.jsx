@@ -26,7 +26,15 @@ export default function ItemDetailPage() {
   useEffect(() => {
     let alive = true;
     getItem(id)
-      .then((d) => alive && setItem(d.item))
+      .then((d) => {
+        if (!alive) return;
+        // vaulted 아이템은 vault 모듈 흐름으로 유도(잠금 오버레이 → PIN → 마스킹 해제 열람)
+        if (d.item?.vaulted) {
+          navigate(`/vault/items/${id}`, { replace: true });
+          return;
+        }
+        setItem(d.item);
+      })
       .catch((e) => show(e.message || '불러오지 못했습니다.', { icon: 'error' }));
     getRelated(id, 4)
       .then((d) => alive && setRelated(d.items))

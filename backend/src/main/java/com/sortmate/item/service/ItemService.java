@@ -233,12 +233,14 @@ public class ItemService {
     }
 
     // ── ITEM-13 공유 ───────────────────────────────────────────
+    // vaultUnlocked: 유효한 X-Vault-Token(볼트 세션)이 동봉됐는지. 컨트롤러가 VaultTokenService로 판정해 전달.
     @Transactional(readOnly = true)
-    public ShareResponse share(Long ownerId, List<Long> ids) {
+    public ShareResponse share(Long ownerId, List<Long> ids, boolean vaultUnlocked) {
         for (Long id : ids) {
             Item item = getOwned(ownerId, id);
-            if (item.isVaulted()) {
-                throw new BusinessException(ErrorCode.VALIDATION_ERROR, "비밀 보관함 아이템은 공유할 수 없습니다.");
+            // vaulted는 볼트 세션 활성 시에만 조건부 공유 허용(계약 ITEM-13/VAULT-04). 세션 없으면 403.
+            if (item.isVaulted() && !vaultUnlocked) {
+                throw new BusinessException(ErrorCode.VAULT_LOCKED);
             }
         }
         // 공유 링크 발급: 토큰 URL + 7일 만료. 실제 링크 해석은 후속 인프라. [가정]

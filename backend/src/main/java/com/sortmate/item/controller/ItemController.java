@@ -22,10 +22,13 @@ import com.sortmate.item.dto.ToggleResponses.FavoriteResponse;
 import com.sortmate.item.dto.ToggleResponses.ShareResponse;
 import com.sortmate.item.dto.ToggleResponses.VaultResponse;
 import com.sortmate.item.service.ItemService;
+import com.sortmate.vault.controller.VaultController;
+import com.sortmate.vault.service.VaultTokenService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,9 +46,11 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
+    private final VaultTokenService vaultTokenService;
 
-    public ItemController(ItemService itemService) {
+    public ItemController(ItemService itemService, VaultTokenService vaultTokenService) {
         this.itemService = itemService;
+        this.vaultTokenService = vaultTokenService;
     }
 
     /** ITEM-01 갤러리 사진 가져오기(다중 업로드). */
@@ -144,10 +149,14 @@ public class ItemController {
         return ApiResponse.success(itemService.bulkTags(userId(auth), request.ids(), request.tags()));
     }
 
-    /** ITEM-13 아이템 공유. */
+    /** ITEM-13 아이템 공유. vaulted 포함 시 유효한 X-Vault-Token(볼트 세션)이 있어야 허용. */
     @PostMapping("/share")
-    public ApiResponse<ShareResponse> share(Authentication auth, @Valid @RequestBody IdsRequest request) {
-        return ApiResponse.success(itemService.share(userId(auth), request.ids()));
+    public ApiResponse<ShareResponse> share(
+            Authentication auth, @Valid @RequestBody IdsRequest request,
+            @RequestHeader(value = VaultController.VAULT_TOKEN_HEADER, required = false) String vaultToken) {
+        Long ownerId = userId(auth);
+        boolean vaultUnlocked = vaultTokenService.isUnlocked(vaultToken, ownerId);
+        return ApiResponse.success(itemService.share(ownerId, request.ids(), vaultUnlocked));
     }
 
     /** 인증 주체(JWT sub=userId)에서 사용자 id 추출. */
