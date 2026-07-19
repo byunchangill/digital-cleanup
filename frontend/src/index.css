@@ -42,3 +42,17 @@ body {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
+
+/* item 모듈: Level 1 카드 그림자 (memo_writing / item_detail code.html의 .memo-shadow) */
+.memo-shadow {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05), 0px 10px 20px rgba(0, 0, 0, 0.02);
+}
+
+/* 가로 스크롤 필터 칩 바 스크롤바 숨김 (favorites / bulk code.html의 .no-scrollbar) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

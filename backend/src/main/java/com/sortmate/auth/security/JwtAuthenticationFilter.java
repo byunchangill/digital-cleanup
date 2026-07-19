@@ -22,6 +22,9 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    /** 인증 실패 시 EntryPoint가 읽어 봉투 코드로 사용할 요청 속성 키. */
+    public static final String AUTH_ERROR_ATTRIBUTE = "sortmate.authError";
+
     private final JwtProvider jwtProvider;
 
     public JwtAuthenticationFilter(JwtProvider jwtProvider) {
@@ -40,8 +43,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         claims.getSubject(), null, AuthorityUtils.NO_AUTHORITIES);
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+            } catch (com.sortmate.common.BusinessException ex) {
+                // 만료/무효 구분 코드를 EntryPoint가 봉투로 내려주도록 요청에 스탬핑.
+                SecurityContextHolder.clearContext();
+                request.setAttribute(AUTH_ERROR_ATTRIBUTE, ex.getErrorCode());
             } catch (Exception ignored) {
                 SecurityContextHolder.clearContext();
+                request.setAttribute(AUTH_ERROR_ATTRIBUTE, com.sortmate.common.ErrorCode.TOKEN_INVALID);
             }
         }
         filterChain.doFilter(request, response);

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
  * 수동 검증할 수 있도록 데모 계정을 시딩한다. app.seed-demo-data=false로 비활성화 가능.
  */
 @Component
+@org.springframework.core.annotation.Order(1) // item 시딩(@Order 2)보다 먼저 사용자 생성
 @ConditionalOnProperty(name = "app.seed-demo-data", havingValue = "true", matchIfMissing = true)
 public class AuthDemoDataInitializer implements ApplicationRunner {
 

@@ -38,6 +38,12 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.failure(ErrorCode.VALIDATION_ERROR, "요청 본문 형식이 올바르지 않습니다."));
     }
 
+    @ExceptionHandler(org.springframework.web.multipart.MaxUploadSizeExceededException.class)
+    public ResponseEntity<ApiResponse<Void>> handleUploadTooLarge(Exception ex) {
+        return ResponseEntity.status(ErrorCode.FILE_TOO_LARGE.getStatus())
+                .body(ApiResponse.failure(ErrorCode.FILE_TOO_LARGE, ErrorCode.FILE_TOO_LARGE.getDefaultMessage()));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleUnexpected(Exception ex) {
         return ResponseEntity.status(ErrorCode.INTERNAL_ERROR.getStatus())

@@ -17,6 +17,14 @@ public enum ErrorCode {
     PASSWORD_MISMATCH(HttpStatus.UNPROCESSABLE_ENTITY, "새 비밀번호와 확인이 일치하지 않습니다."),
     RATE_LIMITED(HttpStatus.TOO_MANY_REQUESTS, "요청 횟수가 초과되었습니다."),
     SOCIAL_AUTH_FAILED(HttpStatus.BAD_GATEWAY, "소셜 인증에 실패했습니다."),
+
+    // ── item 모듈 (contracts/item.md) ──────────────────────────
+    ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 아이템입니다."),
+    ITEM_FORBIDDEN(HttpStatus.FORBIDDEN, "해당 아이템에 접근할 권한이 없습니다."),
+    FILE_TOO_LARGE(HttpStatus.PAYLOAD_TOO_LARGE, "업로드 파일 크기가 허용치를 초과했습니다."),
+    UNSUPPORTED_MEDIA_TYPE(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "허용되지 않은 파일 형식입니다."),
+    BULK_PARTIAL_FAILURE(HttpStatus.UNPROCESSABLE_ENTITY, "일괄 작업 중 일부가 실패했습니다."),
+
     INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류가 발생했습니다.");
 
     private final HttpStatus status;
