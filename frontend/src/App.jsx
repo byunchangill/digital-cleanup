@@ -18,6 +18,12 @@ import CleanupSettingsPage from './pages/cleanup/CleanupSettingsPage';
 import PinEntryPage from './pages/vault/PinEntryPage';
 import SecretItemDetailPage from './pages/vault/SecretItemDetailPage';
 import PrivacyControlsPage from './pages/vault/PrivacyControlsPage';
+import MyHomePage from './pages/my/MyHomePage';
+import NotificationsPage from './pages/my/NotificationsPage';
+import ExportPage from './pages/my/ExportPage';
+import StoragePage from './pages/my/StoragePage';
+import PlanPage from './pages/my/PlanPage';
+import AccountDeletePage from './pages/my/AccountDeletePage';
 
 export default function App() {
   return (
@@ -47,6 +53,13 @@ export default function App() {
         <Route path="/vault/unlock" element={<PinEntryPage />} />
         <Route path="/vault/items/:id" element={<SecretItemDetailPage />} />
         <Route path="/my/privacy" element={<PrivacyControlsPage />} />
+        {/* my 모듈 */}
+        <Route path="/my" element={<MyHomePage />} />
+        <Route path="/my/notifications" element={<NotificationsPage />} />
+        <Route path="/my/export" element={<ExportPage />} />
+        <Route path="/my/storage" element={<StoragePage />} />
+        <Route path="/my/plan" element={<PlanPage />} />
+        <Route path="/my/delete-account" element={<AccountDeletePage />} />
         {/* 미정의 경로는 로그인으로 */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>

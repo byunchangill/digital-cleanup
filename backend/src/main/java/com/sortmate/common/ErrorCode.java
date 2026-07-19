@@ -36,6 +36,15 @@ public enum ErrorCode {
     ITEM_NOT_VAULTED(HttpStatus.UNPROCESSABLE_ENTITY, "비밀 보관함 아이템이 아닙니다."),
     VAULT_LOCKED_OUT(HttpStatus.TOO_MANY_REQUESTS, "PIN 시도 횟수를 초과했습니다. 잠시 후 다시 시도하세요."),
 
+    // ── my 모듈 (contracts/my.md) ──────────────────────────────
+    NOTIFICATION_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 알림입니다."),
+    EXPORT_JOB_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 내보내기 작업입니다."),
+    EXPORT_ALREADY_RUNNING(HttpStatus.CONFLICT, "이미 진행 중인 내보내기 작업이 있습니다."),
+    EXPORT_NOT_CANCELABLE(HttpStatus.CONFLICT, "이미 완료/실패/취소된 작업은 취소할 수 없습니다."),
+    PLAN_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 플랜입니다."),
+    PLAN_ALREADY_ACTIVE(HttpStatus.CONFLICT, "이미 해당 플랜을 사용 중입니다."),
+    PAYMENT_NOT_IMPLEMENTED(HttpStatus.NOT_IMPLEMENTED, "결제/복원이 아직 지원되지 않습니다."),
+
     INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류가 발생했습니다.");
 
     private final HttpStatus status;

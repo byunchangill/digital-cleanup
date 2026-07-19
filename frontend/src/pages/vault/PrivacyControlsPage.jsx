@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getPrivacy, updatePrivacy, requestAccountDeletion } from '../../api/vaultApi';
+import { getPrivacy, updatePrivacy } from '../../api/vaultApi';
 import BottomNav from '../../components/BottomNav';
 import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
@@ -19,7 +19,6 @@ export default function PrivacyControlsPage() {
   const navigate = useNavigate();
   const { toast, show } = useToast();
   const [settings, setSettings] = useState(null);
-  const [confirmDelete, setConfirmDelete] = useState(false);
 
   useEffect(() => {
     getPrivacy()
@@ -40,19 +39,8 @@ export default function PrivacyControlsPage() {
     }
   };
 
-  const onDeleteRequest = async () => {
-    if (!confirmDelete) {
-      setConfirmDelete(true);
-      return;
-    }
-    try {
-      await requestAccountDeletion();
-      setConfirmDelete(false);
-      show('계정 삭제 요청이 접수되었습니다.', { icon: 'check_circle' });
-    } catch (e) {
-      show(e.message || '요청에 실패했습니다.', { icon: 'error' });
-    }
-  };
+  // 계정 삭제는 확인 화면(/my/delete-account, VAULT-07 재사용)으로 위임 — 중복 호출 방지.
+  const onDeleteRequest = () => navigate('/my/delete-account');
 
   return (
     <div className="bg-surface text-on-surface antialiased min-h-screen pb-24">
@@ -145,7 +133,7 @@ export default function PrivacyControlsPage() {
             onClick={onDeleteRequest}
             className="w-full py-4 px-6 bg-white border border-error text-error font-semibold rounded-xl active:scale-[0.98] transition-transform hover:bg-error/5 flex justify-center items-center gap-2"
           >
-            {confirmDelete ? '정말 삭제를 요청하시겠습니까? 한 번 더 탭' : '계정 탈퇴 요청'}
+            계정 탈퇴 요청
           </button>
         </section>
       </main>

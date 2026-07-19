@@ -121,6 +121,7 @@ public final class VaultDtos {
             @AssertTrue(message = "confirm은 true여야 합니다.") boolean confirm) {
     }
 
-    public record DeletionResponse(String status, Instant requestedAt, Instant scheduledPurgeAt) {
+    public record DeletionResponse(String status, Instant requestedAt,
+                                   long gracePeriodDays, Instant scheduledPurgeAt) {
     }
 }

@@ -1,5 +1,6 @@
 # vault (시크릿 볼트) API 계약
 
+> 변경: 2026-07-19 VAULT-07 유예/취소 정책 확정 — my 모듈 account_deletion_confirmation_my_009_2 화면이 "30일 유예 + 재로그인 취소" 근거 제공. 계정 삭제는 my에서 재정의하지 않고 VAULT-07 재사용.
 > 모듈: vault · 작성일: 2026-07-19 · 대상 화면: app_lock_pin_entry_com_006, secret_item_detail_my_003(+_2), privacy_controls_my_002
 > 공통 규격: 응답 봉투 `{ success, data, error }`, 필드 camelCase, 날짜 ISO 8601(UTC, 예 `2026-07-19T09:00:00Z`).
 > 인증: 본 모듈 **모든 엔드포인트는 JWT 인증 필요** — `Authorization: Bearer {accessToken}`(auth 발급). 누락/만료 시 auth 계약의 `401 TOKEN_EXPIRED`/`401 TOKEN_INVALID` 봉투.
@@ -201,13 +202,14 @@
   "data": {
     "status": "string(PENDING)",
     "requestedAt": "2026-07-19T09:00:00Z",
-    "scheduledPurgeAt": "string(ISO 8601)|null — 실제 파기 예정(유예 후)"
+    "gracePeriodDays": 30,
+    "scheduledPurgeAt": "string(ISO 8601) — 실제 파기 예정 = requestedAt + 30일"
   },
   "error": null
 }
 ```
 - **에러**: `400 VALIDATION_ERROR`(confirm 누락/false)
-- **비고**: `[가정]` 유예 기간·취소(cancel) 흐름은 화면 미제공 → 최소 계약. 재요청 시 기존 PENDING 재사용(멱등).
+- **비고**: 유예 기간 **30일 확정**(my account_deletion_confirmation 화면 근거). `scheduledPurgeAt = requestedAt + 30일`. **취소 흐름 = 유예 기간 내 재로그인**(auth 세션 복원 시 계정 재활성화, 별도 cancel 엔드포인트 불요 — auth 소관). 재요청 시 기존 PENDING 재사용(멱등). my 모듈은 본 엔드포인트 재사용(신규 정의 없음).
 
 ---
 

@@ -173,7 +173,8 @@ public class VaultService {
                 .findByUserIdAndStatus(userId, DeletionStatus.PENDING)
                 .orElseGet(() -> deletionRequestRepository.save(new AccountDeletionRequest(
                         userId, Instant.now().plus(PURGE_GRACE_DAYS, ChronoUnit.DAYS))));
-        return new DeletionResponse(req.getStatus().name(), req.getRequestedAt(), req.getScheduledPurgeAt());
+        return new DeletionResponse(req.getStatus().name(), req.getRequestedAt(),
+                PURGE_GRACE_DAYS, req.getScheduledPurgeAt());
     }
 
     // ── 내부 헬퍼 ──────────────────────────────────────────────
