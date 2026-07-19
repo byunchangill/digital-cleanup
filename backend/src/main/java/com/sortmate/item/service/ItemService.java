@@ -162,7 +162,24 @@ public class ItemService {
         if (req.tags() != null) {
             item.replaceTags(req.tags());
         }
+        if (req.thumbnailFileId() != null) {
+            // 사전 업로드(ITEM-01)한 미디어 Item의 썸네일로 교체. 소유·존재 검증.
+            Item media = itemRepository.findByIdAndOwnerId(req.thumbnailFileId(), ownerId)
+                    .orElseThrow(() -> new BusinessException(ErrorCode.VALIDATION_ERROR,
+                            "thumbnailFileId가 유효하지 않습니다: " + req.thumbnailFileId()));
+            item.updateThumbnailUrl(media.getThumbnailUrl());
+        }
+        // aiSummary는 편집 불가(계약 ITEM-06 비고) → 요청에 없으며 무시.
         return ItemDetailDto.of(item);
+    }
+
+    // ── ITEM-15 AI 재분석 요청(stub) ───────────────────────────
+    @Transactional(readOnly = true)
+    public com.sortmate.item.dto.ToggleResponses.ReanalyzeResponse reanalyze(Long ownerId, Long id) {
+        Item item = getOwned(ownerId, id); // 404/403
+        // AI 미연동 → 접수만 확인하는 no-op. 실제 큐잉/비동기 갱신은 AI 연동 후. [가정]
+        return new com.sortmate.item.dto.ToggleResponses.ReanalyzeResponse(
+                item.getId(), "QUEUED", "AI 재분석 요청이 접수되었습니다.");
     }
 
     // ── ITEM-08 즐겨찾기 토글 ──────────────────────────────────

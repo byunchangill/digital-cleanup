@@ -49,6 +49,19 @@
 - `itemMock.js`: `splitByExistence()` 추가 — DB에 없는 id는 `failedIds`로 분류. delete/bulkCategory/bulkTags mock이 실제 실패 케이스를 시뮬레이션(예: id 999999 → `{deletedCount:0, failedIds:[999999]}`).
 - 참고: `shareItems`(ITEM-13)는 계약상 `failedIds`가 없어(shareUrl 반환) 대상 아님.
 
+## 추가: 아이템 편집 화면 (item_edit_lib_004, 구현 완료 · `npm run build` 통과)
+
+| 화면 ID | 파일 | 라우트 | 연동 |
+|---|---|---|---|
+| item_edit_lib_004 | `src/pages/item/ItemEditPage.jsx` | `/items/:id/edit` | ITEM-06(저장), ITEM-15(재분석), ITEM-09(삭제) |
+
+- **저장** → ITEM-06 `updateItem(id, {title, category, tags})`. tags는 전체 치환, aiSummary 미전송(읽기 전용). 성공 시 상세로 복귀.
+- **AI 재분석** → ITEM-15 `reanalyzeItem(id)` 신규 추가(`itemApi.js` + `itemMock.js` `mockReanalyze` 202 QUEUED). "요청이 접수되었습니다" 토스트만.
+- **삭제** → ITEM-09 재사용, `deletedCount === 0` 실패 가드(QA-01 규약 준수).
+- **ItemDetailPage "수정하기"**: 안내 토스트 → `/items/:id/edit` 라우트 연결로 교체.
+- **[가정] 썸네일 편집**: 업로드 UI는 이번 범위 밖 → 편집 버튼은 안내 토스트만(계약상 `thumbnailFileId` 선택 필드, 미구현 무시 가능).
+- **[가정] 카테고리 select**: 화면 고정 4종(쿠폰/영수증/링크/메모)을 한글 라벨 값으로 저장(앱 전반 category가 한글이라 일관성 유지). 현재 값이 4종 밖이면 옵션에 추가해 선택 유지. 계약은 "다른 값도 서버 허용".
+
 ## 미연결/후속 (frontend 범위 밖 or 화면 미제공)
 
 - ITEM-06 수정 화면(편집 폼) — 함수만 존재, 화면 없음.

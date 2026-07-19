@@ -1,6 +1,7 @@
 # item (라이브러리 핵심) API 계약
 
-> 모듈: item · 작성일: 2026-07-19 · 대상 화면: gallery_import_add_002, memo_writing_add_004, item_detail_lib_003_2, favorites_lib_005, bulk_selection_lib_001
+> 변경: 2026-07-19 item_edit_lib_004(아이템 편집) 분석 반영 — ITEM-06에 `thumbnailFileId` 선택 필드 추가 및 편집 화면 매핑 명시, ITEM-15(AI 재분석 stub) 신규 추가. 삭제는 ITEM-09 재사용(변경 없음).
+> 모듈: item · 작성일: 2026-07-19 · 대상 화면: gallery_import_add_002, memo_writing_add_004, item_detail_lib_003_2, favorites_lib_005, bulk_selection_lib_001, item_edit_lib_004
 > 공통 규격: 응답 봉투 `{ success, data, error }`(common/ApiResponse.java와 동일), 필드 camelCase, 날짜 ISO 8601(UTC, 예 `2026-07-19T09:00:00Z`).
 > 인증: 본 모듈 **모든 엔드포인트는 인증 필요** — `Authorization: Bearer {accessToken}`(auth 모듈 발급 JWT). 누락/만료 시 auth 계약의 `401 TOKEN_EXPIRED`/`401 TOKEN_INVALID`.
 
@@ -163,7 +164,7 @@
 ---
 
 ### ITEM-06: 아이템 수정
-> 화면: item_detail "수정하기". 부분 수정(PATCH). 전달된 필드만 변경.
+> 화면: item_detail "수정하기" → item_edit_lib_004 편집 폼 저장. 부분 수정(PATCH). 전달된 필드만 변경.
 - **Method/Path**: `PATCH /api/items/{id}`
 - **인증**: 필요
 - **Request Body** (모든 필드 선택, 최소 1개):
@@ -171,8 +172,9 @@
 {
   "title": "string(선택, 최대 200자)",
   "body": "string(선택)",
-  "category": "string(선택)",
-  "tags": ["string(선택) — 전체 치환"]
+  "category": "string(선택, 편집 화면은 coupon|receipt|link|memo 고정 enum. 다른 값도 서버 허용)",
+  "tags": ["string(선택) — 최종 태그 집합 전체 치환(증분 아님)"],
+  "thumbnailFileId": "number(선택) — 썸네일 교체 시 사전 업로드(ITEM-01)한 미디어 Item id"
 }
 ```
 - **Response 200**:
@@ -180,6 +182,10 @@
 { "success": true, "data": { "item": { "...Item 표준 표현" } }, "error": null }
 ```
 - **에러**: `400 VALIDATION_ERROR`, `404 ITEM_NOT_FOUND`, `403 ITEM_FORBIDDEN`
+- **비고**:
+  - `aiSummary`는 편집 불가(읽기 전용, 화면 "AI 요약은 편집할 수 없습니다"). 요청에 포함되어도 서버는 무시. 재생성은 ITEM-15로만.
+  - `category` 편집 select 옵션은 화면 고정(coupon/receipt/link/memo)이며 ITEM-14(동적 필터 카테고리)와 별개 축. `[가정]` 서버는 문자열로 저장, enum 강제는 backend 재량.
+  - `thumbnailFileId`는 `[가정]` — 화면의 썸네일 편집 버튼 근거. 이미지 재선택 → ITEM-01로 업로드 후 반환 id를 참조. 미구현 시 무시 가능.
 
 ---
 
@@ -211,7 +217,7 @@
 ---
 
 ### ITEM-09: 아이템 삭제 (단건/일괄)
-> 화면: bulk_selection "삭제", item_detail more_vert. 다중 id 지원.
+> 화면: bulk_selection "삭제", item_detail more_vert, **item_edit_lib_004 "아이템 삭제하기"(danger)**. 다중 id 지원. 편집 화면 삭제도 이 엔드포인트 재사용(`ids: [id]`), 신규 엔드포인트 없음.
 - **Method/Path**: `POST /api/items/delete`
 - **인증**: 필요
 - **Request Body**:
@@ -309,6 +315,28 @@
 
 ---
 
+### ITEM-15: AI 재분석 요청  `[가정] stub`
+> 화면: item_edit_lib_004 "AI 재분석 요청". **AI 미연동 상태 → 요청 접수(큐잉) stub.** 즉시 재분류 결과를 반환하지 않고 접수만 확인한다. AI 연동 후 비동기로 category/tags/aiSummary가 갱신됨.
+- **Method/Path**: `POST /api/items/{id}/reanalyze`
+- **인증**: 필요
+- **Request Body**: 없음
+- **Response 202** (접수됨):
+```json
+{
+  "success": true,
+  "data": {
+    "id": "number",
+    "status": "QUEUED",
+    "message": "AI 재분석 요청이 접수되었습니다."
+  },
+  "error": null
+}
+```
+- **에러**: `404 ITEM_NOT_FOUND`, `403 ITEM_FORBIDDEN`, `429 RATE_LIMITED`(재분석 남용 방지, `[가정]`)
+- **비고**: 현 단계 backend 구현은 **접수 응답만 반환하는 no-op stub**로 충분(실제 AI 파이프라인 없음). 응답 봉투/에러는 표준 준수. `status` enum(`QUEUED`)만 두고 폴링/웹소켓 등 진행조회는 AI 연동 시점에 별도 정의(현재 불필요, YAGNI).
+
+---
+
 ## 엔드포인트 요약
 | ID | Method | Path | 인증 |
 |---|---|---|---|
@@ -326,3 +354,4 @@
 | ITEM-12 | PUT | `/api/items/{id}/vault` | 필요 |
 | ITEM-13 | POST | `/api/items/share` | 필요 |
 | ITEM-14 | GET | `/api/categories` | 필요 |
+| ITEM-15 | POST | `/api/items/{id}/reanalyze` | 필요 |

@@ -80,7 +80,7 @@ class ItemServiceTest {
     @DisplayName("수정: 빈 요청이면 VALIDATION_ERROR")
     void updateEmpty() {
         assertThatThrownBy(() -> itemService.update(OWNER, 1L,
-                new ItemUpdateRequest(null, null, null, null)))
+                new ItemUpdateRequest(null, null, null, null, null)))
                 .isInstanceOf(BusinessException.class)
                 .extracting("errorCode").isEqualTo(ErrorCode.VALIDATION_ERROR);
     }
@@ -94,10 +94,57 @@ class ItemServiceTest {
         when(itemRepository.findByIdAndOwnerId(1L, OWNER)).thenReturn(Optional.of(stored));
 
         ItemDetailDto dto = itemService.update(OWNER, 1L,
-                new ItemUpdateRequest("new", null, null, null));
+                new ItemUpdateRequest("new", null, null, null, null));
 
         assertThat(dto.title()).isEqualTo("new");
         assertThat(dto.category()).isEqualTo("cat"); // 미전달 → 유지
+    }
+
+    @Test
+    @DisplayName("수정: thumbnailFileId로 사전 업로드 미디어의 썸네일 교체")
+    void updateThumbnailFromMedia() {
+        Item target = item(1L, OWNER);
+        Item media = item(5L, OWNER);
+        media.updateThumbnailUrl("/media/uploaded/thumb");
+        when(itemRepository.findByIdAndOwnerId(1L, OWNER)).thenReturn(Optional.of(target));
+        when(itemRepository.findByIdAndOwnerId(5L, OWNER)).thenReturn(Optional.of(media));
+
+        ItemDetailDto dto = itemService.update(OWNER, 1L,
+                new ItemUpdateRequest(null, null, null, null, 5L));
+
+        assertThat(dto.thumbnailUrl()).isEqualTo("/media/uploaded/thumb");
+    }
+
+    @Test
+    @DisplayName("수정: 유효하지 않은 thumbnailFileId면 VALIDATION_ERROR")
+    void updateBadThumbnail() {
+        when(itemRepository.findByIdAndOwnerId(1L, OWNER)).thenReturn(Optional.of(item(1L, OWNER)));
+        when(itemRepository.findByIdAndOwnerId(99L, OWNER)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> itemService.update(OWNER, 1L,
+                new ItemUpdateRequest(null, null, null, null, 99L)))
+                .isInstanceOf(BusinessException.class)
+                .extracting("errorCode").isEqualTo(ErrorCode.VALIDATION_ERROR);
+    }
+
+    // ── ITEM-15 재분석 stub ───────────────────────────────────
+    @Test
+    @DisplayName("재분석: 소유 아이템이면 QUEUED 접수 반환")
+    void reanalyzeQueued() {
+        when(itemRepository.findByIdAndOwnerId(1L, OWNER)).thenReturn(Optional.of(item(1L, OWNER)));
+        var res = itemService.reanalyze(OWNER, 1L);
+        assertThat(res.id()).isEqualTo(1L);
+        assertThat(res.status()).isEqualTo("QUEUED");
+    }
+
+    @Test
+    @DisplayName("재분석: 존재하지 않으면 ITEM_NOT_FOUND")
+    void reanalyzeNotFound() {
+        when(itemRepository.findByIdAndOwnerId(9L, OWNER)).thenReturn(Optional.empty());
+        when(itemRepository.existsById(9L)).thenReturn(false);
+        assertThatThrownBy(() -> itemService.reanalyze(OWNER, 9L))
+                .isInstanceOf(BusinessException.class)
+                .extracting("errorCode").isEqualTo(ErrorCode.ITEM_NOT_FOUND);
     }
 
     // ── ITEM-09 삭제(부분 실패는 200 + failedIds) ─────────────

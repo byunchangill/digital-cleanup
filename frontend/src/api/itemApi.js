@@ -76,6 +76,11 @@ export async function toggleVault(id, vaulted) {
   return USE_MOCK ? mock.mockToggleVault(id, vaulted) : client.put(`/items/${id}/vault`, { vaulted });
 }
 
+// ITEM-15: POST /api/items/{id}/reanalyze  (AI 재분석 stub, 202 QUEUED)
+export async function reanalyzeItem(id) {
+  return USE_MOCK ? mock.mockReanalyze(id) : client.post(`/items/${id}/reanalyze`);
+}
+
 // ITEM-13: POST /api/items/share  ({ ids: [] })
 export async function shareItems(ids) {
   return USE_MOCK ? mock.mockShareItems(ids) : client.post('/items/share', { ids });

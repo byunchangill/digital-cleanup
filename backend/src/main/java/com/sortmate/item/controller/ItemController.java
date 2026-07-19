@@ -159,6 +159,14 @@ public class ItemController {
         return ApiResponse.success(itemService.share(ownerId, request.ids(), vaultUnlocked));
     }
 
+    /** ITEM-15 AI 재분석 요청(stub, 202 접수). */
+    @PostMapping("/{id}/reanalyze")
+    @org.springframework.web.bind.annotation.ResponseStatus(org.springframework.http.HttpStatus.ACCEPTED)
+    public ApiResponse<com.sortmate.item.dto.ToggleResponses.ReanalyzeResponse> reanalyze(
+            Authentication auth, @PathVariable Long id) {
+        return ApiResponse.success(itemService.reanalyze(userId(auth), id));
+    }
+
     /** 인증 주체(JWT sub=userId)에서 사용자 id 추출. */
     private Long userId(Authentication auth) {
         if (auth == null || auth.getName() == null) {

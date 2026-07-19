@@ -1,10 +1,21 @@
 # item 모듈 QA 리포트 (2026-07-19)
 
-> 기준: contracts/item.md(14 엔드포인트) · 정적 3자 교차 비교 + 동적 검증
+> 기준: contracts/item.md(ITEM-01~15) · 정적 3자 교차 비교 + 동적 검증
 > 빌드: backend `gradlew.bat build` BUILD SUCCESSFUL / frontend `npm run build` 통과
-> **재검증(2026-07-19, 2차): QA-01 / QA-02 모두 수정 확인 → 통과.**
+> **재검증(2026-07-19, 2차): QA-01 / QA-02 수정 확인. 3차: 보류였던 ITEM-06 편집 화면 해소 → 전 항목 통과.**
 
-## 요약(2차 재검증 후): 통과 26 / 실패 0 / 보류 1 → **최종 통과**
+## 요약(3차 재검증 후): 통과 30 / 실패 0 / 보류 0 → **최종 통과**
+
+### 3차 재검증 — ITEM-06 편집 화면 보류 해소 (수정본, 최신 빌드 :8092 별도 기동)
+> 계약 갱신(ITEM-06에 `thumbnailFileId` 추가, ITEM-15 신규) 후 편집 화면 구현. 보류 항목 해소.
+- **ITEM-06 편집 저장 라운드트립 → 통과**: `PATCH /api/items/{id}` {title/category/tags} → **HTTP 200**, 상세 재조회에 반영 확인(persist). **tags 전체 치환 동작 확인**(원본 4개 → 요청 2개로 치환, 증분 아님). **aiSummary 미전송·무시 확인**(편집 후에도 기존 aiSummary 보존, 계약 ITEM-06 비고 준수). 빈 바디 → 400, 404 정상. (한글 바디는 UTF-8 파일로 전송해 검증 — 초기 shell 인코딩 400은 테스트 아티팩트로, 백엔드는 malformed JSON을 정상 거부)
+- **ITEM-15 AI 재분석 → 통과**: `POST /api/items/{id}/reanalyze` → **202 `{id, status:"QUEUED", message}`**(stub). 없는 id → `404 ITEM_NOT_FOUND`. 403 경로는 공유 `getOwned`(존재+타소유→403) 재사용(item 전반 검증済).
+- **thumbnailFileId 백엔드 동작 → 통과**: 무효 id → `400 VALIDATION_ERROR`("thumbnailFileId가 유효하지 않습니다"), 유효 id(소유 Item) → 200. 프론트는 썸네일 편집 UI 미제공으로 thumbnailFileId **미전송**(계약상 선택 필드라 허용 — `ItemEditPage.jsx:53` onSave가 title/category/tags만 전송, 썸네일 버튼은 안내 토스트).
+- **편집 → 삭제 흐름 → 통과**: `ItemEditPage.jsx:72-84` onDelete가 `deleteItems([id])` 후 `deletedCount===0` 가드(failedIds 규약 준수). 동적: 삭제 200 `{deletedCount:1,failedIds:[]}`, 없는 id → 200 `{deletedCount:0,failedIds:[777777]}`.
+- **연결/라우팅 → 통과**: `App.jsx:44` `/items/:id/edit` 등록, `ItemDetailPage.jsx:262` "수정하기" → `navigate('/items/:id/edit')`(기존 안내 토스트 대체). `itemApi.reanalyzeItem`(ITEM-15) + mock 추가.
+- **회귀 → 없음**: 상세/목록/즐겨찾기/카테고리/related 전부 200.
+
+## (2차) 요약: 통과 26 / 실패 0 / 보류 1
 
 ### 재검증 결과 (수정본, 최신 빌드 :8086 별도 기동 — 스테일 8080 회피)
 - **QA-01 → 통과(FIXED)**: `BulkSelectionPage.jsx:50-91` `afterBulk(successCount, failedIds, verb)` 중앙화 확인 — 성공 0이면 에러 토스트+동작 미수행, 부분성공이면 "N개 …, M건 실패" 병기. `ItemDetailPage.jsx:72-79` `deletedCount===0`이면 이탈 안 함. `itemMock.js:127-138` `splitByExistence`로 존재하지 않는 id를 failedIds에 채움. frontend `npm run build` 통과. 백엔드 부분실패 동작 재확인: `POST /items/delete {"ids":[999999]}` → `200 {"deletedCount":0,"failedIds":[999999]}`.
@@ -61,7 +72,7 @@
 ---
 
 ## 보류 항목
-- **ITEM-06 수정(PATCH) 화면 미연결**: `updateItem` 함수는 `itemApi.js:45`에 존재하나 편집 화면이 설계 5종에 없어 미연결(frontend_done.md 명시, 화면 미제공). 백엔드 PATCH 엔드포인트/DTO는 계약과 일치. 편집 화면 확보 시 재검증.
+- **[✅ RESOLVED 3차] ITEM-06 수정(PATCH) 화면 미연결**: 편집 화면(`ItemEditPage.jsx`, `/items/:id/edit`) 구현·연결 완료. ITEM-06 라운드트립/tags 전체치환/aiSummary 무시, ITEM-15 재분석 202, thumbnailFileId 검증, 편집→삭제 흐름 전부 동적 통과(상단 "3차 재검증" 참조). 보류 없음.
 
 ---
 

@@ -8,6 +8,7 @@ import SearchResultsPage from './pages/home/SearchResultsPage';
 import GalleryImportPage from './pages/item/GalleryImportPage';
 import MemoWritingPage from './pages/item/MemoWritingPage';
 import ItemDetailPage from './pages/item/ItemDetailPage';
+import ItemEditPage from './pages/item/ItemEditPage';
 import FavoritesPage from './pages/item/FavoritesPage';
 import BulkSelectionPage from './pages/item/BulkSelectionPage';
 import CleanupDashboardPage from './pages/cleanup/CleanupDashboardPage';
@@ -40,6 +41,7 @@ export default function App() {
         {/* item 모듈 */}
         <Route path="/import" element={<GalleryImportPage />} />
         <Route path="/items/new-memo" element={<MemoWritingPage />} />
+        <Route path="/items/:id/edit" element={<ItemEditPage />} />
         <Route path="/items/:id" element={<ItemDetailPage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/library" element={<BulkSelectionPage />} />

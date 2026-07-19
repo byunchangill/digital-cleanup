@@ -74,6 +74,25 @@ com.sortmate.item
   - (만료 토큰은 동일 경로로 `TOKEN_EXPIRED` 반환 — 코드 경로 확인, 별도 curl 미실시)
 - **범위 주의**: SecurityConfig/JwtAuthenticationFilter는 auth 모듈 공통 인프라. 이번 수정은 전 모듈(인증 필요 경로 전체)의 401 UX를 개선한다.
 
+## 계약 갱신 반영 (2026-07-19, item_edit_lib_004)
+### ITEM-15 신규: AI 재분석 요청 (stub)
+- `POST /api/items/{id}/reanalyze` — 요청 바디 없음, **202 ACCEPTED** + `{id, status:"QUEUED", message}`.
+- AI 미연동 → `getOwned`(404/403)만 검사하는 no-op 접수 stub. 실제 큐잉/비동기 갱신은 AI 연동 후.
+- `429 RATE_LIMITED`(재분석 남용 방지)는 계약상 `[가정]`이라 미구현. 레이트리밋 인프라 확보 시 추가.
+- 컨트롤러: `@ResponseStatus(HttpStatus.ACCEPTED)`로 202 지정, `ApiResponse` 봉투 유지.
+
+### ITEM-06 갱신: thumbnailFileId
+- `ItemUpdateRequest`에 `thumbnailFileId(Long, 선택)` 추가. `isEmpty()`에도 반영.
+- 서비스: 값이 있으면 해당 id의 미디어 Item을 소유·존재 검증(`findByIdAndOwnerId`) 후 그 `thumbnailUrl`로 교체. 유효하지 않으면 `400 VALIDATION_ERROR`.
+- `aiSummary`는 요청 DTO에 애초에 없어 자동 무시(계약 비고 준수 확인). `category`는 문자열 그대로 저장 — enum 강제 안 함(계약 재량 허용).
+
+### 테스트 보강 (`ItemServiceTest`)
+- `updateThumbnailFromMedia`(썸네일 교체 반영), `updateBadThumbnail`(유효하지 않은 id → VALIDATION_ERROR)
+- `reanalyzeQueued`(QUEUED 접수), `reanalyzeNotFound`(404)
+- `gradlew.bat build` BUILD SUCCESSFUL.
+
+> 참고: 이 시점 `ItemController.share`/`ItemService.share`는 vault 모듈 통합으로 `X-Vault-Token` 기반 3-인자 시그니처로 변경돼 있었음(vault 소관). 본 작업은 해당 변경 위에 ITEM-15/thumbnailFileId만 추가.
+
 ## 실행 방법
 ```bash
 cd backend

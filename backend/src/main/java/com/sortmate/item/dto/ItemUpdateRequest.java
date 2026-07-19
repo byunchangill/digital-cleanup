@@ -10,10 +10,12 @@ public record ItemUpdateRequest(
         String title,
         String body,
         String category,
-        List<@Size(max = 30, message = "각 태그는 최대 30자입니다.") String> tags
+        List<@Size(max = 30, message = "각 태그는 최대 30자입니다.") String> tags,
+        Long thumbnailFileId
 ) {
     /** 최소 1개 필드가 존재하는지. */
     public boolean isEmpty() {
-        return title == null && body == null && category == null && tags == null;
+        return title == null && body == null && category == null
+                && tags == null && thumbnailFileId == null;
     }
 }

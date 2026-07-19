@@ -259,7 +259,7 @@ export default function ItemDetailPage() {
             <span className="font-label-caps text-[10px]">공유하기</span>
           </button>
           <button
-            onClick={() => show('수정 화면은 준비 중입니다.', { icon: 'info' })}
+            onClick={() => navigate(`/items/${item.id}/edit`)}
             className="flex flex-col items-center justify-center gap-1.5 p-3 rounded-2xl bg-white border border-surface-border text-primary hover:bg-surface-container-low transition-all active:scale-95"
           >
             <span className="material-symbols-outlined">edit</span>

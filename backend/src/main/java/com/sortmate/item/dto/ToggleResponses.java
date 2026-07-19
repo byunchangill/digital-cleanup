@@ -28,4 +28,8 @@ public final class ToggleResponses {
     /** ITEM-13 공유 응답. */
     public record ShareResponse(String shareUrl, Instant expiresAt) {
     }
+
+    /** ITEM-15 AI 재분석 접수 응답(stub). */
+    public record ReanalyzeResponse(Long id, String status, String message) {
+    }
 }

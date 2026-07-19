@@ -154,6 +154,11 @@ export async function mockToggleVault(id, vaulted) {
   return { id: Number(id), vaulted: !!vaulted };
 }
 
+export async function mockReanalyze(id) {
+  await delay(300);
+  return { id: Number(id), status: 'QUEUED', message: 'AI 재분석 요청이 접수되었습니다.' };
+}
+
 export async function mockShareItems() {
   await delay();
   return { shareUrl: 'https://sortmate.app/s/mock-token', expiresAt: null };

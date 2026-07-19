@@ -168,6 +168,10 @@ public class Item {
         this.category = category;
     }
 
+    public void updateThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
+    }
+
     public void replaceTags(List<String> tags) {
         this.tags = tags == null ? new ArrayList<>() : new ArrayList<>(tags);
     }
