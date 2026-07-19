@@ -10,6 +10,11 @@ import MemoWritingPage from './pages/item/MemoWritingPage';
 import ItemDetailPage from './pages/item/ItemDetailPage';
 import FavoritesPage from './pages/item/FavoritesPage';
 import BulkSelectionPage from './pages/item/BulkSelectionPage';
+import CleanupDashboardPage from './pages/cleanup/CleanupDashboardPage';
+import DuplicateReviewPage from './pages/cleanup/DuplicateReviewPage';
+import ScreenshotCleanupPage from './pages/cleanup/ScreenshotCleanupPage';
+import CleanupReportPage from './pages/cleanup/CleanupReportPage';
+import CleanupSettingsPage from './pages/cleanup/CleanupSettingsPage';
 
 export default function App() {
   return (
@@ -29,6 +34,12 @@ export default function App() {
         <Route path="/items/:id" element={<ItemDetailPage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/library" element={<BulkSelectionPage />} />
+        {/* cleanup 모듈 */}
+        <Route path="/cleanup" element={<CleanupDashboardPage />} />
+        <Route path="/cleanup/duplicates" element={<DuplicateReviewPage />} />
+        <Route path="/cleanup/screenshots" element={<ScreenshotCleanupPage />} />
+        <Route path="/cleanup/report" element={<CleanupReportPage />} />
+        <Route path="/cleanup/settings" element={<CleanupSettingsPage />} />
         {/* 미정의 경로는 로그인으로 */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>

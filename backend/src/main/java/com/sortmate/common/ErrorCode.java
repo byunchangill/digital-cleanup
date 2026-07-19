@@ -25,6 +25,10 @@ public enum ErrorCode {
     UNSUPPORTED_MEDIA_TYPE(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "허용되지 않은 파일 형식입니다."),
     BULK_PARTIAL_FAILURE(HttpStatus.UNPROCESSABLE_ENTITY, "일괄 작업 중 일부가 실패했습니다."),
 
+    // ── cleanup 모듈 (contracts/cleanup.md) ────────────────────
+    CLEANUP_GROUP_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 중복 그룹입니다."),
+    CLEANUP_GROUP_ALREADY_RESOLVED(HttpStatus.CONFLICT, "이미 처리된 중복 그룹입니다."),
+
     INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류가 발생했습니다.");
 
     private final HttpStatus status;
