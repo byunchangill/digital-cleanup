@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sortmate - 스타벅스 아메리카노 쿠폰</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#c3c0ff",
+                    "primary": "#3525cd",
+                    "on-primary-fixed": "#0f0069",
+                    "on-primary": "#ffffff",
+                    "surface": "#f8f9ff",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#4d44e3",
+                    "surface-border": "#E2E8F0",
+                    "surface-bright": "#f8f9ff",
+                    "on-background": "#0b1c30",
+                    "primary-fixed": "#e2dfff",
+                    "bg-secondary": "#F8FAFC",
+                    "inverse-surface": "#213145",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed": "#6ffbbe",
+                    "text-muted": "#64748B",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#464555",
+                    "tertiary-container": "#885500",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-container": "#e5eeff",
+                    "bg-primary": "#FFFFFF",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "inverse-primary": "#c3c0ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-container": "#dad7ff",
+                    "on-tertiary-container": "#ffd4a4",
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#eff4ff",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-error-container": "#93000a",
+                    "error-container": "#ffdad6",
+                    "background": "#f8f9ff",
+                    "surface-variant": "#d3e4fe",
+                    "secondary-container": "#6cf8bb",
+                    "secondary": "#006c49",
+                    "primary-container": "#4f46e5",
+                    "on-surface": "#0b1c30",
+                    "outline-variant": "#c7c4d8",
+                    "outline": "#777587",
+                    "on-secondary-container": "#00714d",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-high": "#dce9ff",
+                    "tertiary": "#684000",
+                    "surface-container-highest": "#d3e4fe",
+                    "secondary-fixed-dim": "#4edea3",
+                    "text-main": "#0F172A",
+                    "vault-blur": "rgba(255, 255, 255, 0.4)",
+                    "surface-dim": "#cbdbf5",
+                    "on-secondary-fixed": "#002113",
+                    "on-secondary-fixed-variant": "#005236",
+                    "tertiary-fixed": "#ffddb8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-gap-md": "16px",
+                    "base-unit": "4px",
+                    "stack-gap-lg": "24px",
+                    "grid-gutter": "12px",
+                    "stack-gap-sm": "8px",
+                    "container-padding": "20px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "label-caps": ["JetBrains Mono"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "caption": ["Hanken Grotesk"],
+                    "display-lg": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .coupon-preview-container {
+            mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md text-body-md pb-32">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between px-container-padding py-stack-gap-sm w-full z-50 bg-background/80 backdrop-blur-md sticky top-0">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-text-main">자료 상세</h1>
+<div class="flex gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-outline">more_vert</span>
+</button>
+</div>
+</header>
+<main class="max-w-md mx-auto">
+<!-- Coupon Hero Preview -->
+<section class="coupon-preview-container px-container-padding pt-stack-gap-md overflow-hidden">
+<div class="relative group">
+<div class="w-full aspect-[3/4] rounded-xl overflow-hidden shadow-2xl transition-transform duration-500 group-hover:scale-[1.02] bg-surface-container-low">
+<img class="w-full h-full object-cover" data-alt="스타벅스 모바일 기프티콘 스크린샷. 상단에 아이코닉한 초록색 사이렌 로고, 중앙에 바코드, 'Hot Americano Tall size' 텍스트가 보입니다." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbV8kahE5Y4OtH62RfeILNrPfL6O34pp1xY0XEkbe8BI1XquiO2_8Tzpw4RtZTVo5CXqXkLiElDJBbpABEvCrthGR6oqJdSzQGK8sjq9Cjy4YXZAHTJilDipNwOB1XLeF992TmFMw7UeFEjKvmC6jZqGo-3QGZtuSuuafhlJJi2W-Vp9701Kd_WhbDh_Ju31K4AoLmymP8TCseBPnseGrLDpCeKkiARBbfuoRoAS3PX7VW_sCRW2pGV-XCM_CnzEFUem7a0u2Kmsw"/>
+</div>
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur px-4 py-2 rounded-full shadow-lg border border-surface-border flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">zoom_in</span>
+<span class="font-label-caps text-label-caps text-primary">탭하여 확대</span>
+</div>
+</div>
+</section>
+<!-- Information Card -->
+<section class="px-container-padding -mt-8 relative z-10">
+<div class="bg-bg-primary rounded-[24px] p-6 shadow-[0px_10px_30px_rgba(53,37,205,0.08)] border border-surface-border/50">
+<!-- AI Badge -->
+<div class="flex items-center gap-2 mb-4">
+<div class="bg-primary/10 px-3 py-1 rounded-full flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-label-caps text-[10px] text-primary tracking-wider uppercase">AI 자동 분류</span>
+</div>
+<div class="bg-amber-50 px-3 py-1 rounded-full flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-amber-600" style="font-variation-settings: 'FILL' 1;">schedule</span>
+<span class="font-label-caps text-[10px] text-amber-600 tracking-wider uppercase">만료 임박</span>
+</div>
+</div>
+<!-- Main Content -->
+<div class="space-y-4">
+<div>
+<h1 class="font-headline-md text-headline-md text-text-main mb-1">스타벅스 아메리카노 쿠폰</h1>
+<div class="flex items-center gap-2 text-text-muted">
+<span class="material-symbols-outlined text-[18px]">local_activity</span>
+<span class="font-body-md">쿠폰</span>
+</div>
+</div>
+<!-- Tags -->
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-surface-container-low text-primary rounded-full font-label-caps text-label-caps">#쿠폰</span>
+<span class="px-3 py-1 bg-surface-container-low text-primary rounded-full font-label-caps text-label-caps">#스타벅스</span>
+<span class="px-3 py-1 bg-surface-container-low text-primary rounded-full font-label-caps text-label-caps">#음료</span>
+<span class="px-3 py-1 bg-surface-container-low text-primary rounded-full font-label-caps text-label-caps">#선물</span>
+</div>
+<!-- AI Summary Section -->
+<div class="bg-surface p-4 rounded-xl border-l-4 border-primary/20">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary/40">description</span>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+                                2026년 8월 31일까지 유효한 아메리카노 쿠폰입니다. 카카오톡 스크린샷에서 발견되었습니다.
+                            </p>
+</div>
+</div>
+<!-- Metadata Grid -->
+<div class="grid grid-cols-2 gap-4 pt-2">
+<div class="p-3 bg-bg-secondary rounded-lg border border-surface-border/30">
+<span class="font-label-caps text-[10px] text-text-muted block mb-1">출처</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">chat</span>
+<span class="font-body-md text-on-surface font-medium">카카오톡</span>
+</div>
+</div>
+<div class="p-3 bg-bg-secondary rounded-lg border border-surface-border/30">
+<span class="font-label-caps text-[10px] text-text-muted block mb-1">저장일</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">calendar_today</span>
+<span class="font-body-md text-on-surface font-medium">2024년 5월 12일</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Related Items (Bento Style) -->
+<section class="px-container-padding mt-stack-gap-lg">
+<h2 class="font-headline-sm text-headline-sm mb-4 px-1">함께 사용하기 좋은 아이템</h2>
+<div class="grid grid-cols-2 gap-grid-gutter">
+<div class="bg-white p-3 rounded-xl shadow-sm border border-surface-border">
+<div class="w-full aspect-square bg-surface-container-low rounded-lg mb-3 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="스타벅스 블루베리 머핀 쿠폰 스크린샷" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUvjJPzYT23k5sGuIQ4rSZLEFI-3Qb98TGOzEW8c23x-kZSinqWnPgSm_jTj660cAOkuWqw_BFvh0mX92VQkYh6CfMWXJ9cSTF6GGBH31SWCl4OCo_z7fVhHGfEJJNmNuuGuG-Tn4FfYG96wtjjQejPIIQJWSbGM4-luEj2yoVAJ3NLa6m8A4835tKuVf-jegAQxFzOzLRYITMVJ-GSUe_8KZZYclAu_A0iCAl_HZrk7yNd17DwtRL_qhS5Ha9mb1SxBdXi5_On3c"/>
+</div>
+<span class="font-body-md font-medium text-text-main line-clamp-1">블루베리 머핀</span>
+<span class="font-caption text-caption text-text-muted">만료일 10/12</span>
+</div>
+<div class="bg-white p-3 rounded-xl shadow-sm border border-surface-border">
+<div class="w-full aspect-square bg-surface-container-low rounded-lg mb-3 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="스타벅스 리유저블 텀블러 사진" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMxinh3QY7d9e9NzAqG7xg2A0C68hD_pFAOdlOALI3sx6561w-IuECCjEe6schXGzCdTrRvW90P-yPYqv7x8ydYHfJ1AqzeMrd200mZK5-cfRl7PDc66x9FC28R9KKERJdPYMJ2wOBMUpVVyZEBpV6i8LTfuOy-mGY6fL87N48MkNHYQ4sR0-ll9EIpOvY2NlOt9OOWHMgHg1cxzWedd7ZxPQpgaNsPypxrKMfbtrcfrAY7SN1HI-xX6EcFxDbEjuH08WjBP8cJFQ"/>
+</div>
+<span class="font-body-md font-medium text-text-main line-clamp-1">텀블러 리워드</span>
+<span class="font-caption text-caption text-text-muted">만료일 12/31</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Action Bar -->
+<div class="fixed bottom-0 left-0 w-full z-50 px-container-padding pb-10 pt-4 bg-background/90 backdrop-blur-xl">
+<div class="max-w-md mx-auto grid grid-cols-3 gap-3">
+<!-- Share Button -->
+<button class="flex flex-col items-center justify-center gap-1.5 p-3 rounded-2xl bg-white border border-surface-border text-primary hover:bg-surface-container-low transition-all active:scale-95">
+<span class="material-symbols-outlined">share</span>
+<span class="font-label-caps text-[10px]">공유하기</span>
+</button>
+<!-- Edit Button -->
+<button class="flex flex-col items-center justify-center gap-1.5 p-3 rounded-2xl bg-white border border-surface-border text-primary hover:bg-surface-container-low transition-all active:scale-95">
+<span class="material-symbols-outlined">edit</span>
+<span class="font-label-caps text-[10px]">수정하기</span>
+</button>
+<!-- Move to Vault Button -->
+<button class="flex flex-col items-center justify-center gap-1.5 p-3 rounded-2xl bg-primary text-on-primary shadow-lg shadow-primary/20 hover:opacity-90 transition-all active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">enhanced_encryption</span>
+<span class="font-label-caps text-[10px]">비밀 보관함으로 이동</span>
+</button>
+</div>
+</div>
+<!-- Visual Polish: Micro-interaction Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.addEventListener('touchstart', () => {
+                    btn.classList.add('scale-95');
+                });
+                btn.addEventListener('touchend', () => {
+                    btn.classList.remove('scale-95');
+                });
+            });
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('translate-y-0', 'opacity-100');
+                        entry.target.classList.remove('translate-y-10', 'opacity-0');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const infoCard = document.querySelector('section.relative.z-10');
+            infoCard.classList.add('transition-all', 'duration-700', 'translate-y-10', 'opacity-0');
+            observer.observe(infoCard);
+        });
+    </script>
+</body></html>

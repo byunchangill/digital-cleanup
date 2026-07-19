@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sortmate - 일괄 내보내기 옵션</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .custom-checkbox:checked {
+            background-color: #3525cd;
+            border-color: #3525cd;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#4edea3",
+                        "inverse-primary": "#c3c0ff",
+                        "on-surface-variant": "#464555",
+                        "surface-variant": "#d3e4fe",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#0b1c30",
+                        "on-secondary-fixed": "#002113",
+                        "surface-border": "#E2E8F0",
+                        "outline-variant": "#c7c4d8",
+                        "primary-fixed": "#e2dfff",
+                        "surface-container": "#e5eeff",
+                        "outline": "#777587",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-primary-fixed": "#0f0069",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#005236",
+                        "surface-bright": "#f8f9ff",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "primary-container": "#4f46e5",
+                        "on-tertiary-container": "#ffd4a4",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "vault-blur": "rgba(255, 255, 255, 0.4)",
+                        "surface-container-low": "#eff4ff",
+                        "on-background": "#0b1c30",
+                        "secondary-container": "#6cf8bb",
+                        "error-container": "#ffdad6",
+                        "bg-primary": "#FFFFFF",
+                        "primary": "#3525cd",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "tertiary-fixed": "#ffddb8",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#cbdbf5",
+                        "on-secondary-container": "#00714d",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-primary-container": "#dad7ff",
+                        "text-muted": "#64748B",
+                        "surface-container-high": "#dce9ff",
+                        "text-main": "#0F172A",
+                        "tertiary": "#684000",
+                        "inverse-on-surface": "#eaf1ff",
+                        "tertiary-container": "#885500",
+                        "surface-tint": "#4d44e3",
+                        "inverse-surface": "#213145",
+                        "surface": "#f8f9ff",
+                        "background": "#f8f9ff",
+                        "bg-secondary": "#F8FAFC",
+                        "secondary": "#006c49"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap-md": "16px",
+                        "container-padding": "20px",
+                        "stack-gap-lg": "24px",
+                        "stack-gap-sm": "8px",
+                        "grid-gutter": "12px",
+                        "base-unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "caption": ["Hanken Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-sm": ["Hanken Grotesk"],
+                        "display-lg": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-container-padding h-16 bg-surface shadow-sm">
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-low rounded-full transition-colors" onclick="window.history.back()">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-on-surface">일괄 내보내기</h1>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary font-bold">JD</div>
+</header>
+<main class="flex-grow pt-24 pb-32 px-container-padding max-w-lg mx-auto w-full">
+<!-- Visual Accent -->
+<div class="mb-stack-gap-lg">
+<h2 class="font-headline-md text-headline-md text-primary mb-2">콘텐츠 내보내기</h2>
+<p class="text-on-surface-variant font-body-md">외부 저장소로 이동하거나 백업하기 위해 보관된 스크린샷과 링크를 준비합니다.</p>
+</div>
+<div class="space-y-stack-gap-lg">
+<!-- Data Selection Section -->
+<section class="space-y-stack-gap-md">
+<div class="flex items-center justify-between">
+<h3 class="font-label-caps text-label-caps text-outline uppercase tracking-wider">데이터 유형 선택</h3>
+<span class="text-caption text-primary font-medium">2,482개 항목 선택됨</span>
+</div>
+<div class="grid gap-stack-gap-sm">
+<!-- JSON Data -->
+<label class="group flex items-center p-4 bg-surface rounded-xl border border-surface-border cursor-pointer hover:border-primary transition-all duration-200">
+<div class="w-12 h-12 rounded-lg bg-surface-container-low flex items-center justify-center mr-4 group-hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-primary">data_object</span>
+</div>
+<div class="flex-grow">
+<span class="block font-headline-sm text-body-lg text-on-surface">JSON 메타데이터</span>
+<span class="text-caption text-on-surface-variant">AI 태그, 소스 URL 및 타임스탬프</span>
+</div>
+<input checked="" class="w-6 h-6 rounded-md border-outline-variant text-primary focus:ring-primary custom-checkbox" type="checkbox"/>
+</label>
+<!-- Original Files -->
+<label class="group flex items-center p-4 bg-surface rounded-xl border border-surface-border cursor-pointer hover:border-primary transition-all duration-200">
+<div class="w-12 h-12 rounded-lg bg-surface-container-low flex items-center justify-center mr-4 group-hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-primary">image</span>
+</div>
+<div class="flex-grow">
+<span class="block font-headline-sm text-body-lg text-on-surface">원본 파일</span>
+<span class="text-caption text-on-surface-variant">고해상도 스크린샷 및 미디어</span>
+</div>
+<input checked="" class="w-6 h-6 rounded-md border-outline-variant text-primary focus:ring-primary custom-checkbox" type="checkbox"/>
+</label>
+</div>
+</section>
+<!-- Destination Selection -->
+<section class="space-y-stack-gap-md pt-4">
+<h3 class="font-label-caps text-label-caps text-outline uppercase tracking-wider">저장 위치 선택</h3>
+<div class="grid grid-cols-1 gap-stack-gap-sm">
+<!-- Download Option -->
+<div class="relative">
+<input checked="" class="peer hidden" id="dest-download" name="destination" type="radio"/>
+<label class="flex items-center p-4 bg-surface rounded-xl border border-surface-border cursor-pointer peer-checked:border-primary peer-checked:bg-primary-fixed transition-all" for="dest-download">
+<span class="material-symbols-outlined text-on-surface mr-3">download</span>
+<span class="font-body-md text-on-surface font-semibold">직접 다운로드 (.zip)</span>
+<span class="material-symbols-outlined text-primary ml-auto opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</label>
+</div>
+<!-- Google Drive -->
+<div class="relative">
+<input class="peer hidden" id="dest-drive" name="destination" type="radio"/>
+<label class="flex items-center p-4 bg-surface rounded-xl border border-surface-border cursor-pointer peer-checked:border-primary peer-checked:bg-primary-fixed transition-all" for="dest-drive">
+<span class="material-symbols-outlined text-on-surface mr-3">cloud_upload</span>
+<span class="font-body-md text-on-surface font-semibold">구글 드라이브</span>
+<span class="material-symbols-outlined text-primary ml-auto opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</label>
+</div>
+<!-- Email -->
+<div class="relative">
+<input class="peer hidden" id="dest-email" name="destination" type="radio"/>
+<label class="flex items-center p-4 bg-surface rounded-xl border border-surface-border cursor-pointer peer-checked:border-primary peer-checked:bg-primary-fixed transition-all" for="dest-email">
+<span class="material-symbols-outlined text-on-surface mr-3">mail</span>
+<span class="font-body-md text-on-surface font-semibold">이메일로 전송</span>
+<span class="material-symbols-outlined text-primary ml-auto opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</label>
+</div>
+</div>
+</section>
+<!-- Storage Info -->
+<div class="p-4 bg-surface-container-low rounded-xl flex items-start gap-3 border border-dashed border-outline-variant">
+<span class="material-symbols-outlined text-secondary text-headline-sm">info</span>
+<div>
+<p class="text-caption text-on-surface font-medium">예상 내보내기 크기: 1.4 GB</p>
+<p class="text-caption text-on-surface-variant">파일 크기가 2GB를 초과할 경우 여러 개의 압축 파일로 나뉘어 저장됩니다.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Action Bar -->
+<footer class="fixed bottom-0 w-full bg-surface-container-lowest p-container-padding flex flex-col gap-3 shadow-[0px_-4px_20px_rgba(0,0,0,0.08)] rounded-t-[24px]">
+<button class="w-full h-14 bg-primary text-on-primary font-headline-sm rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all duration-150 shadow-lg shadow-primary/20" id="startExportBtn">
+<span>내보내기 시작</span>
+<span class="material-symbols-outlined">rocket_launch</span>
+</button>
+<p class="text-center text-caption text-outline">내보내기가 준비되면 알림을 보내드립니다.</p>
+</footer>
+<!-- Exporting Modal (Hidden by default) -->
+<div class="fixed inset-0 z-[100] hidden flex items-center justify-center p-6" id="exportModal">
+<div class="absolute inset-0 bg-on-background/40 backdrop-blur-sm"></div>
+<div class="relative bg-surface w-full max-w-sm rounded-[32px] p-8 flex flex-col items-center text-center shadow-2xl">
+<div class="w-24 h-24 relative mb-6">
+<!-- Circular Loader -->
+<svg class="w-full h-full animate-spin text-primary-fixed" viewbox="0 0 100 100">
+<circle class="opacity-25" cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-width="8"></circle>
+<circle class="opacity-100" cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-dasharray="282.7" stroke-dashoffset="180" stroke-linecap="round" stroke-width="8" style="color: #3525cd"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-display-lg" style="font-variation-settings: 'FILL' 1;">cloud_sync</span>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">내보내기 준비 중</h3>
+<p class="text-on-surface-variant font-body-md mb-6">보관된 자료를 수집하고 있습니다. 보통 몇 분 정도 소요됩니다...</p>
+<div class="w-full bg-surface-container rounded-full h-2 mb-2 overflow-hidden">
+<div class="bg-primary h-full transition-all duration-500 ease-out" id="progressBar" style="width: 35%"></div>
+</div>
+<span class="text-caption font-label-caps text-primary" id="progressLabel">35% 완료</span>
+<button class="mt-8 text-on-surface-variant font-semibold hover:text-error transition-colors" onclick="closeModal()">내보내기 취소</button>
+</div>
+</div>
+<script>
+        const exportBtn = document.getElementById('startExportBtn');
+        const modal = document.getElementById('exportModal');
+        const progressBar = document.getElementById('progressBar');
+        const progressLabel = document.getElementById('progressLabel');
+
+        function openModal() {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
+            let progress = 35;
+            const interval = setInterval(() => {
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    progressLabel.innerText = '내보내기 완료';
+                    setTimeout(() => {
+                        closeModal();
+                        alert('내보낸 파일을 다운로드할 준비가 되었습니다!');
+                    }, 500);
+                } else {
+                    progress += Math.floor(Math.random() * 5) + 1;
+                    if (progress > 100) progress = 100;
+                    progressBar.style.width = progress + '%';
+                    progressLabel.innerText = progress + '% 완료';
+                }
+            }, 300);
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            progressBar.style.width = '35%';
+            progressLabel.innerText = '35% 완료';
+        }
+
+        exportBtn.addEventListener('click', openModal);
+    </script>
+</body></html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Sortmate - 알림</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-surface": "#0b1c30",
+                "outline-variant": "#c7c4d8",
+                "surface-variant": "#d3e4fe",
+                "surface-bright": "#f8f9ff",
+                "surface-container-high": "#dce9ff",
+                "on-secondary-fixed-variant": "#005236",
+                "surface-border": "#E2E8F0",
+                "secondary-container": "#6cf8bb",
+                "on-primary": "#ffffff",
+                "on-secondary-container": "#00714d",
+                "outline": "#777587",
+                "secondary": "#006c49",
+                "surface-container-highest": "#d3e4fe",
+                "primary-container": "#4f46e5",
+                "on-tertiary-fixed": "#2a1700",
+                "background": "#f8f9ff",
+                "primary-fixed-dim": "#c3c0ff",
+                "tertiary-fixed": "#ffddb8",
+                "primary-fixed": "#e2dfff",
+                "on-primary-fixed": "#0f0069",
+                "bg-primary": "#FFFFFF",
+                "surface-dim": "#cbdbf5",
+                "on-primary-fixed-variant": "#3323cc",
+                "on-background": "#0b1c30",
+                "primary": "#3525cd",
+                "tertiary": "#684000",
+                "tertiary-fixed-dim": "#ffb95f",
+                "on-tertiary-fixed-variant": "#653e00",
+                "secondary-fixed": "#6ffbbe",
+                "on-surface-variant": "#464555",
+                "on-secondary": "#ffffff",
+                "vault-blur": "rgba(255, 255, 255, 0.4)",
+                "on-secondary-fixed": "#002113",
+                "inverse-primary": "#c3c0ff",
+                "inverse-surface": "#213145",
+                "surface-container-lowest": "#ffffff",
+                "text-main": "#0F172A",
+                "surface-container-low": "#eff4ff",
+                "on-primary-container": "#dad7ff",
+                "inverse-on-surface": "#eaf1ff",
+                "surface-container": "#e5eeff",
+                "on-tertiary": "#ffffff",
+                "tertiary-container": "#885500",
+                "secondary-fixed-dim": "#4edea3",
+                "error": "#ba1a1a",
+                "surface": "#f8f9ff",
+                "on-error-container": "#93000a",
+                "text-muted": "#64748B",
+                "surface-tint": "#4d44e3",
+                "on-tertiary-container": "#ffd4a4",
+                "on-error": "#ffffff",
+                "bg-secondary": "#F8FAFC",
+                "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "stack-gap-sm": "8px",
+                "grid-gutter": "12px",
+                "stack-gap-md": "16px",
+                "stack-gap-lg": "24px",
+                "container-padding": "20px",
+                "base-unit": "4px"
+            },
+            "fontFamily": {
+                "body-md": ["Hanken Grotesk"],
+                "caption": ["Hanken Grotesk"],
+                "body-lg": ["Hanken Grotesk"],
+                "headline-lg-mobile": ["Hanken Grotesk"],
+                "display-lg": ["Hanken Grotesk"],
+                "label-caps": ["JetBrains Mono"],
+                "headline-md": ["Hanken Grotesk"],
+                "headline-sm": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f8f9ff;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Custom subtle scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E2E8F0;
+            border-radius: 10px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 flex justify-between items-center px-container-padding h-16 w-full bg-surface/80 backdrop-blur-xl transition-all duration-300">
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50 active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm font-bold text-on-surface">알림</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50 active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined text-primary">more_vert</span>
+</button>
+</div>
+</header>
+<main class="pb-24 pt-4 px-container-padding max-w-2xl mx-auto space-y-stack-gap-lg">
+<!-- Filter Tabs -->
+<div class="flex gap-2 overflow-x-auto no-scrollbar">
+<button class="px-5 py-2 rounded-full bg-primary text-on-primary font-body-md whitespace-nowrap active:scale-95 transition-all">전체</button>
+<button class="px-5 py-2 rounded-full bg-surface-container text-on-surface-variant font-body-md whitespace-nowrap hover:bg-surface-variant/50 active:scale-95 transition-all">AI 분석</button>
+<button class="px-5 py-2 rounded-full bg-surface-container text-on-surface-variant font-body-md whitespace-nowrap hover:bg-surface-variant/50 active:scale-95 transition-all">시스템 관리</button>
+<button class="px-5 py-2 rounded-full bg-surface-container text-on-surface-variant font-body-md whitespace-nowrap hover:bg-surface-variant/50 active:scale-95 transition-all">혜택</button>
+</div>
+<!-- Section: Today -->
+<section class="space-y-stack-gap-md">
+<h2 class="font-label-caps text-label-caps text-outline uppercase tracking-widest">오늘</h2>
+<div class="space-y-3">
+<!-- Notification Card: AI Complete -->
+<div class="group bg-surface-container-lowest rounded-xl p-4 shadow-[0px_2px_4px_rgba(0,0,0,0.05),0px_10px_20px_rgba(0,0,0,0.02)] flex items-start gap-4 active:scale-[0.98] transition-all cursor-pointer border border-transparent hover:border-primary/10">
+<div class="w-12 h-12 rounded-xl bg-primary-container/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex justify-between items-start">
+<h3 class="font-body-lg text-body-lg font-semibold text-on-surface">5개 항목에 대한 AI 분석 완료</h3>
+<span class="font-caption text-caption text-outline shrink-0">2시간 전</span>
+</div>
+<p class="text-on-surface-variant text-body-md">최근 동기화된 자료에서 주요 영수증과 스크린샷을 식별했습니다. 정리할 준비가 되었습니다.</p>
+<div class="flex gap-2 mt-2">
+<span class="px-2 py-0.5 rounded bg-surface-variant/50 text-primary text-[10px] font-bold uppercase tracking-tighter">AI 분석</span>
+</div>
+</div>
+</div>
+<!-- Notification Card: Duplicates -->
+<div class="group bg-surface-container-lowest rounded-xl p-4 shadow-[0px_2px_4px_rgba(0,0,0,0.05),0px_10px_20px_rgba(0,0,0,0.02)] flex items-start gap-4 active:scale-[0.98] transition-all cursor-pointer border border-transparent hover:border-primary/10">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">cleaning_services</span>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex justify-between items-start">
+<h3 class="font-body-lg text-body-lg font-semibold text-on-surface">12개의 중복 자료 발견 - 지금 정리하기</h3>
+<span class="font-caption text-caption text-outline shrink-0">5시간 전</span>
+</div>
+<p class="text-on-surface-variant text-body-md">"업무" 폴더에서 여러 개의 유사한 스크린샷을 찾았습니다. 12.4 MB의 공간을 확보하세요.</p>
+<div class="flex gap-2 mt-2">
+<button class="text-primary font-bold text-body-md hover:underline decoration-2 underline-offset-4">중복 자료 검토</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: This Week -->
+<section class="space-y-stack-gap-md">
+<h2 class="font-label-caps text-label-caps text-outline uppercase tracking-widest">이번 주</h2>
+<div class="space-y-3">
+<!-- Notification Card: Coupon Expiry -->
+<div class="group bg-surface-container-lowest rounded-xl p-4 shadow-[0px_2px_4px_rgba(0,0,0,0.05),0px_10px_20px_rgba(0,0,0,0.02)] flex items-start gap-4 active:scale-[0.98] transition-all cursor-pointer border border-transparent hover:border-primary/10">
+<div class="w-12 h-12 rounded-xl bg-error-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">timer</span>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex justify-between items-start">
+<h3 class="font-body-lg text-body-lg font-semibold text-on-surface">쿠폰 "스타벅스" 만료 3일 전</h3>
+<span class="font-caption text-caption text-outline shrink-0">화요일</span>
+</div>
+<p class="text-on-surface-variant text-body-md">혜택을 놓치지 마세요. 탭하여 바코드와 상세 내용을 확인하세요.</p>
+<div class="flex gap-2 mt-2">
+<span class="px-2 py-0.5 rounded bg-error-container/30 text-error text-[10px] font-bold uppercase tracking-tighter">만료 임박</span>
+</div>
+</div>
+</div>
+<!-- Notification Card: Vault Secure -->
+<div class="group bg-surface-container-lowest rounded-xl p-4 shadow-[0px_2px_4px_rgba(0,0,0,0.05),0px_10px_20px_rgba(0,0,0,0.02)] flex items-start gap-4 active:scale-[0.98] transition-all cursor-pointer border border-transparent hover:border-primary/10 opacity-80">
+<div class="w-12 h-12 rounded-xl bg-surface-variant/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-outline" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex justify-between items-start">
+<h3 class="font-body-lg text-body-lg font-semibold text-on-surface">비밀 금고 백업 완료</h3>
+<span class="font-caption text-caption text-outline shrink-0">월요일</span>
+</div>
+<p class="text-on-surface-variant text-body-md">암호화된 항목들이 보안 클라우드에 성공적으로 백업되었습니다.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Empty State Illustration Placeholder (Hidden by default) -->
+<div class="hidden flex flex-col items-center justify-center py-20 text-center space-y-4" id="empty-state">
+<div class="w-24 h-24 bg-surface-container rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-4xl">notifications_off</span>
+</div>
+<div class="space-y-1">
+<p class="font-headline-sm text-headline-sm text-on-surface">모두 확인했습니다!</p>
+<p class="text-on-surface-variant text-body-md">현재 새로운 알림이 없습니다.</p>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-2 pb-safe bg-surface dark:bg-surface-container-lowest shadow-[0px_-2px_10px_rgba(0,0,0,0.05)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-all duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-caption text-caption">홈</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-all duration-200" href="#">
+<span class="material-symbols-outlined">folder_zip</span>
+<span class="font-caption text-caption">라이브러리</span>
+</a>
+<div class="relative -top-6">
+<button class="w-14 h-14 bg-primary text-on-primary rounded-full shadow-[0px_8px_16px_rgba(53,37,205,0.3)] flex items-center justify-center active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-all duration-200" href="#">
+<span class="material-symbols-outlined">cleaning_services</span>
+<span class="font-caption text-caption">정리</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim font-bold transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-caption text-caption">내 정보</span>
+</a>
+</nav>
+<script>
+        // Simple Interaction logic
+        document.querySelectorAll('.group').forEach(item => {
+            item.addEventListener('click', () => {
+                // Flash feedback
+                item.classList.add('bg-primary/5');
+                setTimeout(() => {
+                    item.classList.remove('bg-primary/5');
+                }, 400);
+            });
+        });
+
+        // Sticky Header Effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-sm');
+                header.classList.remove('bg-surface/80');
+                header.classList.add('bg-surface');
+            } else {
+                header.classList.remove('shadow-sm');
+                header.classList.add('bg-surface/80');
+                header.classList.remove('bg-surface');
+            }
+        });
+    </script>
+</body></html>

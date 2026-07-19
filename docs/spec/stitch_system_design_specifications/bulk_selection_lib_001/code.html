@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sortmate - 대량 선택</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .selected-item {
+            outline: 3px solid #3525cd;
+            outline-offset: -3px;
+        }
+        .glass-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#4edea3",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-variant": "#d3e4fe",
+                        "on-primary-fixed": "#0f0069",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#213145",
+                        "on-secondary-fixed-variant": "#005236",
+                        "surface-border": "#E2E8F0",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#6cf8bb",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "surface-container-low": "#eff4ff",
+                        "surface-bright": "#f8f9ff",
+                        "surface": "#f8f9ff",
+                        "on-secondary-container": "#00714d",
+                        "on-tertiary-container": "#ffd4a4",
+                        "bg-primary": "#FFFFFF",
+                        "vault-blur": "rgba(255, 255, 255, 0.4)",
+                        "on-primary-container": "#dad7ff",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#4d44e3",
+                        "inverse-primary": "#c3c0ff",
+                        "secondary": "#006c49",
+                        "surface-container": "#e5eeff",
+                        "outline": "#777587",
+                        "on-surface": "#0b1c30",
+                        "primary-container": "#4f46e5",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "surface-container-high": "#dce9ff",
+                        "primary-fixed": "#e2dfff",
+                        "primary": "#3525cd",
+                        "background": "#f8f9ff",
+                        "surface-dim": "#cbdbf5",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#464555",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-tertiary-fixed": "#2a1700",
+                        "text-muted": "#64748B",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#c7c4d8",
+                        "tertiary-container": "#885500",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "text-main": "#0F172A",
+                        "bg-secondary": "#F8FAFC",
+                        "on-secondary-fixed": "#002113",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "tertiary-fixed": "#ffddb8",
+                        "tertiary": "#684000",
+                        "on-background": "#0b1c30"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "20px",
+                        "base-unit": "4px",
+                        "stack-gap-lg": "24px",
+                        "stack-gap-md": "16px",
+                        "stack-gap-sm": "8px",
+                        "grid-gutter": "12px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "display-lg": ["Hanken Grotesk"],
+                        "headline-sm": ["Hanken Grotesk"],
+                        "caption": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen pb-40">
+<!-- TopAppBar (Modified for Selection Mode) -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-md flex justify-between items-center px-container-padding h-16">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 duration-100">
+<span class="material-symbols-outlined">close</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary">3개 항목 선택됨</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="font-label-caps text-label-caps text-primary font-bold hover:opacity-80 transition-opacity uppercase">전체 선택</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 px-container-padding">
+<!-- Category Pill Bar -->
+<div class="flex gap-2 overflow-x-auto pb-4 no-scrollbar">
+<div class="px-4 py-2 bg-primary text-on-primary rounded-full font-label-caps text-label-caps whitespace-nowrap">모든 파일</div>
+<div class="px-4 py-2 bg-surface-container text-on-surface-variant rounded-full font-label-caps text-label-caps whitespace-nowrap">스크린샷</div>
+<div class="px-4 py-2 bg-surface-container text-on-surface-variant rounded-full font-label-caps text-label-caps whitespace-nowrap">영수증</div>
+<div class="px-4 py-2 bg-surface-container text-on-surface-variant rounded-full font-label-caps text-label-caps whitespace-nowrap">기사</div>
+</div>
+<!-- Bento Grid Library -->
+<div class="grid grid-cols-2 gap-grid-gutter mt-4">
+<!-- Card 1 (Selected) -->
+<div class="relative group selected-item rounded-xl bg-surface shadow-[0_2px_4px_rgba(0,0,0,0.05),0_10px_20px_rgba(0,0,0,0.02)] overflow-hidden">
+<div class="aspect-square bg-cover bg-center relative" data-alt="A clean, high-resolution screenshot of a minimalist mobile banking interface" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCsu4izjjWNiNqCpkHbpR0h3B0IdRguxgyjGxUj5yEb53rd6EXSwPgauLcUkLsaBF1E_t0G4hNo_9BQn3tKiXhMNIGj8h-xnbfJzSzjRJ5tOOyFHL4CLyArNG1tUavHJdrmToe-oJ_mxOj_5uXSxvRG6gyDyu30chgEz9ATO70eTu9PaOuj-ozODj6cA8GaB_by597_5EmOQ6JxqFd2b8VrilMd68sAuqdMap20zqcVoqTGYfmhyG1LSEF1NIm0Hofk6TbcCODQMjE')">
+<div class="absolute top-2 right-2 w-6 h-6 bg-primary rounded-full flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<div class="p-3">
+<p class="font-label-caps text-label-caps text-on-surface-variant truncate">은행_거래내역_Q3.PNG</p>
+<div class="flex gap-1 mt-1">
+<span class="px-2 py-0.5 bg-primary-container/10 text-primary rounded-full text-[10px] font-bold">금융</span>
+</div>
+</div>
+</div>
+<!-- Card 2 (Unselected) -->
+<div class="relative group rounded-xl bg-surface shadow-[0_2px_4px_rgba(0,0,0,0.05),0_10px_20px_rgba(0,0,0,0.02)] overflow-hidden">
+<div class="aspect-square bg-cover bg-center relative" data-alt="A professional digital mockup of a modern recipe application" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD0DLVdiw2LdG16wtAV7qRWLWOB_axDil7oEsvrsWSGUMH2cMJu69ZefK1y-nf0h2GRshCGqybTnWnb46FglyLbGPiVg5mV4TT-2qSHz50EBo_LgKODhJdBUt6jvKrZNrH45Na5mbvO1DjObFgA9gH6DtjUc9P_Hdvn6jaiFHgZ7vD_fzXS_Op19HDypQMysWuwT0AU5i01oduXwVjDrHWQCc0WlzSphCTGz994GA-VOrdnEc86ZOROKHzPmJg6fYFBe5waDZYlCK8')">
+<div class="absolute top-2 right-2 w-6 h-6 border-2 border-outline-variant bg-white/50 rounded-full flex items-center justify-center"></div>
+</div>
+<div class="p-3">
+<p class="font-label-caps text-label-caps text-on-surface-variant truncate">퀴노아_샐러드_레시피.JPG</p>
+<div class="flex gap-1 mt-1">
+<span class="px-2 py-0.5 bg-primary-container/10 text-primary rounded-full text-[10px] font-bold">건강</span>
+</div>
+</div>
+</div>
+<!-- Card 3 (Selected) -->
+<div class="relative group selected-item rounded-xl bg-surface shadow-[0_2px_4px_rgba(0,0,0,0.05),0_10px_20px_rgba(0,0,0,0.02)] overflow-hidden">
+<div class="aspect-square bg-cover bg-center relative" data-alt="A detailed digital architectural sketch" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDWBcsTj9qjPZ2yFN_NnjGsOZNC2I642e8MrXV1cOgy9nKlw0Wo-Sj1RtwxODJs1XpT4DktZRRlY9vXCe3mXadaT54ygpGShnScwW8pefnwlwihxeNcxR5xwW7Wl32kdxMW5Bj4jeW0w6TYDfm2nbUGzP1_r3VFJR94ImeydB4fcP9hsHjTTUa4eaSMNWRz2QUiI3PdOq2bok4l0Nvcfj0f7u1hv1Idg2dGiqsJhiX4ItJRasrpLNd23Vpy0CBA1erlKXU3yGTc9Xw')">
+<div class="absolute top-2 right-2 w-6 h-6 bg-primary rounded-full flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<div class="p-3">
+<p class="font-label-caps text-label-caps text-on-surface-variant truncate">사무실_디자인_영감.PNG</p>
+<div class="flex gap-1 mt-1">
+<span class="px-2 py-0.5 bg-primary-container/10 text-primary rounded-full text-[10px] font-bold">디자인</span>
+</div>
+</div>
+</div>
+<!-- Card 4 (Selected) -->
+<div class="relative group selected-item rounded-xl bg-surface shadow-[0_2px_4px_rgba(0,0,0,0.05),0_10px_20px_rgba(0,0,0,0.02)] overflow-hidden">
+<div class="aspect-square bg-cover bg-center relative" data-alt="A high-quality digital capture of an Amazon order confirmation page" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAA6a8_vWx_Ovi3Nz9XHKhgdTIUdk_i5bSH0UFo5UdI6PDx22LkSEp0K0Oo5AuPEb0FDLDjEIbDacLRzRd6yr_l1M9IF1FDuh7PpjwdG-FZ4vbQnisJIlA44a1rcncJft_iql0rwRm_NMRrxR3CjrVoIRJznpoUzDNa5pRHWjazQJw0N-etJ-DpqX0uxcR9vk1zneuJmxVvToA5_zmVvEJp70QiUZ5HoIccJ9-ASP58E5sJIPa2gOEct3cIYrwK6AwEfa8CTrPYta4')">
+<div class="absolute top-2 right-2 w-6 h-6 bg-primary rounded-full flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<div class="p-3">
+<p class="font-label-caps text-label-caps text-on-surface-variant truncate">주문_확인_0912.JPG</p>
+<div class="flex gap-1 mt-1">
+<span class="px-2 py-0.5 bg-primary-container/10 text-primary rounded-full text-[10px] font-bold">영수증</span>
+</div>
+</div>
+</div>
+<!-- Card 5 (Unselected) -->
+<div class="relative group rounded-xl bg-surface shadow-[0_2px_4px_rgba(0,0,0,0.05),0_10px_20px_rgba(0,0,0,0.02)] overflow-hidden">
+<div class="aspect-square bg-cover bg-center relative" data-alt="A minimalist digital dashboard layout for a smart home system" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDuJWsgh9RnjUCUIo-1YpFLXuu0p8w7XgQ8iRcYcRs_wa_mhdLHvG4xlnaZ9XYXLoDyUCfzGl4ys_-Gsu7eTLn72DGGIfuOzOn_Tp2g5D3tKcwhEw02Hh484vfM6jEk_qe14r3HYtGo9wTQtwIEy17klEMWoy0rBNzD_7LvATMu9IxSjxi4uUk0Wd-f6Ft0SJ_WT9CpM-JYx-_WcEMdxB9o0yU7udZJRTiIzkx_slXcg5U5yvsTqQ3G1b4YmzrsZ1o5bEY4nQ4yxXM')">
+<div class="absolute top-2 right-2 w-6 h-6 border-2 border-outline-variant bg-white/50 rounded-full flex items-center justify-center"></div>
+</div>
+<div class="p-3">
+<p class="font-label-caps text-label-caps text-on-surface-variant truncate">스마트_홈_대시보드.PNG</p>
+<div class="flex gap-1 mt-1">
+<span class="px-2 py-0.5 bg-primary-container/10 text-primary rounded-full text-[10px] font-bold">시스템</span>
+</div>
+</div>
+</div>
+<!-- Card 6 (Vaulted/Unselected) -->
+<div class="relative group rounded-xl bg-surface shadow-[0_2px_4px_rgba(0,0,0,0.05),0_10px_20px_rgba(0,0,0,0.02)] overflow-hidden">
+<div class="aspect-square bg-cover bg-center relative backdrop-blur-xl" data-alt="A blurred, secure view of a passport" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDm1Fx_7gw2DhngK_RXBly4gvKO6Iiuoquqtd1q4TskAw1S0iC1fW_ffoNxtRC7TfCLEGqFSVv74m0qqikrvTA0UE-YpWhcs3UTdC5pMgGvn8XfZoNMmrbbZX4-t0X3jErTCnUKLYBRS_efGJtbt7HxXf-_yb6UnxjzNA7RwFLx6QvTR_zGwkq_1rOKSfLNy0Jq0oUk_3948j56E68pqwpkNJ0W8ZhiHCZdjPZvFpvZHHaGGE-N8LNW1pNZPrBG4j7xsv7F3JQdYz4')">
+<div class="absolute inset-0 bg-vault-blur/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant/50 text-3xl">lock</span>
+</div>
+<div class="absolute top-2 right-2 w-6 h-6 border-2 border-outline-variant bg-white/50 rounded-full flex items-center justify-center"></div>
+</div>
+<div class="p-3">
+<p class="font-label-caps text-label-caps text-on-surface-variant truncate">여권_스캔.PDF</p>
+<div class="flex gap-1 mt-1">
+<span class="px-2 py-0.5 bg-secondary-container/20 text-secondary rounded-full text-[10px] font-bold">금고</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bulk Action Bottom Bar -->
+<div class="fixed bottom-0 left-0 w-full z-[60] bg-surface dark:bg-on-background shadow-lg rounded-t-xl transition-transform duration-300 transform translate-y-0">
+<!-- Floating Shadow Separator -->
+<div class="w-full h-1 bg-gradient-to-b from-transparent to-black/5 absolute -top-1"></div>
+<div class="flex justify-around items-center px-4 pb-8 pt-4">
+<!-- Move Category -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1">drive_file_move</span>
+<span class="font-label-caps text-[10px] uppercase">이동</span>
+</button>
+<!-- Add Tags -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1">label</span>
+<span class="font-label-caps text-[10px] uppercase">태그</span>
+</button>
+<!-- Share -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1">share</span>
+<span class="font-label-caps text-[10px] uppercase">공유</span>
+</button>
+<!-- Delete (High Contrast Danger) -->
+<button class="flex flex-col items-center justify-center text-error p-2 hover:bg-error-container/20 transition-colors rounded-xl active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1">delete</span>
+<span class="font-label-caps text-[10px] uppercase">삭제</span>
+</button>
+</div>
+</div>
+<script>
+        // Simple Interaction logic
+        document.querySelectorAll('.group').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('selected-item');
+                const check = this.querySelector('.absolute.top-2.right-2');
+                if (this.classList.contains('selected-item')) {
+                    check.className = 'absolute top-2 right-2 w-6 h-6 bg-primary rounded-full flex items-center justify-center text-white';
+                    check.innerHTML = '<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: \'FILL\' 1;">check_circle</span>';
+                } else {
+                    check.className = 'absolute top-2 right-2 w-6 h-6 border-2 border-outline-variant bg-white/50 rounded-full flex items-center justify-center';
+                    check.innerHTML = '';
+                }
+                updateSelectionCount();
+            });
+        });
+
+        function updateSelectionCount() {
+            const count = document.querySelectorAll('.selected-item').length;
+            const headline = document.querySelector('header h1');
+            headline.textContent = `${count}개 항목 선택됨`;
+            
+            // Hide selection bar if nothing selected
+            const bar = document.querySelector('.fixed.bottom-0');
+            if (count === 0) {
+                bar.classList.add('translate-y-full');
+            } else {
+                bar.classList.remove('translate-y-full');
+            }
+        }
+    </script>
+</body></html>

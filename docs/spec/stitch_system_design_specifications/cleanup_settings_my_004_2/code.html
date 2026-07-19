@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "text-main": "#0F172A",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "outline": "#777587",
+                    "secondary": "#006c49",
+                    "surface": "#f8f9ff",
+                    "surface-dim": "#cbdbf5",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "surface-variant": "#d3e4fe",
+                    "inverse-surface": "#213145",
+                    "outline-variant": "#c7c4d8",
+                    "surface-container": "#e5eeff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-secondary-fixed-variant": "#005236",
+                    "surface-container-high": "#dce9ff",
+                    "surface-container-highest": "#d3e4fe",
+                    "tertiary": "#684000",
+                    "secondary-fixed-dim": "#4edea3",
+                    "inverse-primary": "#c3c0ff",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-secondary-fixed": "#002113",
+                    "primary": "#3525cd",
+                    "on-secondary-container": "#00714d",
+                    "vault-blur": "rgba(255, 255, 255, 0.4)",
+                    "on-secondary": "#ffffff",
+                    "on-primary-container": "#dad7ff",
+                    "on-tertiary": "#ffffff",
+                    "on-surface": "#0b1c30",
+                    "background": "#f8f9ff",
+                    "text-muted": "#64748B",
+                    "primary-fixed": "#e2dfff",
+                    "primary-container": "#4f46e5",
+                    "secondary-container": "#6cf8bb",
+                    "surface-border": "#E2E8F0",
+                    "surface-tint": "#4d44e3",
+                    "on-error": "#ffffff",
+                    "surface-container-low": "#eff4ff",
+                    "bg-primary": "#FFFFFF",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#0f0069",
+                    "on-background": "#0b1c30",
+                    "error-container": "#ffdad6",
+                    "bg-secondary": "#F8FAFC",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-tertiary-container": "#ffd4a4",
+                    "on-primary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "tertiary-container": "#885500",
+                    "surface-bright": "#f8f9ff",
+                    "on-surface-variant": "#464555"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-gap-md": "16px",
+                    "stack-gap-lg": "24px",
+                    "stack-gap-sm": "8px",
+                    "grid-gutter": "12px",
+                    "base-unit": "4px",
+                    "container-padding": "20px"
+            },
+            "fontFamily": {
+                    "body-md": ["Hanken Grotesk"],
+                    "label-caps": ["JetBrains Mono"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "display-lg": ["Hanken Grotesk"],
+                    "caption": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "headline-sm": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .toggle-switch:checked + .toggle-bg {
+            background-color: #3525cd;
+        }
+        .toggle-switch:checked + .toggle-bg .toggle-dot {
+            transform: translateX(20px);
+        }
+        .bento-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .bento-card:active {
+            transform: scale(0.98);
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md selection:bg-primary-fixed-dim selection:text-on-primary-fixed overflow-x-hidden">
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-container-padding h-16 bg-surface dark:bg-on-background shadow-sm">
+<div class="flex items-center gap-3">
+<button class="p-2 -ml-2 hover:opacity-80 transition-opacity duration-200">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-on-surface">정리 설정</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary hover:opacity-80 cursor-pointer transition-opacity duration-200">search</span>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-surface-border">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIftmJ-KzLEQWdl5oBgHajvNCxR_q-efk5dk5Ol9v9ZrEM0zT2w_8HRmxmF2pfwyld3v_f8WKQ-2rWMCI-meLpgS5XtFuL0lljEJxfV5BKCNZ1xZwL8ijgcsZGvX_lfYVEXR7nsTTRi9jSh7kPMwBwVljgVLJTni-3tKIZA7xwxgw6a7N7fLmJysreVLvntp3Uo64Ufv81sBqog-ijHg4ofVgJr4lIg1TM9gc7EvM_cm5wKjhjpe2lPYwAH0f61RfRLmaOdguJF3I"/>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-container-padding max-w-lg mx-auto">
+<!-- Hero Status Card -->
+<div class="mb-stack-gap-lg p-6 bg-primary-container rounded-xl shadow-lg relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-caps text-label-caps bg-on-primary-container text-primary-container px-2 py-1 rounded">시스템 상태</span>
+<span class="text-on-primary-container text-body-md font-semibold">MY-004</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-primary text-white mb-2">최적화된 상태</h2>
+<p class="text-on-primary-container text-body-md opacity-90">이번 달 자동 정리를 통해 워크스페이스에서 1.2GB의 저장 공간을 절약했습니다.</p>
+</div>
+</div>
+<!-- Settings Section: Automation -->
+<div class="mb-stack-gap-lg">
+<h3 class="font-label-caps text-label-caps text-text-muted mb-4 px-1">자동화 규칙</h3>
+<div class="space-y-grid-gutter">
+<!-- Toggle Item 1 -->
+<div class="bento-card bg-bg-primary p-5 rounded-xl border border-surface-border shadow-[0px_2px_4px_rgba(0,0,0,0.05),0px_10px_20px_rgba(0,0,0,0.02)] flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">delete_sweep</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-semibold text-text-main leading-tight">휴지통으로 자동 이동</p>
+<p class="text-caption text-caption text-text-muted mt-0.5">만료일이 지난 항목 이동</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant rounded-full transition-colors toggle-bg flex items-center px-0.5">
+<div class="toggle-dot w-5 h-5 bg-white rounded-full transition-transform shadow-sm"></div>
+</div>
+</label>
+</div>
+<!-- Toggle Item 2 -->
+<div class="bento-card bg-bg-primary p-5 rounded-xl border border-surface-border shadow-[0px_2px_4px_rgba(0,0,0,0.05),0px_10px_20px_rgba(0,0,0,0.02)] flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-semibold text-text-main leading-tight">스마트 스크린샷 감지</p>
+<p class="text-caption text-caption text-text-muted mt-0.5">AI가 불필요한 임시 파일을 식별</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only toggle-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant rounded-full transition-colors toggle-bg flex items-center px-0.5">
+<div class="toggle-dot w-5 h-5 bg-white rounded-full transition-transform shadow-sm"></div>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Settings Section: Thresholds -->
+<div class="mb-stack-gap-lg">
+<h3 class="font-label-caps text-label-caps text-text-muted mb-4 px-1">보관 임계값</h3>
+<div class="bento-card bg-bg-primary p-6 rounded-xl border border-surface-border shadow-[0px_2px_4px_rgba(0,0,0,0.05),0px_10px_20px_rgba(0,0,0,0.02)]">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">history</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-semibold text-text-main">미사용 자료 기준</p>
+<p class="text-caption text-caption text-text-muted">일정 기간 활동이 없는 콘텐츠 보관</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between text-body-md font-semibold text-primary">
+<span>90일</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">edit</span>
+</div>
+<input class="w-full h-1.5 bg-surface-container-high rounded-lg appearance-none cursor-pointer accent-primary" max="365" min="30" type="range" value="90"/>
+<div class="flex justify-between text-caption text-text-muted">
+<span>30일</span>
+<span>180일</span>
+<span>365일</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Warning Card -->
+<div class="p-4 bg-error-container/20 border border-error-container rounded-xl flex gap-4 items-start">
+<span class="material-symbols-outlined text-error">info</span>
+<p class="text-caption text-on-error-container">자동 정리는 <strong>비밀 금고</strong>에 있는 항목이나 <span class="bg-primary/10 px-1 rounded text-primary">영구 보관</span> 태그가 지정된 항목은 절대 삭제하지 않습니다.</p>
+</div>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 pb-8 pt-2 bg-surface dark:bg-on-background shadow-[0px_-2px_10px_rgba(0,0,0,0.05)] rounded-t-xl">
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-inverse-surface rounded-full p-2 transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined">home</span>
+<span class="font-caption text-caption">홈</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-inverse-surface rounded-full p-2 transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-caption text-caption">라이브러리</span>
+</div>
+<div class="relative -top-6">
+<button class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white shadow-[0px_4px_10px_rgba(53,37,205,0.3)] hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[28px]">add</span>
+</button>
+</div>
+<div class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed font-semibold hover:bg-surface-container-low dark:hover:bg-inverse-surface rounded-full p-2 transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_fix_high</span>
+<span class="font-caption text-caption">정리</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-inverse-surface rounded-full p-2 transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined">person</span>
+<span class="font-caption text-caption">마이</span>
+</div>
+</nav>
+<script>
+        // Simple micro-interaction for the range slider
+        const rangeInput = document.querySelector('input[type="range"]');
+        const rangeDisplay = rangeInput.previousElementSibling.firstElementChild;
+        
+        rangeInput.addEventListener('input', (e) => {
+            rangeDisplay.textContent = `${e.target.value}일`;
+        });
+
+        // Toggle state simulation
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const label = this.closest('.bento-card').querySelector('p').textContent;
+                console.log(`${label} updated to ${this.checked}`);
+            });
+        });
+    </script>
+</body></html>

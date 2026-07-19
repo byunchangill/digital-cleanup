@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sortmate | 데이터 내보내기</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-bright": "#f8f9ff",
+            "secondary": "#006c49",
+            "primary-fixed": "#e2dfff",
+            "on-secondary-fixed-variant": "#005236",
+            "on-background": "#0b1c30",
+            "on-tertiary-container": "#ffd4a4",
+            "on-surface-variant": "#464555",
+            "on-primary-fixed": "#0f0069",
+            "secondary-fixed-dim": "#4edea3",
+            "surface-container-highest": "#d3e4fe",
+            "secondary-container": "#6cf8bb",
+            "inverse-surface": "#213145",
+            "on-error": "#ffffff",
+            "primary-container": "#4f46e5",
+            "on-error-container": "#93000a",
+            "surface-tint": "#4d44e3",
+            "surface-dim": "#cbdbf5",
+            "error": "#ba1a1a",
+            "on-tertiary-fixed": "#2a1700",
+            "inverse-primary": "#c3c0ff",
+            "surface-container": "#e5eeff",
+            "on-secondary-fixed": "#002113",
+            "bg-secondary": "#F8FAFC",
+            "on-surface": "#0b1c30",
+            "tertiary-container": "#885500",
+            "surface-container-low": "#eff4ff",
+            "inverse-on-surface": "#eaf1ff",
+            "text-main": "#0F172A",
+            "surface": "#f8f9ff",
+            "tertiary-fixed": "#ffddb8",
+            "on-tertiary-fixed-variant": "#653e00",
+            "error-container": "#ffdad6",
+            "surface-container-lowest": "#ffffff",
+            "bg-primary": "#FFFFFF",
+            "on-primary-fixed-variant": "#3323cc",
+            "tertiary-fixed-dim": "#ffb95f",
+            "surface-variant": "#d3e4fe",
+            "text-muted": "#64748B",
+            "primary-fixed-dim": "#c3c0ff",
+            "on-secondary": "#ffffff",
+            "tertiary": "#684000",
+            "outline": "#777587",
+            "surface-border": "#E2E8F0",
+            "on-secondary-container": "#00714d",
+            "outline-variant": "#c7c4d8",
+            "on-tertiary": "#ffffff",
+            "surface-container-high": "#dce9ff",
+            "on-primary": "#ffffff",
+            "secondary-fixed": "#6ffbbe",
+            "background": "#f8f9ff",
+            "vault-blur": "rgba(255, 255, 255, 0.4)",
+            "on-primary-container": "#dad7ff",
+            "primary": "#3525cd"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "stack-gap-lg": "24px",
+            "container-padding": "20px",
+            "stack-gap-sm": "8px",
+            "stack-gap-md": "16px",
+            "grid-gutter": "12px",
+            "base-unit": "4px"
+          },
+          "fontFamily": {
+            "caption": ["Hanken Grotesk"],
+            "headline-sm": ["Hanken Grotesk"],
+            "headline-lg-mobile": ["Hanken Grotesk"],
+            "headline-md": ["Hanken Grotesk"],
+            "body-md": ["Hanken Grotesk"],
+            "label-caps": ["JetBrains Mono"],
+            "display-lg": ["Hanken Grotesk"],
+            "body-lg": ["Hanken Grotesk"]
+          },
+          "fontSize": {
+            "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+            "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+            "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+            "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+            "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #f8f9ff;
+      font-family: 'Hanken Grotesk', sans-serif;
+    }
+    .progress-bar-fill {
+      transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .secure-pulse {
+      animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.05); opacity: 0.4; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .floating-card {
+      box-shadow: 0px 2px 4px rgba(0,0,0,0.05), 0px 10px 20px rgba(0,0,0,0.02);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-container-padding h-16 bg-surface dark:bg-on-background shadow-sm">
+<div class="flex items-center gap-stack-gap-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:opacity-80 transition-opacity" data-icon="close">close</button>
+<h1 class="font-headline-sm text-headline-sm text-primary font-bold">데이터 내보내기</h1>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a young tech-savvy user in a bright, modern office setting. The lighting is soft and high-key, emphasizing a clean and organized aesthetic that aligns with a high-end digital assistant brand. The subject is wearing professional yet comfortable attire in a palette of indigo and soft greys, looking directly at the camera with a calm and confident expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlmcQp8iQzKWqIfFnBPwnm5a_s8cSLR_Hht2A99TMOrXHcHjWKa8G7p11RdGLYF0BVCQOG8Qp3snOYr18ZChn5OsYnG5_IBtxp3GYj_2FYQUWXLaUkD8k_k5CTOwU7vnQHrNERhV-wsRUIpOe-d9u3P9PirVnnwPKdhgtXPQaeToI23GjZQRngqVl3wofhjmaiurVgL5kwj7sIO_Mn5VBELfLaUEzzaG0QTdPkok5UHeLE_r3lmgQElwjQvDEaiHMXtguMVL5HIvE"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-24 pb-12 px-container-padding flex flex-col items-center justify-center">
+<!-- Central Progress Module -->
+<div class="w-full max-w-md flex flex-col items-center gap-stack-gap-lg">
+<!-- Secure Icon Visual -->
+<div class="relative mb-stack-gap-md">
+<div class="w-24 h-24 rounded-full bg-primary-fixed flex items-center justify-center text-primary relative z-10">
+<span class="material-symbols-outlined text-[48px]" style="font-variation-settings: 'FILL' 1;">enhanced_encryption</span>
+</div>
+<div class="absolute inset-0 bg-primary opacity-20 rounded-full secure-pulse -z-0"></div>
+</div>
+<!-- Heading & Status -->
+<div class="text-center space-y-2">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">데이터 내보내는 중</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-[280px] mx-auto">
+          자산을 수집하고 아카이브를 준비하고 있습니다...
+        </p>
+</div>
+<!-- Progress Indicators -->
+<div class="w-full bg-surface-container-low p-stack-gap-md rounded-xl floating-card space-y-stack-gap-md">
+<div class="flex justify-between items-end">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-primary uppercase tracking-widest">현재 작업</span>
+<span class="font-body-lg text-body-lg font-semibold" id="task-name">고화질 미디어 압축 중</span>
+</div>
+<span class="font-display-lg text-display-lg text-primary" id="percent-text">65%</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-3 bg-surface-container rounded-full overflow-hidden">
+<div class="progress-bar-fill h-full bg-primary rounded-full" id="progress-bar" style="width: 65%;"></div>
+</div>
+<!-- Security Badge -->
+<div class="flex items-center gap-2 bg-surface p-2 rounded-lg border border-surface-border">
+<span class="material-symbols-outlined text-secondary text-[18px]">verified_user</span>
+<span class="font-caption text-caption text-secondary">종단간 암호화된 JSON 패키지</span>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="w-full mt-stack-gap-lg flex flex-col gap-stack-gap-md">
+<button class="w-full py-4 bg-primary text-on-primary rounded-xl font-body-lg font-bold shadow-lg hover:opacity-90 active:scale-95 transition-all">
+          백그라운드에서 진행
+        </button>
+<button class="w-full py-3 bg-transparent text-error font-body-md font-semibold hover:bg-error-container/10 rounded-xl transition-colors">
+          내보내기 취소
+        </button>
+</div>
+</div>
+<!-- Background Decoration -->
+<div class="fixed top-1/4 -left-12 w-64 h-64 bg-primary-container/5 rounded-full blur-3xl -z-10"></div>
+<div class="fixed bottom-1/4 -right-12 w-48 h-48 bg-secondary-container/5 rounded-full blur-3xl -z-10"></div>
+</main>
+<script>
+    // Micro-interaction: Progress Bar Simulation
+    let progress = 65;
+    const bar = document.getElementById('progress-bar');
+    const text = document.getElementById('percent-text');
+    const taskLabel = document.getElementById('task-name');
+    
+    const tasks = [
+      "메타데이터 수집 중...",
+      "보안 금고 키 추출 중...",
+      "고화질 미디어 압축 중",
+      "JSON 아카이브 구성 중...",
+      "보안 패키지 마무리 중..."
+    ];
+
+    setInterval(() => {
+      if (progress < 99) {
+        progress += Math.random() * 2;
+        if (progress > 99) progress = 99;
+        
+        bar.style.width = `${progress}%`;
+        text.innerText = `${Math.floor(progress)}%`;
+        
+        // Update task labels based on progress thresholds
+        if (progress > 85) taskLabel.innerText = tasks[4];
+        else if (progress > 75) taskLabel.innerText = tasks[3];
+      }
+    }, 3000);
+  </script>
+</body></html>

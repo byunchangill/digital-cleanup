@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sortmate - 새 메모</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Hanken Grotesk & JetBrains Mono -->
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#d3e4fe",
+                        "inverse-primary": "#c3c0ff",
+                        "on-secondary-fixed": "#002113",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-border": "#E2E8F0",
+                        "on-primary-container": "#dad7ff",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#eaf1ff",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#e2dfff",
+                        "bg-secondary": "#F8FAFC",
+                        "on-surface": "#0b1c30",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-primary-fixed": "#0f0069",
+                        "surface-dim": "#cbdbf5",
+                        "secondary-fixed": "#6ffbbe",
+                        "secondary-container": "#6cf8bb",
+                        "secondary": "#006c49",
+                        "tertiary": "#684000",
+                        "on-tertiary-container": "#ffd4a4",
+                        "surface": "#f8f9ff",
+                        "primary": "#3525cd",
+                        "on-secondary": "#ffffff",
+                        "text-main": "#0F172A",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary-fixed": "#ffddb8",
+                        "inverse-surface": "#213145",
+                        "primary-container": "#4f46e5",
+                        "outline": "#777587",
+                        "bg-primary": "#FFFFFF",
+                        "background": "#f8f9ff",
+                        "surface-tint": "#4d44e3",
+                        "outline-variant": "#c7c4d8",
+                        "on-tertiary-fixed": "#2a1700",
+                        "text-muted": "#64748B",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#464555",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "surface-container-high": "#dce9ff",
+                        "on-secondary-container": "#00714d",
+                        "surface-container": "#e5eeff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#885500",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "vault-blur": "rgba(255, 255, 255, 0.4)",
+                        "surface-container-low": "#eff4ff",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-background": "#0b1c30",
+                        "on-tertiary-fixed-variant": "#653e00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "grid-gutter": "12px",
+                        "stack-gap-sm": "8px",
+                        "stack-gap-lg": "24px",
+                        "base-unit": "4px",
+                        "stack-gap-md": "16px",
+                        "container-padding": "20px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "caption": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "headline-sm": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Hanken Grotesk', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .memo-shadow {
+            box-shadow: 0px 2px 4px rgba(0,0,0,0.05), 0px 10px 20px rgba(0,0,0,0.02);
+        }
+        .active-btn {
+            transform: scale(0.95);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface-bright text-on-surface min-h-screen flex flex-col">
+<!-- Top AppBar (Task-Focused: No global nav) -->
+<header class="docked full-width top-0 z-50 bg-surface/80 backdrop-blur-md flex justify-between items-center w-full px-container-padding h-16">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:opacity-80 transition-opacity" onclick="history.back()">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-primary">새 메모</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary text-on-primary px-6 py-2 rounded-xl font-body-md text-body-md font-bold hover:opacity-90 transition-all active:scale-95 memo-shadow" id="saveBtn">
+                저장
+            </button>
+</div>
+</header>
+<!-- Main Editor Canvas -->
+<main class="flex-1 px-container-padding pt-8 pb-32 max-w-2xl mx-auto w-full">
+<div class="flex flex-col space-y-6">
+<!-- Metadata & AI Tags Row -->
+<div class="flex flex-wrap gap-2 items-center">
+<span class="font-label-caps text-label-caps bg-surface-container-low text-primary px-3 py-1 rounded-full border border-surface-border">
+                    # 제목 없음
+                </span>
+<span class="font-label-caps text-label-caps bg-secondary-container/20 text-secondary px-3 py-1 rounded-full border border-secondary/10 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+                    AI 추천: 초안
+                </span>
+</div>
+<!-- Title Input -->
+<input autofocus="" class="w-full bg-transparent border-none focus:ring-0 font-headline-lg-mobile text-headline-lg-mobile placeholder:text-outline-variant text-on-surface p-0" placeholder="제목을 입력하세요..." type="text"/>
+<!-- Separator -->
+<div class="h-[1px] w-full bg-surface-border"></div>
+<!-- Body Area -->
+<textarea class="w-full flex-1 min-h-[353px] bg-transparent border-none focus:ring-0 font-body-lg text-body-lg placeholder:text-outline-variant text-on-surface-variant p-0 resize-none" placeholder="여기에 생각을 적어보세요..."></textarea>
+<!-- Attachment Grid (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-grid-gutter mt-8">
+<!-- Image Attachment Card -->
+<div class="rounded-xl bg-surface-container-lowest border border-surface-border p-4 memo-shadow group cursor-pointer hover:border-primary transition-colors">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary-container/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">image</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary">add_circle</span>
+</div>
+<p class="font-headline-sm text-headline-sm">미디어 첨부</p>
+<p class="font-caption text-caption text-text-muted mt-1">스크린샷이나 사진을 업로드하세요</p>
+</div>
+<!-- Link/Category Card -->
+<div class="rounded-xl bg-surface-container-lowest border border-surface-border p-4 memo-shadow group cursor-pointer hover:border-primary transition-colors">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-secondary-container/10 rounded-lg text-secondary">
+<span class="material-symbols-outlined">label</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-secondary">settings</span>
+</div>
+<p class="font-headline-sm text-headline-sm">분류</p>
+<p class="font-caption text-caption text-text-muted mt-1">태그를 추가하거나 보관함으로 이동</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual Editor Toolbar (Floating Above Keyboard/Bottom) -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 w-[90%] max-w-lg bg-inverse-surface text-inverse-on-surface rounded-full h-14 flex items-center justify-between px-6 memo-shadow z-50">
+<div class="flex items-center gap-6">
+<button class="hover:text-primary-fixed-dim transition-colors">
+<span class="material-symbols-outlined">format_bold</span>
+</button>
+<button class="hover:text-primary-fixed-dim transition-colors">
+<span class="material-symbols-outlined">format_list_bulleted</span>
+</button>
+<button class="hover:text-primary-fixed-dim transition-colors">
+<span class="material-symbols-outlined">link</span>
+</button>
+<div class="w-[1px] h-6 bg-outline"></div>
+<button class="hover:text-primary-fixed-dim transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined">mic</span>
+</button>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 hover:bg-surface-variant/20 px-3 py-1 rounded-full transition-colors">
+<span class="material-symbols-outlined text-primary-fixed-dim">lock</span>
+<span class="font-label-caps text-label-caps">비밀 보관함</span>
+</button>
+</div>
+</div>
+<!-- Success Toast (Hidden by default) -->
+<div class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-on-background text-white px-6 py-3 rounded-xl memo-shadow opacity-0 transition-all duration-300 transform translate-y-4 pointer-events-none z-[60] flex items-center gap-3" id="toast">
+<span class="material-symbols-outlined text-secondary-fixed">check_circle</span>
+<span class="font-body-md text-body-md">메모가 라이브러리에 저장되었습니다</span>
+</div>
+<script>
+        document.getElementById('saveBtn').addEventListener('click', function() {
+            const toast = document.getElementById('toast');
+            // Mock interaction
+            this.classList.add('active-btn');
+            setTimeout(() => this.classList.remove('active-btn'), 200);
+
+            // Show Toast
+            toast.classList.remove('opacity-0', 'translate-y-4');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 3000);
+        });
+
+        // Simple toolbar micro-interactions
+        const toolbarButtons = document.querySelectorAll('.fixed.bottom-8 button');
+        toolbarButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.add('scale-90');
+                setTimeout(() => btn.classList.remove('scale-90'), 150);
+            });
+        });
+    </script>
+</body></html>

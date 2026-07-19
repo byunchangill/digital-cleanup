@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sortmate - 갤러리 가져오기</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .selected-overlay {
+            background: rgba(79, 70, 229, 0.4);
+            border: 3px solid #4f46e5;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Custom micro-interaction for the import button */
+        #import-button:active {
+            transform: scale(0.95);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#c7c4d8",
+                        "on-secondary-fixed": "#002113",
+                        "background": "#f8f9ff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "surface-container-high": "#dce9ff",
+                        "surface-dim": "#cbdbf5",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "bg-primary": "#FFFFFF",
+                        "secondary-container": "#6cf8bb",
+                        "text-muted": "#64748B",
+                        "inverse-surface": "#213145",
+                        "surface-container": "#e5eeff",
+                        "surface-bright": "#f8f9ff",
+                        "on-surface": "#0b1c30",
+                        "surface-border": "#E2E8F0",
+                        "on-primary-fixed": "#0f0069",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#d3e4fe",
+                        "secondary": "#006c49",
+                        "on-secondary-container": "#00714d",
+                        "on-secondary": "#ffffff",
+                        "vault-blur": "rgba(255, 255, 255, 0.4)",
+                        "primary-fixed": "#e2dfff",
+                        "on-tertiary-container": "#ffd4a4",
+                        "outline": "#777587",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#0b1c30",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#eff4ff",
+                        "on-surface-variant": "#464555",
+                        "inverse-on-surface": "#eaf1ff",
+                        "text-main": "#0F172A",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "inverse-primary": "#c3c0ff",
+                        "surface-tint": "#4d44e3",
+                        "surface-variant": "#d3e4fe",
+                        "on-tertiary": "#ffffff",
+                        "bg-secondary": "#F8FAFC",
+                        "on-secondary-fixed-variant": "#005236",
+                        "tertiary-container": "#885500",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#4f46e5",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#2a1700",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#ffddb8",
+                        "primary": "#3525cd",
+                        "secondary-fixed-dim": "#4edea3",
+                        "surface": "#f8f9ff",
+                        "tertiary": "#684000",
+                        "on-primary-container": "#dad7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "20px",
+                        "stack-gap-lg": "24px",
+                        "base-unit": "4px",
+                        "stack-gap-sm": "8px",
+                        "stack-gap-md": "16px",
+                        "grid-gutter": "12px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-sm": ["Hanken Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "display-lg": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "caption": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="bg-background sticky top-0 z-50 flex items-center justify-between px-container-padding py-stack-gap-sm w-full">
+<div class="flex items-center gap-stack-gap-md">
+<button class="p-2 -ml-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-on-surface">close</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-on-surface">갤러리 가져오기</h1>
+</div>
+<button class="font-label-caps text-label-caps text-primary px-3 py-1.5 rounded-lg hover:bg-surface-container-low transition-colors">
+            앨범
+        </button>
+</header>
+<!-- Filter Tabs -->
+<div class="px-container-padding py-stack-gap-sm flex gap-stack-gap-md border-b border-surface-border bg-background">
+<button class="font-label-caps text-label-caps pb-2 border-b-2 border-primary text-primary transition-all" id="tab-all" onclick="switchTab('all')">
+            모든 사진
+        </button>
+<button class="font-label-caps text-label-caps pb-2 border-b-2 border-transparent text-text-muted hover:text-on-surface transition-all" id="tab-screenshots" onclick="switchTab('screenshots')">
+            스크린샷만 보기
+        </button>
+</div>
+<!-- Gallery Canvas -->
+<main class="flex-1 px-container-padding pt-stack-gap-md pb-32">
+<div class="grid grid-cols-3 gap-grid-gutter" id="gallery-grid">
+<!-- Gallery Item 1 -->
+<div class="relative aspect-square rounded-lg overflow-hidden group cursor-pointer select-none" onclick="toggleSelect(this)">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="생산성 앱의 미니멀한 스마트폰 스크린샷" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBSPAjevEBg1x9Jpx2ggVW8aNXoEY0YywPKSo7CRTtm5CVp2_jy9tcYkpz99F404YKZSkyUbN661QWB9FMYjnpe5pDFXsBEXDybEPlTerHkbo5NAtGdsGvDRMVnZhLgsbF-hEhBBJcdNULycbj5fes2n0XWziILUSzXnMAE7mmCjb_PluEVzzqBhgpKevcHL-JGTcLW0YVSrSfLSxit9KwgsT7xOnru90qIrtdBjUJsLpLgRCAorBMXEWFcG6ywtLlYOdK6U9qJN9o')"></div>
+<div class="selection-indicator absolute top-2 right-2 w-6 h-6 border-2 border-white rounded-full bg-black/20 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-[16px] text-white hidden">check</span>
+</div>
+</div>
+<!-- Gallery Item 2 -->
+<div class="relative aspect-square rounded-lg overflow-hidden group cursor-pointer select-none" onclick="toggleSelect(this)">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="전문적인 디지털 디자인 문서 스크린샷" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDWTREXNPcK1boh2oB1w2IfzOu9TGk808M1FesCwFc_XcqY_yT7Vs6OocPA64pez3tEWEqzXtZm4TflMnQZS-gV-8oXZ1KJ3vLSyEcidaahs5Vl_BoSHQ2Vr4YYyn2Jd3Qu5UwqTc7nNJIiCfiXPxG8l2kxuBXc4VyNm7sesKnjRiNAjopW9ECE7C2KeKAG_kLgFFVvFjhFK7iBuC-_t9ontyyJpHqJJkjDUQ0VCHrG9_HvuypWYoyn_zBtmZqVB7ljIyXenmZjIV0')"></div>
+<div class="selection-indicator absolute top-2 right-2 w-6 h-6 border-2 border-white rounded-full bg-black/20 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-[16px] text-white hidden">check</span>
+</div>
+</div>
+<!-- Gallery Item 3 -->
+<div class="relative aspect-square rounded-lg overflow-hidden group cursor-pointer select-none" onclick="toggleSelect(this)">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="여행 블로그 포스트의 화려한 스크린샷" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCRckDlbcjlT-9lZssb7TR6iL2inUD0Y6MXtygLlvgzu_WPHzIDnubNYKcFPbcrKMrl1CVnZPXHO0Ti4gWBaivNS8Sv5fkfflyBRipDEyR7tl90U6TtAF4kAXYhmOQw18dw0vv-udkC5ZjS1WcouczxOZrixpDrD5mWY4RYLsd8eUtdlARPOIXEQ9P98WueFvhTmMVLVI9xADl_zRFz-2aLNUM4o0Dk7kaKWuAMrZV-N4AimaGZXDhXReaAHjwMiQK0SEiFpbyKPiA')"></div>
+<div class="selection-indicator absolute top-2 right-2 w-6 h-6 border-2 border-white rounded-full bg-black/20 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-[16px] text-white hidden">check</span>
+</div>
+</div>
+<!-- Gallery Item 4 -->
+<div class="relative aspect-square rounded-lg overflow-hidden group cursor-pointer select-none" onclick="toggleSelect(this)">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="쇼핑 영수증 또는 주문 확인 페이지 캡처" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZUX3TgIEm7TJ0N-Iec6At8zTxcNFYr7NVsacEJqcfCj0DEhXKmVOediw4jCqS3MUHKSAbunN-uHfuI8lrmIA5Hig3iqTmlQXlFk4W-Tq4fz9164SLGJT70BdOiFLuWMD7L1qL0ZKhygpx-wk2j_cVVJyGFc-lXBcLCrVJ16DpBtQTZjLObQaG42ef1tH4wUXF7hLavwIQEakjBugEAacCSpiyXFIyrwB4aCiCtLHYGYk0kjqHP3-8ih2G-sq-zDy0RkKtsJvA5u8')"></div>
+<div class="selection-indicator absolute top-2 right-2 w-6 h-6 border-2 border-white rounded-full bg-black/20 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-[16px] text-white hidden">check</span>
+</div>
+</div>
+<!-- Gallery Item 5 (Pre-selected) -->
+<div class="relative aspect-square rounded-lg overflow-hidden group cursor-pointer select-none selected" onclick="toggleSelect(this)">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="패션 영감 보드 스크린샷" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD4mRnEVgZ-0E0E2wP7O-t6hEcB6ByA3_YoFHGOE2GZXdqqxEMI_hCR5uvy3c4FuGFjWT164r4RNguDzsdaVMxBNoARKD6I44hY5rfY7joQPSrxTevl4ZxBIxNyFm80beyywhrK8Xo5wHxdwUjm2PV8cm1VwDy3O-Eeatlr9mCjsKldabvht0kLZ-sicEZQIuMhIu7vTz0MCs8HEtkrVp_L2nv0frZTjIPcKr_GnfNSEjZWOd9kvNyXAorFSgoC_PGeh7oJkbhle9A')"></div>
+<div class="selection-indicator absolute top-2 right-2 w-6 h-6 border-2 border-white rounded-full bg-primary flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-[16px] text-white">check</span>
+</div>
+<div class="absolute inset-0 selected-overlay"></div>
+</div>
+<!-- Gallery Item 6 -->
+<div class="relative aspect-square rounded-lg overflow-hidden group cursor-pointer select-none" onclick="toggleSelect(this)">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="날씨 애플리케이션 스크린샷" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDWdL2YdwJQQFQbYXYpoKrkGxQ61P0ckszBs3hX0VNRao8r7K-CQzZOmp3uVkRk3a_DSM7ERreC_-RMrh6TQD0wq2NWLsJnjSgF29eRvJQEPBCDXHR-w8jgPi-oVuCPSINdWc0rv8K4NIHDXcA_swI41JV6zdFZxg-Z5JuV6Fkc3QdhQXBgpHpwXNkgZkzR7TXOuniM3mzQzWaNhd6Eh3D8kQV6cPlNFD3qBJGLjQFI87f9EAwd3zR1pbcSfHZiqvvQ3wdumS9adr4')"></div>
+<div class="selection-indicator absolute top-2 right-2 w-6 h-6 border-2 border-white rounded-full bg-black/20 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-[16px] text-white hidden">check</span>
+</div>
+</div>
+<!-- Additional items -->
+<div class="relative aspect-square rounded-lg overflow-hidden group cursor-pointer select-none" onclick="toggleSelect(this)">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="금융 대시보드 스크린샷" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDo_EQSeFPWlhqTSW3RtTbPWj6DzlvMGQqV-O6G0TOPIxOih2uyeZY17hw1Hn7Nc7cc1sDlRAmN9tKlVGWMAEtXepZX9V7Nuari1pjrg8NFp_rc-GXEinaETx01IDZ8F09HtysWk3lWNUnC0VX8HJptREq0Q3GLhAlgrLrh1umWeoF0fRbLEswAlQYK5QZgnO9PTPwRDESteyyfuU1JmneLhVAom1ePIvVezoIWqXkXVfCoQT62SiX_5A_hP6y6YTYDLKG7I9LYnRE')"></div>
+<div class="selection-indicator absolute top-2 right-2 w-6 h-6 border-2 border-white rounded-full bg-black/20 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-[16px] text-white hidden">check</span>
+</div>
+</div>
+<div class="relative aspect-square rounded-lg overflow-hidden group cursor-pointer select-none" onclick="toggleSelect(this)">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="미니멀한 홈 오피스 사진" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBUlfRBH1stqmM6gt8yDA_7O_1VPpBHmCS674Ex7aF0ElGn9UAklksSDDNv8_REX7pNqTVlkBXB4lJ-GiLZ62A-GiHxcuQrrvxFu70o6li85NqPhXGarFc9T_miUektikMRiG92CU3cN-tZS0xJKOrnGntoa_39cYCn9lAZ2BtgUdSy1xiMZhnSOUMLnd4PxfwnlGp308bwn91BoqUPJaxpd8Nu_83sss1kfrzm2ANwwIm463tHRJ3rTle5gw_u0OqKYBppHbEKQu4')"></div>
+<div class="selection-indicator absolute top-2 right-2 w-6 h-6 border-2 border-white rounded-full bg-black/20 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-[16px] text-white hidden">check</span>
+</div>
+</div>
+<div class="relative aspect-square rounded-lg overflow-hidden group cursor-pointer select-none" onclick="toggleSelect(this)">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="요리 레시피 앱 스크린샷" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDc7Wv3r-_5pfe1VBtXfR1kgkIX1G-65K3nOffR7YR4SZpClNYOehZHzDdbFPbab05ajRvVBDa_oXTn0lQ8pEzYKq1yDwlHwFrdGSmkQaAyAmyNC0PsTM80TDaBFaL9dh3SSn-NwKMMW6KFTEhsSgq5wpjTL3JhzhL6CrpUg-tPLb9ws5QgVH3-lbJg7DAv9jMkX8BeXg476bKKm6nkr5JAL-3_GrqnicHHUB1LSQ-1pQzgboLa4sG1_AJ6mUvp1TM8MX9RJlhnH6o')"></div>
+<div class="selection-indicator absolute top-2 right-2 w-6 h-6 border-2 border-white rounded-full bg-black/20 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-[16px] text-white hidden">check</span>
+</div>
+</div>
+<div class="relative aspect-square rounded-lg overflow-hidden group cursor-pointer select-none" onclick="toggleSelect(this)">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="명상 앱 인터페이스 캡처" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBYInp8LYSl0-F1dsKl8ZQNwAn2U1POYzD5NWg-9kA9VV_9KWy55LMgaJPA8Y0Dzk9SdCu3fptqlfBZt-xlhrI8z9swYN3wH2I-rd9s_nWK1ynIsQKsI7T5Yi2hICkA_YAA0zAsrfFgFaPa7qwxN7xcI6SdFG_0fFuLnrYwmHh9wjuv0kiYNHrCwn_a89l4n6NGbgWfrxTSF8SXJwI2tBNxDSSmXb2DBYJKAYwPpF-tmFQUEOWFqssdBE_bLCbDc4Hiyru5lUri0_8')"></div>
+<div class="selection-indicator absolute top-2 right-2 w-6 h-6 border-2 border-white rounded-full bg-black/20 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-[16px] text-white hidden">check</span>
+</div>
+</div>
+<div class="relative aspect-square rounded-lg overflow-hidden group cursor-pointer select-none" onclick="toggleSelect(this)">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="팟캐스트 애플리케이션 다크 모드 스크린샷" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDdMjOEwvBsnf1hHEwzlYUZYbHI4_CnzQbAXRAme5mzaOQCYJ3wAsrbMbVtQpJukiRDRHLzLEWj9APd00VIbEsnfiXTZeMZ5fn4Mrpqox8EpsSTfNyJzJ-QfJISsAIUh9ocMfXSDssF427FjQoYENL8LncZhCyLueNEHW1fN_iDS7U3gIMY4Mj43wOSHcmbNdlZg1sP-hz-tlSf9olsK8s6i2o2lwY7ONfQxYVlqj4XnZ72iRnVPRbT32lCmxLsIlCIiMigFNGHWVo')"></div>
+<div class="selection-indicator absolute top-2 right-2 w-6 h-6 border-2 border-white rounded-full bg-black/20 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-[16px] text-white hidden">check</span>
+</div>
+</div>
+<div class="relative aspect-square rounded-lg overflow-hidden group cursor-pointer select-none" onclick="toggleSelect(this)">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="할 일 관리 도구의 상세 인터페이스" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDkngwKCxnXkinSsebkpwHOIEL28qJlUBi7UIBReokQPAmohcWICcRNcFau1fgHZ6PNKUZaMUL68dUmqhId0hFlaVP6qK-DaZgZtlNJiHXCzv41MuKPWWnMUK-CeHZn7SgG4lmFTnSOkLxGcb57SRm29r6ukTZkGJcj4wBgkMGa_MjeSP60-oCDabl_w8fRbMcgF7USU-RWRIjkgt7iWlcOc_LNbwBHJp9OKoHmFnIq2hCm9okqZrEdgKRl9iJnWBHZA5Ykqo2KSkQ')"></div>
+<div class="selection-indicator absolute top-2 right-2 w-6 h-6 border-2 border-white rounded-full bg-black/20 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-[16px] text-white hidden">check</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Fixed Floating Action Layer -->
+<div class="fixed bottom-0 left-0 w-full px-container-padding pb-8 pt-4 bg-gradient-to-t from-background via-background/95 to-transparent z-40">
+<button class="w-full bg-primary-container text-on-primary-container h-14 rounded-xl font-headline-sm text-headline-sm shadow-lg shadow-primary/20 flex items-center justify-center gap-stack-gap-md hover:brightness-110 transition-all" id="import-button">
+            사진 <span id="counter">1</span>장 가져오기
+        </button>
+</div>
+<!-- Script for Gallery Interactions -->
+<script>
+        let selectedCount = 1; // Starting with the pre-selected item
+        const counterEl = document.getElementById('counter');
+        const importBtn = document.getElementById('import-button');
+
+        function toggleSelect(el) {
+            const indicator = el.querySelector('.selection-indicator');
+            const checkIcon = indicator.querySelector('.material-symbols-outlined');
+            const isSelected = el.classList.contains('selected');
+
+            if (isSelected) {
+                el.classList.remove('selected');
+                indicator.classList.remove('bg-primary');
+                indicator.classList.add('bg-black/20');
+                checkIcon.classList.add('hidden');
+                
+                // Remove overlay
+                const overlay = el.querySelector('.selected-overlay');
+                if (overlay) overlay.remove();
+                
+                selectedCount--;
+            } else {
+                el.classList.add('selected');
+                indicator.classList.remove('bg-black/20');
+                indicator.classList.add('bg-primary');
+                checkIcon.classList.remove('hidden');
+                
+                // Add overlay
+                const overlay = document.createElement('div');
+                overlay.className = 'absolute inset-0 selected-overlay';
+                el.appendChild(overlay);
+                
+                selectedCount++;
+            }
+
+            // Update UI
+            counterEl.textContent = selectedCount;
+            if (selectedCount === 0) {
+                importBtn.disabled = true;
+                importBtn.classList.add('opacity-50', 'grayscale');
+            } else {
+                importBtn.disabled = false;
+                importBtn.classList.remove('opacity-50', 'grayscale');
+            }
+        }
+
+        function switchTab(tab) {
+            const allBtn = document.getElementById('tab-all');
+            const screenBtn = document.getElementById('tab-screenshots');
+            
+            if (tab === 'all') {
+                allBtn.classList.add('border-primary', 'text-primary');
+                allBtn.classList.remove('border-transparent', 'text-text-muted');
+                screenBtn.classList.add('border-transparent', 'text-text-muted');
+                screenBtn.classList.remove('border-primary', 'text-primary');
+            } else {
+                screenBtn.classList.add('border-primary', 'text-primary');
+                screenBtn.classList.remove('border-transparent', 'text-text-muted');
+                allBtn.classList.add('border-transparent', 'text-text-muted');
+                allBtn.classList.remove('border-primary', 'text-primary');
+            }
+        }
+    </script>
+</body></html>

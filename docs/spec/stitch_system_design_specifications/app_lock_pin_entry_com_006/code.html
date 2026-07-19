@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sortmate 보안 - 잠금 화면</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Design System Implementation -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#ffdad6",
+                        "bg-primary": "#FFFFFF",
+                        "tertiary-fixed": "#ffddb8",
+                        "primary": "#3525cd",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-primary-container": "#dad7ff",
+                        "text-muted": "#64748B",
+                        "surface-dim": "#cbdbf5",
+                        "on-secondary-container": "#00714d",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#dce9ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "text-main": "#0F172A",
+                        "tertiary": "#684000",
+                        "surface": "#f8f9ff",
+                        "background": "#f8f9ff",
+                        "bg-secondary": "#F8FAFC",
+                        "tertiary-container": "#885500",
+                        "surface-tint": "#4d44e3",
+                        "inverse-surface": "#213145",
+                        "secondary": "#006c49",
+                        "secondary-fixed-dim": "#4edea3",
+                        "inverse-primary": "#c3c0ff",
+                        "on-surface-variant": "#464555",
+                        "on-secondary-fixed": "#002113",
+                        "surface-border": "#E2E8F0",
+                        "surface-variant": "#d3e4fe",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#0b1c30",
+                        "surface-container": "#e5eeff",
+                        "outline-variant": "#c7c4d8",
+                        "primary-fixed": "#e2dfff",
+                        "outline": "#777587",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-primary-fixed": "#0f0069",
+                        "primary-container": "#4f46e5",
+                        "on-tertiary-container": "#ffd4a4",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8f9ff",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-background": "#0b1c30",
+                        "on-tertiary-fixed": "#2a1700",
+                        "vault-blur": "rgba(255, 255, 255, 0.4)",
+                        "surface-container-low": "#eff4ff",
+                        "secondary-container": "#6cf8bb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "20px",
+                        "stack-gap-sm": "8px",
+                        "grid-gutter": "12px",
+                        "base-unit": "4px",
+                        "stack-gap-lg": "24px",
+                        "stack-gap-md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Hanken Grotesk"],
+                        "display-lg": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "caption": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .pin-dot {
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .pin-dot.active {
+            transform: scale(1.2);
+            background-color: #3525cd;
+        }
+        .keypad-btn:active {
+            transform: scale(0.9);
+            background-color: #e2dfff;
+        }
+        .error-shake {
+            animation: shake 0.4s ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            50% { transform: translateX(8px); }
+            75% { transform: translateX(-8px); }
+        }
+        .glass-background {
+            background: rgba(248, 249, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col font-body-md overflow-hidden">
+<!-- Top Status Bar Simulation (Standard Mobile Component) -->
+<header class="w-full flex justify-between items-center px-6 pt-12 pb-4">
+<div class="text-primary font-bold tracking-tight">
+<span class="font-display-lg text-display-lg">Sortmate</span>
+</div>
+<div class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">lock</div>
+</header>
+<main class="flex-grow flex flex-col items-center justify-center px-container-padding">
+<!-- Security Header -->
+<div class="text-center mb-10">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-2">보안 잠금</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">금고에 액세스하려면 6자리 PIN을 입력하세요</p>
+</div>
+<!-- PIN Display Dots -->
+<div class="flex gap-4 mb-16" id="pin-container">
+<div class="pin-dot w-4 h-4 rounded-full border-2 border-outline-variant bg-transparent"></div>
+<div class="pin-dot w-4 h-4 rounded-full border-2 border-outline-variant bg-transparent"></div>
+<div class="pin-dot w-4 h-4 rounded-full border-2 border-outline-variant bg-transparent"></div>
+<div class="pin-dot w-4 h-4 rounded-full border-2 border-outline-variant bg-transparent"></div>
+<div class="pin-dot w-4 h-4 rounded-full border-2 border-outline-variant bg-transparent"></div>
+<div class="pin-dot w-4 h-4 rounded-full border-2 border-outline-variant bg-transparent"></div>
+</div>
+<!-- Biometric Alternative -->
+<button class="flex flex-col items-center gap-2 mb-12 hover:opacity-70 transition-opacity" id="faceid-trigger">
+<div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'wght' 300;">face</span>
+</div>
+<span class="font-caption text-caption text-primary font-medium">Face ID 사용</span>
+</button>
+<!-- Numeric Keypad -->
+<div class="grid grid-cols-3 gap-y-4 gap-x-8 w-full max-w-xs">
+<button class="keypad-btn w-20 h-20 rounded-full flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-container-high transition-all" onclick="appendPin('1')">
+<span class="font-headline-md text-headline-md text-on-surface">1</span>
+</button>
+<button class="keypad-btn w-20 h-20 rounded-full flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-container-high transition-all" onclick="appendPin('2')">
+<span class="font-headline-md text-headline-md text-on-surface">2</span>
+<span class="text-[10px] text-on-surface-variant tracking-widest font-bold">ABC</span>
+</button>
+<button class="keypad-btn w-20 h-20 rounded-full flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-container-high transition-all" onclick="appendPin('3')">
+<span class="font-headline-md text-headline-md text-on-surface">3</span>
+<span class="text-[10px] text-on-surface-variant tracking-widest font-bold">DEF</span>
+</button>
+<button class="keypad-btn w-20 h-20 rounded-full flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-container-high transition-all" onclick="appendPin('4')">
+<span class="font-headline-md text-headline-md text-on-surface">4</span>
+<span class="text-[10px] text-on-surface-variant tracking-widest font-bold">GHI</span>
+</button>
+<button class="keypad-btn w-20 h-20 rounded-full flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-container-high transition-all" onclick="appendPin('5')">
+<span class="font-headline-md text-headline-md text-on-surface">5</span>
+<span class="text-[10px] text-on-surface-variant tracking-widest font-bold">JKL</span>
+</button>
+<button class="keypad-btn w-20 h-20 rounded-full flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-container-high transition-all" onclick="appendPin('6')">
+<span class="font-headline-md text-headline-md text-on-surface">6</span>
+<span class="text-[10px] text-on-surface-variant tracking-widest font-bold">MNO</span>
+</button>
+<button class="keypad-btn w-20 h-20 rounded-full flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-container-high transition-all" onclick="appendPin('7')">
+<span class="font-headline-md text-headline-md text-on-surface">7</span>
+<span class="text-[10px] text-on-surface-variant tracking-widest font-bold">PQRS</span>
+</button>
+<button class="keypad-btn w-20 h-20 rounded-full flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-container-high transition-all" onclick="appendPin('8')">
+<span class="font-headline-md text-headline-md text-on-surface">8</span>
+<span class="text-[10px] text-on-surface-variant tracking-widest font-bold">TUV</span>
+</button>
+<button class="keypad-btn w-20 h-20 rounded-full flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-container-high transition-all" onclick="appendPin('9')">
+<span class="font-headline-md text-headline-md text-on-surface">9</span>
+<span class="text-[10px] text-on-surface-variant tracking-widest font-bold">WXYZ</span>
+</button>
+<div class="w-20 h-20"></div>
+<button class="keypad-btn w-20 h-20 rounded-full flex items-center justify-center bg-surface-container-low hover:bg-surface-container-high transition-all" onclick="appendPin('0')">
+<span class="font-headline-md text-headline-md text-on-surface">0</span>
+</button>
+<button class="keypad-btn w-20 h-20 rounded-full flex items-center justify-center hover:bg-surface-container-low transition-all text-on-surface-variant" onclick="removePin()">
+<span class="material-symbols-outlined text-2xl">backspace</span>
+</button>
+</div>
+</main>
+<!-- Support Link Footer -->
+<footer class="w-full py-8 px-container-padding flex flex-col items-center gap-4">
+<a class="text-primary font-body-md font-semibold hover:underline decoration-2 underline-offset-4" href="#">
+        비밀번호를 잊으셨나요? 고객 지원팀에 문의하세요
+    </a>
+<div class="w-32 h-1 bg-outline-variant/30 rounded-full mb-2"></div>
+</footer>
+<!-- Background Decoration -->
+<div class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-40">
+<div class="absolute top-[10%] right-[5%] w-64 h-64 bg-primary/10 blur-[80px] rounded-full"></div>
+<div class="absolute bottom-[20%] left-[10%] w-80 h-80 bg-secondary-container/20 blur-[100px] rounded-full"></div>
+</div>
+<script>
+    let currentPin = "";
+    const MAX_PIN_LENGTH = 6;
+    const dots = document.querySelectorAll('.pin-dot');
+    const container = document.getElementById('pin-container');
+
+    function appendPin(digit) {
+        if (currentPin.length < MAX_PIN_LENGTH) {
+            currentPin += digit;
+            updateDots();
+            
+            if (currentPin.length === MAX_PIN_LENGTH) {
+                handlePinSubmit();
+            }
+        }
+    }
+
+    function removePin() {
+        if (currentPin.length > 0) {
+            currentPin = currentPin.slice(0, -1);
+            updateDots();
+        }
+    }
+
+    function updateDots() {
+        dots.forEach((dot, index) => {
+            if (index < currentPin.length) {
+                dot.classList.add('active', 'bg-primary', 'border-primary');
+                dot.classList.remove('border-outline-variant', 'bg-transparent');
+            } else {
+                dot.classList.remove('active', 'bg-primary', 'border-primary');
+                dot.classList.add('border-outline-variant', 'bg-transparent');
+            }
+        });
+    }
+
+    function handlePinSubmit() {
+        // Simulated validation
+        setTimeout(() => {
+            if (currentPin === "123456") { // Example "correct" pin
+                // Success logic
+                container.classList.add('scale-110');
+                dots.forEach(dot => dot.classList.replace('bg-primary', 'bg-secondary'));
+            } else {
+                // Error logic
+                container.classList.add('error-shake');
+                dots.forEach(dot => dot.classList.replace('bg-primary', 'bg-error'));
+                
+                setTimeout(() => {
+                    container.classList.remove('error-shake');
+                    currentPin = "";
+                    updateDots();
+                    dots.forEach(dot => dot.classList.remove('bg-error'));
+                }, 600);
+            }
+        }, 300);
+    }
+
+    // FaceID Interaction
+    document.getElementById('faceid-trigger').addEventListener('click', () => {
+        const faceIcon = document.querySelector('#faceid-trigger .material-symbols-outlined');
+        faceIcon.style.animation = 'pulse 1s infinite';
+        
+        // Mock authentication
+        setTimeout(() => {
+            faceIcon.style.animation = '';
+            currentPin = "123456";
+            updateDots();
+            handlePinSubmit();
+        }, 1200);
+    });
+
+    // Add CSS for pulse
+    const style = document.createElement('style');
+    style.innerHTML = `
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+</body></html>

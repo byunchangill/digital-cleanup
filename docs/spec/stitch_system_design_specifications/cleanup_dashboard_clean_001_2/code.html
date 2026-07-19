@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sortmate - 정리 대시보드</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#ffd4a4",
+                    "surface-tint": "#4d44e3",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "primary-fixed": "#e2dfff",
+                    "error": "#ba1a1a",
+                    "bg-primary": "#FFFFFF",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-bright": "#f8f9ff",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#4edea3",
+                    "secondary": "#006c49",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed": "#002113",
+                    "primary-container": "#4f46e5",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary": "#684000",
+                    "on-primary-fixed": "#0f0069",
+                    "on-surface-variant": "#464555",
+                    "secondary-container": "#6cf8bb",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface-container": "#e5eeff",
+                    "on-background": "#0b1c30",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-primary-container": "#dad7ff",
+                    "on-secondary-container": "#00714d",
+                    "primary": "#3525cd",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "on-surface": "#0b1c30",
+                    "outline-variant": "#c7c4d8",
+                    "bg-secondary": "#F8FAFC",
+                    "error-container": "#ffdad6",
+                    "surface-variant": "#d3e4fe",
+                    "on-secondary-fixed-variant": "#005236",
+                    "text-main": "#0F172A",
+                    "vault-blur": "rgba(255, 255, 255, 0.4)",
+                    "surface-border": "#E2E8F0",
+                    "outline": "#777587",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-error": "#ffffff",
+                    "surface-container-low": "#eff4ff",
+                    "surface-dim": "#cbdbf5",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-secondary": "#ffffff",
+                    "surface": "#f8f9ff",
+                    "background": "#f8f9ff",
+                    "inverse-surface": "#213145",
+                    "surface-container-high": "#dce9ff",
+                    "text-muted": "#64748B",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#885500",
+                    "inverse-primary": "#c3c0ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-gap-sm": "8px",
+                    "container-padding": "20px",
+                    "stack-gap-md": "16px",
+                    "stack-gap-lg": "24px",
+                    "base-unit": "4px",
+                    "grid-gutter": "12px"
+            },
+            "fontFamily": {
+                    "label-caps": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "display-lg": ["Hanken Grotesk"],
+                    "caption": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "headline-sm": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-card {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+        }
+        .bento-card:active {
+            transform: scale(0.96);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-md h-16 flex justify-between items-center px-container-padding">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/10">
+<img alt="사용자 프로필 사진" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDS24z6d574utwvFEhxMjN7Fyi-6j9IYnd71QlZb9v8IblFkkstX20C-f0pBoE1i_2bN86AGN1Q5vwXctvuhENDsX5MC7_EGOrwUZeCGQA_kEBKNm77zE-iDxdNRMIsCgORUhugqJ5ka1b9L9ggVxwWHOZEaqQe5T2_XjrLZOhdnYay7-JRTg92zKcc3ubmtGyckGzUmggzO0os6TnURBlySc5hSWNXCgqvLVjak6jggWT_JN0ydmK27NHJTYe7I0ocPrrMYrD4Aw0"/>
+</div>
+<h1 class="font-display-lg text-headline-md font-bold text-primary">Sortmate</h1>
+</div>
+<button class="p-2 text-primary hover:opacity-80 transition-opacity active:scale-95 duration-100">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</header>
+<main class="pt-24 px-container-padding space-y-stack-gap-lg">
+<!-- Storage Usage Summary -->
+<section class="relative overflow-hidden rounded-[32px] p-8 bg-primary-container text-on-primary-container shadow-lg">
+<div class="absolute -right-12 -top-12 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+<div class="absolute -left-6 -bottom-6 w-32 h-32 bg-primary/20 rounded-full blur-2xl"></div>
+<div class="relative z-10 flex flex-col items-center text-center">
+<span class="font-label-caps text-label-caps opacity-80 mb-2 uppercase tracking-widest">저장 공간 분석 완료</span>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile mb-4">1.2GB 절약할 수 있어요</h2>
+<!-- Circular Progress Mockup -->
+<div class="relative w-32 h-32 flex items-center justify-center mb-6">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="opacity-20" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-width="8"></circle>
+<circle cx="64" cy="64" fill="transparent" r="58" stroke="white" stroke-dasharray="364.4" stroke-dashoffset="100" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-headline-md text-headline-md text-white">72%</span>
+</div>
+</div>
+<p class="font-body-md text-white/90">사용하지 않는 파일이 전체의 28%를 차지합니다.</p>
+</div>
+</section>
+<!-- Cleanup Types Grid (Bento Style) -->
+<section class="grid grid-cols-2 gap-grid-gutter">
+<!-- Large Card: Duplicates -->
+<div class="col-span-2 bento-card bg-white rounded-[24px] p-6 shadow-[0px_2px_4px_rgba(0,0,0,0.05),0px_10px_20px_rgba(0,0,0,0.02)] border border-surface-border flex flex-col justify-between overflow-hidden relative group">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 rounded-2xl bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[28px]" data-icon="grid_view">grid_view</span>
+</div>
+<span class="bg-primary text-white font-label-caps text-label-caps px-3 py-1 rounded-full">12건</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-text-main mb-1">중복 자료</h3>
+<p class="font-body-md text-text-muted">비슷한 사진이 묶여 있어요</p>
+</div>
+<!-- Visual Decoration -->
+<div class="mt-6 flex -space-x-4 overflow-hidden">
+<div class="w-16 h-16 rounded-xl border-4 border-white overflow-hidden shadow-sm rotate-[-6deg]">
+<img alt="건축물 사진" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoODgIrLPPJcWbkfUxrYkXvmaQZUs4qoFUy3vVhCMBx3FHFLc2H_J2oqiipK8XvdU5b2FgFalQjbupOuWI3LQTdKExh-5L6pfFNT2Iuq9YY71f5ghDKspHvnBmZcjTLj72oUPKfMqD9pchEDSpkhQKncq0x7jL8J_SQ3wutOFx0KDlLUStm9aoDCM7r7IeWXtJLuEDQTnUxihTzT5ODnMXU3unRaxVlydYWaN3BORgWaeWsnxZX_4itmehr8hPReZ58wOOzl01s68"/>
+</div>
+<div class="w-16 h-16 rounded-xl border-4 border-white overflow-hidden shadow-sm">
+<img alt="건축물 사진" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-5S0WUUNHWWXPOzAJqGda5T0uimeZkryxRxbc6XIchEXt2aP5ocehTejs5ybg7JAgyBnbp_1rEvRbTmYRyp0hV9U1-RAfjO15wn6Qo6POZOcM03e20NGSaD42kdQZ_WxuQpX2N8HK_yliiArlCt1VO9CX-OYH90NyN2pgLtEbVeY5HOfa79dG1wl-sPnn1IkbvmQRLmcRtUSXf2G8KjkJtIiBoT3PFKmZmfkh6NGfG-5E-iZs2rxxaa9ASUk2rUula1IgDSPTVtE"/>
+</div>
+<div class="w-16 h-16 rounded-xl border-4 border-white overflow-hidden shadow-sm rotate-[6deg]">
+<img alt="벽면 텍스처" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDumChFjaRWYAkti1XlZe45vzGwk3rud8OBA6EcSkcZiBqh2RrMFoHVoaDz-u_lGagZer9lF0UDyDKsL__usf794zR7jlMCIwzgeTygO9lK25fMxEb70mx9WmXw6_9VapqiXCQQTs0s_lXtyI1X7hph2x7w3i7TLeun2r_jTfOiP3Vb2aZoBQUDVWzZqFvjiTHF6eal8c2XsTEAao6Tpe2g1-joOsrwqNy7LkZY507ONnd5GxblgDt6BWbxBYHpuFy8pSTnPVqH1Uk"/>
+</div>
+</div>
+</div>
+<!-- Medium Card: Coupons -->
+<div class="col-span-1 bento-card bg-white rounded-[24px] p-5 shadow-[0px_2px_4px_rgba(0,0,0,0.05),0px_10px_20px_rgba(0,0,0,0.02)] border border-surface-border flex flex-col h-full">
+<div class="w-10 h-10 rounded-xl bg-tertiary-fixed/30 flex items-center justify-center text-tertiary mb-4">
+<span class="material-symbols-outlined" data-icon="confirmation_number">confirmation_number</span>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<h3 class="font-headline-sm text-[18px] text-text-main">만료 쿠폰</h3>
+<span class="text-tertiary font-bold">5건</span>
+</div>
+<p class="font-caption text-text-muted leading-tight">기한이 지난 쿠폰을 정리할까요?</p>
+<div class="mt-auto pt-4">
+<div class="w-full h-1 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-4/5"></div>
+</div>
+</div>
+</div>
+<!-- Medium Card: Screenshots -->
+<div class="col-span-1 bento-card bg-white rounded-[24px] p-5 shadow-[0px_2px_4px_rgba(0,0,0,0.05),0px_10px_20px_rgba(0,0,0,0.02)] border border-surface-border flex flex-col h-full">
+<div class="w-10 h-10 rounded-xl bg-secondary-container/30 flex items-center justify-center text-secondary mb-4">
+<span class="material-symbols-outlined" data-icon="screenshot">screenshot</span>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<h3 class="font-headline-sm text-[18px] text-text-main">불필요 스샷</h3>
+<span class="text-secondary font-bold">24건</span>
+</div>
+<p class="font-caption text-text-muted leading-tight">흐릿하거나 일회성인 자료예요</p>
+<div class="mt-auto pt-4">
+<div class="flex justify-between items-center text-[10px] text-text-muted font-label-caps">
+<span>스캔 중...</span>
+<span class="animate-pulse">●</span>
+</div>
+</div>
+</div>
+<!-- Bottom Insight Card -->
+<div class="col-span-2 bento-card bg-surface-container-low rounded-[24px] p-6 border border-white/50 flex items-center gap-4">
+<div class="w-12 h-12 flex-shrink-0 rounded-full bg-white flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div>
+<h4 class="font-body-lg font-bold text-text-main">최적화 제안</h4>
+<p class="font-body-md text-text-muted">사용하지 않는 태그 3개를 삭제하여 로딩 속도를 개선할 수 있습니다.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Action Button -->
+<div class="fixed bottom-32 left-1/2 -translate-x-1/2 z-40 w-full px-container-padding max-w-md">
+<button class="w-full h-16 bg-primary text-white rounded-full font-headline-sm flex items-center justify-center gap-3 shadow-[0px_8px_24px_rgba(53,37,205,0.3)] active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="auto_delete">auto_delete</span>
+        한꺼번에 정리하기
+    </button>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface shadow-[0_-2px_10px_rgba(0,0,0,0.05)] rounded-t-xl px-4 pb-8 pt-2 flex justify-around items-center">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-caps text-label-caps">홈</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-label-caps text-label-caps">라이브러리</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[32px] text-primary" data-icon="add_circle">add_circle</span>
+<span class="font-label-caps text-label-caps">추가</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary bg-primary-container/10 rounded-xl p-2 scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="auto_delete" style="font-variation-settings: 'FILL' 1;">auto_delete</span>
+<span class="font-label-caps text-label-caps font-bold">정리</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-caps text-label-caps">마이</span>
+</a>
+</nav>
+<script>
+    // Micro-interactions
+    document.querySelectorAll('.bento-card').forEach(card => {
+        card.addEventListener('touchstart', () => {
+            card.style.transform = 'scale(0.98)';
+        });
+        card.addEventListener('touchend', () => {
+            card.style.transform = 'scale(1)';
+        });
+    });
+
+    // Simple scroll effect for Top Bar
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('header');
+        if (window.scrollY > 20) {
+            header.classList.add('shadow-sm');
+        } else {
+            header.classList.remove('shadow-sm');
+        }
+    });
+</script>
+</body></html>

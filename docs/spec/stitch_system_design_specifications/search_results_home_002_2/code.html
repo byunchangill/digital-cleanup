@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sortmate - 검색 결과</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .vault-blur-card {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #E2E8F0;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#c3c0ff",
+                        "primary": "#3525cd",
+                        "on-primary-fixed": "#0f0069",
+                        "on-primary": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#4d44e3",
+                        "surface-border": "#E2E8F0",
+                        "surface-bright": "#f8f9ff",
+                        "on-background": "#0b1c30",
+                        "primary-fixed": "#e2dfff",
+                        "bg-secondary": "#F8FAFC",
+                        "inverse-surface": "#213145",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#6ffbbe",
+                        "text-muted": "#64748B",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#464555",
+                        "tertiary-container": "#885500",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-container": "#e5eeff",
+                        "bg-primary": "#FFFFFF",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "inverse-primary": "#c3c0ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#dad7ff",
+                        "on-tertiary-container": "#ffd4a4",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#eff4ff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "background": "#f8f9ff",
+                        "surface-variant": "#d3e4fe",
+                        "secondary-container": "#6cf8bb",
+                        "secondary": "#006c49",
+                        "primary-container": "#4f46e5",
+                        "on-surface": "#0b1c30",
+                        "outline-variant": "#c7c4d8",
+                        "outline": "#777587",
+                        "on-secondary-container": "#00714d",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "surface-container-high": "#dce9ff",
+                        "tertiary": "#684000",
+                        "surface-container-highest": "#d3e4fe",
+                        "secondary-fixed-dim": "#4edea3",
+                        "text-main": "#0F172A",
+                        "vault-blur": "rgba(255, 255, 255, 0.4)",
+                        "surface-dim": "#cbdbf5",
+                        "on-secondary-fixed": "#002113",
+                        "on-secondary-fixed-variant": "#005236",
+                        "tertiary-fixed": "#ffddb8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap-md": "16px",
+                        "base-unit": "4px",
+                        "stack-gap-lg": "24px",
+                        "grid-gutter": "12px",
+                        "stack-gap-sm": "8px",
+                        "container-padding": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "caption": ["Hanken Grotesk"],
+                        "display-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md min-h-screen flex flex-col">
+<!-- Top Navigation Anchor (Shared Component: TopAppBar) -->
+<header class="flex items-center justify-between px-container-padding py-stack-gap-sm w-full z-50 bg-background dark:bg-background docked full-width top-0 sticky">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden active:scale-95 transition-transform duration-200">
+<img alt="사용자 프로필 이미지" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrr33zBJKr9cHdIkvi6SeCjCumRAM284KovBdTROftgGGt0pGyybCWTxF3rH2_xkNg36GoBgwCBCe2P_GWGn0WCyjMBQBjL1owqcBL48MKN8b1BJeJuKE7wLTh9MSnYVROhI1eiQ0Z2iFloEKaKLPXbv1l5ROuW7qmx0oQqu67vY1Q-c4x82De2LW7gh2k-tNRepM7IZJq4zHPYPlXiuSQl_ShqK7Z2xK2XqYdJWoAQlZR46T8LoaJfw6HYGYDDNAgl-i4zzqucgo"/>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">Sortmate</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors active:scale-95">
+<span class="material-symbols-outlined text-primary">search</span>
+</button>
+</div>
+</header>
+<main class="flex-1 px-container-padding pb-32">
+<!-- Search Query Display -->
+<section class="py-stack-gap-lg">
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-3 text-text-muted">
+<span class="material-symbols-outlined text-[20px]">psychology</span>
+<p class="font-body-md text-body-md">자연어 검색</p>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-text-main leading-tight">
+                    "지난달 와이파이 비밀번호"
+                </h2>
+<!-- Interpretation Chips -->
+<div class="flex flex-wrap gap-2 mt-2">
+<div class="flex items-center gap-1.5 px-3 py-1.5 bg-primary-container/10 text-primary border border-primary/10 rounded-full font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-[14px]">calendar_month</span>
+                        기간: 6월
+                    </div>
+<div class="flex items-center gap-1.5 px-3 py-1.5 bg-secondary-container/20 text-on-secondary-container border border-secondary/10 rounded-full font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-[14px]">screenshot</span>
+                        유형: 스크린샷
+                    </div>
+</div>
+</div>
+</section>
+<!-- Results Grid -->
+<section class="grid grid-cols-2 gap-grid-gutter mt-2">
+<!-- Result 1 -->
+<div class="bg-bg-primary rounded-xl overflow-hidden shadow-[0_2px_4px_rgba(0,0,0,0.05),0_10px_20px_rgba(0,0,0,0.02)] flex flex-col active:scale-[0.98] transition-transform">
+<div class="relative aspect-[3/4] bg-surface-container overflow-hidden">
+<img alt="와이파이 설정 스크린샷" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDTMHxdhxE4chtNnrE6IS2gAyFc9tBVNj3hXoFF2IjaSNXA01dUBjNGj8AEG-uxHQmTgC9ITeHelPi_I3JJqQn29Q_Vl2fD21wK3op0iAzfpwnEQn_tJXrNo_RwvKui9r-AXn1rIjGvxy8LQpRKPRvavhrWywrlumFX_xZQnjiswu1B-NPkykZ9qjx-pw6Q3k55sWQqpQdjkZs-QvebEJAUsBLB-I72DytQRAqrCf5dVYD4TjCfxfbdo8Z1zvQfUo3v8U_0rVHfwI"/>
+<div class="absolute top-2 right-2">
+<span class="material-symbols-outlined text-white drop-shadow-md" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<div class="p-3 flex flex-col gap-1">
+<h3 class="font-headline-sm text-headline-sm text-text-main truncate">홈 네트워크</h3>
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-text-muted">2024년 6월 14일</span>
+<div class="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-[10px] font-bold">98% 일치</div>
+</div>
+</div>
+</div>
+<!-- Result 2 -->
+<div class="bg-bg-primary rounded-xl overflow-hidden shadow-[0_2px_4px_rgba(0,0,0,0.05),0_10px_20px_rgba(0,0,0,0.02)] flex flex-col active:scale-[0.98] transition-transform">
+<div class="relative aspect-[3/4] bg-surface-container overflow-hidden">
+<img alt="라우터 뒷면 라벨 사진" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRVV3LvYJfaT_9b3jhzBHmo8i4rnfMo2eSAhn2kLJg4vhdFFTrNLU8JovxcNdNZBBYLGLPdMd_6t0hZQJDlbDTTdpcPBrKWfxLtMVOK6Pxe-WGUg3GrGEq2R_aDejllONKKqjHvnTfdvVJ3YQKJq3Jvj8NFX1lUutPx-DVvgtu3Voz_ALn6p4L9FAz0Vzz3oImOvw1ZEpqg-F_at-xZ4IYqHEgE78tsSndr9nIkFFwhkTSyYnDyEEdOS-N-5LBVTvhDmcjkFIcFIc"/>
+</div>
+<div class="p-3 flex flex-col gap-1">
+<h3 class="font-headline-sm text-headline-sm text-text-main truncate">라우터 뒷면 패널</h3>
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-text-muted">2024년 6월 21일</span>
+<div class="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-[10px] font-bold">92% 일치</div>
+</div>
+</div>
+</div>
+<!-- Result 3 (Vaulted/Blurred) -->
+<div class="bg-bg-primary rounded-xl overflow-hidden shadow-[0_2px_4px_rgba(0,0,0,0.05),0_10px_20px_rgba(0,0,0,0.02)] flex flex-col active:scale-[0.98] transition-transform">
+<div class="relative aspect-[3/4] bg-surface-container overflow-hidden">
+<div class="absolute inset-0 z-10 vault-blur flex items-center justify-center backdrop-blur-[20px]">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">lock</span>
+</div>
+<img alt="보호된 비밀 메모" class="w-full h-full object-cover grayscale opacity-30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeI4lAs0Bk_klBHXWcLL_1IGqDbWv_reV1tgn7mks0gFcc_aQBIW5VwMCy2f6Hfz2HNCCcWB3GcXAO50LqsYdEtOrSasdGuHqn-jAfUdFVvhP2eaCyw3FM2wAWp1RGm2jIAlqiv9I4DCCsSyLVKEEF0YkCynYscU_h6tiSma-_rA-cI21413Xdt4h0oXZ6iH65A_sb8NCe_0SnzYNavBQLHlcP1ODQbE1_jza2wTMgseh8n42b6KVX7nVrkxn0oywaT7QEAIcYLIk"/>
+</div>
+<div class="p-3 flex flex-col gap-1">
+<h3 class="font-headline-sm text-headline-sm text-text-main truncate">비밀 메모</h3>
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-text-muted">2024년 6월 02일</span>
+<span class="material-symbols-outlined text-primary text-[16px]">verified_user</span>
+</div>
+</div>
+</div>
+<!-- Result 4 -->
+<div class="bg-bg-primary rounded-xl overflow-hidden shadow-[0_2px_4px_rgba(0,0,0,0.05),0_10px_20px_rgba(0,0,0,0.02)] flex flex-col active:scale-[0.98] transition-transform">
+<div class="relative aspect-[3/4] bg-surface-container overflow-hidden">
+<img alt="스타벅스 와이파이 연결 페이지" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJta5chbNRtEc-PWErT86hnZgq0VKbRk8AJRAVfqdbOmdfLbXB1MevpHN1LJ7UriaZ3ZsdBEqtzAv-2qzJ6zlFwQ6k_b4rpT4e3ZyvpWNkliVTtWYoTvTnP1dyfBwDW_yfUsnwReneTBFaULXYfDTMjQ0T0fo7iytmLwjxm2KNMw3kEXFX7EihW14kpxjHZyIyfd9ZGANXI8TNQXEG1OAS4We69vzkBK4WRjNj1EBkgUdEhFx2o2zmbko-3xW2aeCk49w-MMZ5zbE"/>
+</div>
+<div class="p-3 flex flex-col gap-1">
+<h3 class="font-headline-sm text-headline-sm text-text-main truncate">스타벅스 와이파이</h3>
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-text-muted">2024년 6월 28일</span>
+<div class="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-[10px] font-bold">85% 일치</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Refined Search Suggestions -->
+<section class="mt-stack-gap-lg pt-stack-gap-md border-t border-surface-border">
+<h4 class="font-label-caps text-label-caps text-text-muted mb-4 uppercase tracking-widest">상세 필터</h4>
+<div class="flex flex-col gap-3">
+<button class="flex items-center gap-3 p-4 bg-surface rounded-xl hover:bg-surface-container-low transition-colors border border-surface-border group">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">network_check</span>
+</div>
+<div class="flex-1 text-left">
+<p class="font-headline-sm text-headline-sm text-text-main">연결 성공한 항목만 보기</p>
+<p class="font-caption text-caption text-text-muted">활성 네트워크 상태가 포함된 스크린샷 필터링</p>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button>
+<button class="flex items-center gap-3 p-4 bg-surface rounded-xl hover:bg-surface-container-low transition-colors border border-surface-border group">
+<div class="w-10 h-10 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<div class="flex-1 text-left">
+<p class="font-headline-sm text-headline-sm text-text-main">위치로 검색: "사무실"</p>
+<p class="font-caption text-caption text-text-muted">직장에서 촬영된 스크린샷으로 결과 제한</p>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button>
+</div>
+<div class="mt-8 text-center pb-12">
+<p class="font-body-md text-body-md text-text-muted">원하는 결과가 없나요?</p>
+<button class="mt-3 text-primary font-headline-sm text-headline-sm flex items-center gap-2 mx-auto active:scale-95 transition-transform">
+                    다른 검색어 입력하기 <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</section>
+</main>
+<!-- FAB (Contextual) -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary text-on-primary rounded-full shadow-[0_8px_16px_rgba(53,37,205,0.3)] flex items-center justify-center z-50 active:scale-90 transition-transform duration-150">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+<!-- Bottom Navigation Shell (Shared Component: BottomNavBar) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-8 pt-3 bg-surface dark:bg-surface-container-lowest shadow-[0_-2px_10px_rgba(0,0,0,0.02)] rounded-t-xl">
+<div class="flex flex-col items-center justify-center text-text-muted dark:text-outline-variant px-4 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container transition-all active:scale-90 duration-150 cursor-pointer">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-label-caps mt-1">홈</span>
+</div>
+<div class="flex flex-col items-center justify-center text-text-muted dark:text-outline-variant px-4 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container transition-all active:scale-90 duration-150 cursor-pointer">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-caps text-label-caps mt-1">라이브러리</span>
+</div>
+<div class="flex flex-col items-center justify-center text-text-muted dark:text-outline-variant px-4 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container transition-all active:scale-90 duration-150 cursor-pointer">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-label-caps text-label-caps mt-1">추가</span>
+</div>
+<div class="flex flex-col items-center justify-center text-text-muted dark:text-outline-variant px-4 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container transition-all active:scale-90 duration-150 cursor-pointer">
+<span class="material-symbols-outlined">auto_fix_high</span>
+<span class="font-label-caps text-label-caps mt-1">정리</span>
+</div>
+<div class="flex flex-col items-center justify-center text-text-muted dark:text-outline-variant px-4 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container transition-all active:scale-90 duration-150 cursor-pointer">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps mt-1">마이페이지</span>
+</div>
+</nav>
+<script>
+        // Micro-interaction for search results
+        document.querySelectorAll('.active\\:scale-\\[0\\.98\\]').forEach(card => {
+            card.addEventListener('click', function() {
+                this.classList.add('ring-2', 'ring-primary/20');
+                setTimeout(() => {
+                    this.classList.remove('ring-2', 'ring-primary/20');
+                }, 400);
+            });
+        });
+
+        // Simulating the interpretation animation on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const chips = document.querySelectorAll('.interpretation-chip');
+            chips.forEach((chip, index) => {
+                chip.style.opacity = '0';
+                chip.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    chip.style.transition = 'all 0.5s ease-out';
+                    chip.style.opacity = '1';
+                    chip.style.transform = 'translateY(0)';
+                }, 300 + (index * 100));
+            });
+        });
+    </script>
+</body></html>

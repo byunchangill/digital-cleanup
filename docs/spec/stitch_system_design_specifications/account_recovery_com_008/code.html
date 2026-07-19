@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>계정 복구 | Sortmate</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Hanken Grotesk & JetBrains Mono -->
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=JetBrains+Mono:wght@100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "text-main": "#0F172A",
+                      "tertiary-fixed-dim": "#ffb95f",
+                      "outline": "#777587",
+                      "secondary": "#006c49",
+                      "surface": "#f8f9ff",
+                      "surface-dim": "#cbdbf5",
+                      "primary-fixed-dim": "#c3c0ff",
+                      "surface-variant": "#d3e4fe",
+                      "inverse-surface": "#213145",
+                      "outline-variant": "#c7c4d8",
+                      "surface-container": "#e5eeff",
+                      "inverse-on-surface": "#eaf1ff",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed": "#ffddb8",
+                      "on-primary-fixed-variant": "#3323cc",
+                      "on-tertiary-fixed": "#2a1700",
+                      "on-secondary-fixed-variant": "#005236",
+                      "surface-container-high": "#dce9ff",
+                      "surface-container-highest": "#d3e4fe",
+                      "tertiary": "#684000",
+                      "secondary-fixed-dim": "#4edea3",
+                      "inverse-primary": "#c3c0ff",
+                      "secondary-fixed": "#6ffbbe",
+                      "on-secondary-fixed": "#002113",
+                      "primary": "#3525cd",
+                      "on-secondary-container": "#00714d",
+                      "vault-blur": "rgba(255, 255, 255, 0.4)",
+                      "on-secondary": "#ffffff",
+                      "on-primary-container": "#dad7ff",
+                      "on-tertiary": "#ffffff",
+                      "on-surface": "#0b1c30",
+                      "background": "#f8f9ff",
+                      "text-muted": "#64748B",
+                      "primary-fixed": "#e2dfff",
+                      "primary-container": "#4f46e5",
+                      "secondary-container": "#6cf8bb",
+                      "surface-border": "#E2E8F0",
+                      "surface-tint": "#4d44e3",
+                      "on-error": "#ffffff",
+                      "surface-container-low": "#eff4ff",
+                      "bg-primary": "#FFFFFF",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary-fixed": "#0f0069",
+                      "on-background": "#0b1c30",
+                      "error-container": "#ffdad6",
+                      "bg-secondary": "#F8FAFC",
+                      "on-tertiary-fixed-variant": "#653e00",
+                      "on-tertiary-container": "#ffd4a4",
+                      "on-primary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#885500",
+                      "surface-bright": "#f8f9ff",
+                      "on-surface-variant": "#464555"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-gap-md": "16px",
+                      "stack-gap-lg": "24px",
+                      "stack-gap-sm": "8px",
+                      "grid-gutter": "12px",
+                      "base-unit": "4px",
+                      "container-padding": "20px"
+              },
+              "fontFamily": {
+                      "body-md": ["Hanken Grotesk"],
+                      "label-caps": ["JetBrains Mono"],
+                      "headline-md": ["Hanken Grotesk"],
+                      "display-lg": ["Hanken Grotesk"],
+                      "caption": ["Hanken Grotesk"],
+                      "body-lg": ["Hanken Grotesk"],
+                      "headline-lg-mobile": ["Hanken Grotesk"],
+                      "headline-sm": ["Hanken Grotesk"]
+              },
+              "fontSize": {
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .nav-suppressed .shell-nav { display: none; }
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- Transactional Header -->
+<nav class="fixed top-0 left-0 w-full h-16 flex items-center px-container-padding bg-surface/80 backdrop-blur-md z-50 transition-all duration-300">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors" onclick="history.back()">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</button>
+<span class="ml-4 font-headline-sm text-headline-sm text-on-surface">계정 복구</span>
+</nav>
+<!-- Main Canvas -->
+<main class="min-h-screen pt-24 pb-12 px-container-padding flex flex-col items-center justify-center">
+<div class="w-full max-w-md animate-in fade-in slide-in-from-bottom-4 duration-700">
+<!-- Brand Anchor/Visual Identity -->
+<div class="flex flex-col items-center mb-10">
+<div class="w-20 h-20 bg-primary-container rounded-3xl flex items-center justify-center shadow-lg shadow-primary/10 mb-6 relative overflow-hidden group">
+<div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<span class="material-symbols-outlined text-on-primary-container text-4xl" style="font-variation-settings: 'FILL' 1;">lock_reset</span>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-text-main text-center">로그인에 문제가 있나요?</h1>
+<p class="mt-2 text-text-muted text-body-lg text-center max-w-xs">
+                    Sortmate 계정에 안전하게 다시 접속하려면 복구 방법을 선택하세요.
+                </p>
+</div>
+<!-- Recovery Options -->
+<div class="space-y-4">
+<!-- Option 1: Email Recovery -->
+<button class="w-full group relative flex items-center p-5 bg-bg-primary rounded-xl border border-surface-border hover:border-primary/30 transition-all duration-200 text-left shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0">
+<div class="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">mail</span>
+</div>
+<div class="ml-4 flex-1">
+<p class="font-headline-sm text-headline-sm text-text-main">이메일로 인증</p>
+<p class="text-caption text-text-muted">수신함으로 매직 링크를 보내드립니다</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
+</button>
+<!-- Option 2: Recovery Code -->
+<button class="w-full group relative flex items-center p-5 bg-bg-primary rounded-xl border border-surface-border hover:border-primary/30 transition-all duration-200 text-left shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0">
+<div class="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">key</span>
+</div>
+<div class="ml-4 flex-1">
+<p class="font-headline-sm text-headline-sm text-text-main">복구 코드로 인증</p>
+<p class="text-caption text-text-muted">24자리 백업 키를 입력하세요</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
+</button>
+<!-- Option 3: Support -->
+<div class="pt-6 border-t border-surface-border mt-8">
+<p class="text-center text-body-md text-text-muted mb-4">
+                        두 방법 모두 사용할 수 없나요?
+                    </p>
+<button class="w-full py-4 text-primary font-headline-sm text-headline-sm bg-primary-fixed hover:bg-primary-fixed-dim rounded-xl transition-all duration-200 active:scale-95">
+                        고객 센터 문의
+                    </button>
+</div>
+</div>
+<!-- Contextual Branding Image -->
+<div class="mt-16 relative w-full h-40 rounded-2xl overflow-hidden shadow-inner">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-surface-dim"></div>
+<img class="w-full h-full object-cover mix-blend-multiply opacity-40" data-alt="A sophisticated digital landscape showing an abstract, secure vault with glowing indigo light emanating from within. The aesthetic is ultra-modern and corporate minimalist, utilizing soft shadows and a clean palette of whites, slates, and vibrant indigo. This high-end visualization communicates trust, professional data organization, and the intelligent, proactive security features of the Sortmate platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxrK4Wjt6i5xudCtfZ-9AaAsU2-7uUivTJLDT0-BXFRImKKSNscehiJ0YXMRHk_Z9OpkcdwHgyxCHyv-vedyrdqHZNKn8mwKP2SpPTWsnpw4-x_wUCcdWytIsnuZbGAjpta9QqN9aoHgD73SaJRD5izV9xRGxyE-QYc_CSfklPsi2ZxAUaWpg7J2BTNlLq6fGCjaEvjQnbn9g7IDp7n44v-c-HQ5ZFmZmAiWZxIirAEpWimnip4Qli-HonQ3Dv2L0uNrydXQFRums"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="text-center">
+<p class="font-label-caps text-label-caps text-primary tracking-widest uppercase">검증된 보안</p>
+<p class="text-caption text-text-muted mt-1">종단간 암호화된 복구 프로세스</p>
+</div>
+</div>
+</div>
+<!-- Footer Compliance -->
+<p class="mt-12 text-center text-caption text-outline-variant">
+                COM-008 • Sortmate Secure Auth v2.4
+            </p>
+</div>
+</main>
+<!-- Notification Toast -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 translate-y-24 bg-inverse-surface text-inverse-on-surface px-6 py-3 rounded-xl shadow-2xl flex items-center space-x-3 transition-transform duration-500 ease-out z-[100]" id="toast">
+<span class="material-symbols-outlined text-primary-fixed-dim">info</span>
+<span class="text-body-md font-medium" id="toast-message">메시지 내용</span>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (btn.innerText.includes('이메일')) {
+                    showToast('이메일로 복구 링크를 보냈습니다.');
+                } else if (btn.innerText.includes('고객 센터')) {
+                    showToast('고객 지원 포털로 이동 중...');
+                }
+            });
+        });
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.innerText = message;
+            toast.classList.remove('translate-y-24');
+            toast.classList.add('translate-y-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-24');
+                toast.classList.remove('translate-y-0');
+            }, 3000);
+        }
+
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-sm', 'bg-surface/95');
+                nav.classList.remove('bg-surface/80');
+            } else {
+                nav.classList.remove('shadow-sm', 'bg-surface/95');
+                nav.classList.add('bg-surface/80');
+            }
+        });
+    </script>
+</body></html>

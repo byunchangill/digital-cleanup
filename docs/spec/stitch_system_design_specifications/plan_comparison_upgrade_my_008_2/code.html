@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Sortmate | 프리미엄으로 업그레이드</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#c3c0ff",
+                    "inverse-primary": "#c3c0ff",
+                    "outline": "#777587",
+                    "surface-dim": "#cbdbf5",
+                    "primary": "#3525cd",
+                    "on-tertiary-container": "#ffd4a4",
+                    "surface-variant": "#d3e4fe",
+                    "surface-container-high": "#dce9ff",
+                    "on-primary-container": "#dad7ff",
+                    "on-secondary-fixed": "#002113",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-surface": "#0b1c30",
+                    "surface-tint": "#4d44e3",
+                    "on-secondary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#4f46e5",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-container": "#885500",
+                    "surface-container-low": "#eff4ff",
+                    "primary-fixed": "#e2dfff",
+                    "secondary-fixed-dim": "#4edea3",
+                    "on-tertiary-fixed": "#2a1700",
+                    "background": "#f8f9ff",
+                    "text-main": "#0F172A",
+                    "surface": "#f8f9ff",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "vault-blur": "rgba(255, 255, 255, 0.4)",
+                    "inverse-on-surface": "#eaf1ff",
+                    "bg-secondary": "#F8FAFC",
+                    "bg-primary": "#FFFFFF",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#684000",
+                    "surface-container": "#e5eeff",
+                    "surface-bright": "#f8f9ff",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#00714d",
+                    "secondary": "#006c49",
+                    "text-muted": "#64748B",
+                    "surface-border": "#E2E8F0",
+                    "outline-variant": "#c7c4d8",
+                    "on-surface-variant": "#464555",
+                    "inverse-surface": "#213145",
+                    "secondary-container": "#6cf8bb",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-background": "#0b1c30",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-tertiary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed": "#0f0069"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-gap-md": "16px",
+                    "stack-gap-lg": "24px",
+                    "stack-gap-sm": "8px",
+                    "grid-gutter": "12px",
+                    "container-padding": "20px",
+                    "base-unit": "4px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "label-caps": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "display-lg": ["Hanken Grotesk"],
+                    "caption": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Hanken Grotesk', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .premium-glow { box-shadow: 0px 2px 4px rgba(53, 37, 205, 0.1), 0px 10px 24px rgba(53, 37, 205, 0.08); }
+        .card-blur { backdrop-filter: blur(8px); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<nav class="flex justify-between items-center px-container-padding h-16 w-full top-0 sticky bg-surface/80 backdrop-blur-md z-50">
+<button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-low rounded-full transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-on-surface-variant">close</span>
+</button>
+<span class="font-headline-sm text-headline-sm text-on-surface">플랜 선택</span>
+<div class="w-10"></div>
+</nav>
+<main class="px-container-padding pt-6 flex flex-col gap-stack-gap-lg max-w-2xl mx-auto">
+<!-- Header Section -->
+<header class="text-center flex flex-col gap-stack-gap-sm">
+<h1 class="font-display-lg text-display-lg text-primary">더 많은 혜택을 누리세요</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">지능형 큐레이션과 선제적인 보안의 모든 기능을 경험해 보세요.</p>
+</header>
+<!-- Pricing Cards Section -->
+<div class="flex flex-col gap-stack-gap-md lg:grid lg:grid-cols-2 lg:items-stretch">
+<!-- Free Plan Card -->
+<section class="bg-surface-container-lowest border border-surface-border rounded-xl p-6 flex flex-col gap-6 transition-all duration-300">
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">현재 플랜</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">무료</h2>
+</div>
+<ul class="flex flex-col gap-4 flex-grow">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-variant">기본 AI 분류</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-variant">5GB 클라우드 저장 공간</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-variant">표준 암호화</span>
+</li>
+</ul>
+<div class="pt-4 mt-auto">
+<p class="font-headline-sm text-headline-sm text-on-surface-variant opacity-50">월 0원</p>
+</div>
+</section>
+<!-- Premium Plan Card -->
+<section class="relative bg-primary text-on-primary rounded-xl p-6 flex flex-col gap-6 premium-glow transform hover:scale-[1.02] transition-all duration-300 border-2 border-primary">
+<!-- Badge -->
+<div class="absolute -top-3 right-6 bg-tertiary-fixed text-on-tertiary-fixed px-3 py-1 rounded-full font-label-caps text-[10px] font-bold shadow-sm">
+                    가장 인기 있음
+                </div>
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-primary-fixed-dim uppercase tracking-wider">모든 권한</span>
+<h2 class="font-headline-md text-headline-md text-white">프리미엄</h2>
+</div>
+<ul class="flex flex-col gap-4 flex-grow">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-container text-[20px]" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="font-body-md text-body-md text-primary-fixed">무제한 AI 분석</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-container text-[20px]" style="font-variation-settings: 'FILL' 1;">cloud_done</span>
+<span class="font-body-md text-body-md text-primary-fixed">500GB 저장 공간</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-container text-[20px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-body-md text-body-md text-primary-fixed">고급 보안 프로토콜</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-container text-[20px]" style="font-variation-settings: 'FILL' 1;">priority_high</span>
+<span class="font-body-md text-body-md text-primary-fixed">24/7 우선 지원</span>
+</li>
+</ul>
+<div class="pt-4 flex items-baseline gap-1">
+<span class="font-display-lg text-display-lg text-white">월 ₩9,900</span>
+</div>
+</section>
+</div>
+<!-- Call to Action -->
+<div class="flex flex-col gap-stack-gap-md mt-4">
+<button class="bg-primary text-white w-full py-4 rounded-xl font-headline-sm text-headline-sm shadow-[0_4px_12px_rgba(53,37,205,0.3)] active:scale-[0.98] transition-transform flex items-center justify-center gap-2">
+                지금 업그레이드
+                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="text-primary font-body-md text-body-md text-center py-2 hover:underline transition-all">
+                구매 복원
+            </button>
+</div>
+<!-- Visual Element -->
+<div class="mt-8 rounded-2xl overflow-hidden relative h-48 group">
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent"></div>
+<div class="absolute bottom-4 left-6 right-6">
+<p class="font-caption text-caption text-on-surface-variant italic">"자동 분류 기능 덕분에 매주 수동으로 정리하던 시간을 몇 시간이나 아낄 수 있게 되었어요." — Sarah K., 파워 유저</p>
+</div>
+</div>
+<!-- Trust Badges -->
+<footer class="flex justify-center items-center gap-6 py-8 opacity-40 grayscale">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+<span class="font-label-caps text-[10px]">보안 SSL</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">payment</span>
+<span class="font-label-caps text-[10px]">간편 결제</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="font-label-caps text-[10px]">ISO 인증</span>
+</div>
+</footer>
+</main>
+<script>
+        // Micro-interaction for plan selection
+        const premiumCard = document.querySelector('.premium-glow');
+        
+        premiumCard.addEventListener('touchstart', () => {
+            premiumCard.classList.add('scale-[0.99]');
+        });
+
+        premiumCard.addEventListener('touchend', () => {
+            premiumCard.classList.remove('scale-[0.99]');
+        });
+
+        // Simple toast notification for 'Restore Purchase'
+        const restoreBtn = document.querySelector('button.text-primary');
+        restoreBtn.addEventListener('click', () => {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-24 left-1/2 -translate-x-1/2 bg-on-background text-white px-6 py-3 rounded-xl font-body-md text-body-md shadow-lg z-[100] animate-bounce';
+            toast.innerText = '이전 구매 내역을 확인하는 중...';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        });
+    </script>
+</body></html>

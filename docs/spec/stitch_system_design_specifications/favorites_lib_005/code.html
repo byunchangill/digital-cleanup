@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sortmate - 즐겨찾기</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#005236",
+                    "inverse-primary": "#c3c0ff",
+                    "primary-container": "#4f46e5",
+                    "on-primary-container": "#dad7ff",
+                    "tertiary-fixed": "#ffddb8",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-dim": "#cbdbf5",
+                    "surface-container-lowest": "#ffffff",
+                    "text-muted": "#64748B",
+                    "inverse-surface": "#213145",
+                    "surface-bright": "#f8f9ff",
+                    "on-error": "#ffffff",
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#eff4ff",
+                    "on-secondary": "#ffffff",
+                    "tertiary": "#684000",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-error-container": "#93000a",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#0b1c30",
+                    "secondary-fixed-dim": "#4edea3",
+                    "surface-tint": "#4d44e3",
+                    "on-tertiary-container": "#ffd4a4",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "error-container": "#ffdad6",
+                    "secondary": "#006c49",
+                    "outline": "#777587",
+                    "outline-variant": "#c7c4d8",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface-container": "#e5eeff",
+                    "surface": "#f8f9ff",
+                    "surface-border": "#E2E8F0",
+                    "on-background": "#0b1c30",
+                    "surface-variant": "#d3e4fe",
+                    "secondary-container": "#6cf8bb",
+                    "background": "#f8f9ff",
+                    "primary-fixed": "#e2dfff",
+                    "primary": "#3525cd",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "vault-blur": "rgba(255, 255, 255, 0.4)",
+                    "on-secondary-fixed": "#002113",
+                    "on-surface-variant": "#464555",
+                    "surface-container-high": "#dce9ff",
+                    "on-primary-fixed": "#0f0069",
+                    "bg-primary": "#FFFFFF",
+                    "surface-container-highest": "#d3e4fe",
+                    "bg-secondary": "#F8FAFC",
+                    "text-main": "#0F172A",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "on-secondary-container": "#00714d",
+                    "tertiary-container": "#885500"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-gap-lg": "24px",
+                    "stack-gap-sm": "8px",
+                    "grid-gutter": "12px",
+                    "base-unit": "4px",
+                    "stack-gap-md": "16px",
+                    "container-padding": "20px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Hanken Grotesk"],
+                    "headline-sm": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "display-lg": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "caption": ["Hanken Grotesk"],
+                    "label-caps": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            font-family: 'Hanken Grotesk', sans-serif;
+            background-color: #f8f9ff; /* surface */
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="min-h-screen text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-40 bg-surface/80 backdrop-blur-md h-16 flex justify-between items-center px-container-padding">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-primary-container/20 flex items-center justify-center border border-primary/10">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs-3ZUB0_ETeT9cjGeOcaQxkTA0_60h2hYvoGJNosNnBm9Db5XUTy-4P-udsNNZsyli48CYCVBypwrYDter0ovZLqGssYagWcC_kbGYSBzTY7jlP3POWqIvIiD2DE8FEk8DhVyQNdP4RS9o1zw07f1zYjTnvAhJWc-tIkRV6rWjeVXPAeFAkiIef_XuNy2Vb0_LE6YLvkoUkV9PFs8iS9728hMY_5vUioe4w0kTc1EdjbQAq3M96FSfhiQCKhbxkg8TqVqWM7HXWQ"/>
+</div>
+<span class="font-display-lg text-display-lg font-bold text-primary">Sortmate</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center text-primary hover:opacity-80 transition-opacity active:scale-95 duration-100">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</header>
+<main class="pt-24 pb-32 px-container-padding">
+<!-- Search & Filter Area -->
+<section class="mb-stack-gap-lg">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background mb-4">즐겨찾기</h1>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors" data-icon="search">search</span>
+<input class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-full text-body-md focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-outline shadow-sm" placeholder="즐겨찾기 검색..." type="text"/>
+</div>
+<div class="flex gap-2 mt-4 overflow-x-auto pb-2 no-scrollbar">
+<button class="px-4 py-2 bg-primary text-on-primary rounded-full font-label-caps text-label-caps flex items-center gap-2 whitespace-nowrap shadow-md">
+<span class="material-symbols-outlined text-[18px]" data-icon="all_inclusive">all_inclusive</span>
+                    전체
+                </button>
+<button class="px-4 py-2 bg-surface text-on-surface-variant border border-outline-variant rounded-full font-label-caps text-label-caps flex items-center gap-2 whitespace-nowrap hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="image">image</span>
+                    이미지
+                </button>
+<button class="px-4 py-2 bg-surface text-on-surface-variant border border-outline-variant rounded-full font-label-caps text-label-caps flex items-center gap-2 whitespace-nowrap hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="link">link</span>
+                    링크
+                </button>
+<button class="px-4 py-2 bg-surface text-on-surface-variant border border-outline-variant rounded-full font-label-caps text-label-caps flex items-center gap-2 whitespace-nowrap hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="description">description</span>
+                    문서
+                </button>
+</div>
+</section>
+<!-- Favorites Grid -->
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-grid-gutter">
+<!-- Item 1: Image -->
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="aspect-square relative overflow-hidden">
+<img alt="Office Setup" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAS-tLkkEATR0gNLcnvWwuOCT7Ro9MtJvihM1bX6OSgydtpdq7W8vc-KZuTBIIZ-Sr9eL3N6VoPNuvE-1V5EhXh2t5fgfQbpKJ5F2v_DVb0iFUScVxyGY02seVE4cMr79TxjgBTNIYFyFHmL-HhvTgimnQEHeYEiYNjN8jWtWHKSUNDibBWBisra77NTIwesIQisWQgeY8jPeMzmSKhwrJhO0SeE1zUqbYbSKs92mMfm7k9nU03NynffFcnFPBHaoiJ2X1Zt9U2AOk"/>
+<div class="absolute top-2 right-2 z-10">
+<button class="w-8 h-8 rounded-full bg-surface/90 backdrop-blur flex items-center justify-center text-primary shadow-sm active:scale-90 transition-transform">
+<span class="material-symbols-outlined filled-icon" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<div class="absolute bottom-2 left-2 px-2 py-1 bg-primary/10 backdrop-blur rounded-lg flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary" data-icon="auto_awesome">auto_awesome</span>
+<span class="text-[10px] font-label-caps text-primary">디자인</span>
+</div>
+</div>
+<div class="p-3">
+<h3 class="font-body-md text-body-md font-semibold truncate text-on-surface">사무실 셋업 영감</h3>
+<p class="text-caption font-caption text-text-muted">2시간 전 저장됨</p>
+</div>
+</div>
+<!-- Item 2: Link Card (Bento Style) -->
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between border border-surface-border">
+<div class="p-4">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="link">link</span>
+</div>
+<button class="text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined filled-icon" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<h3 class="font-body-md text-body-md font-semibold text-on-surface line-clamp-2">AI 큐레이션의 미래: 2024년 통찰</h3>
+<p class="text-caption font-caption text-primary mt-1">medium.com</p>
+</div>
+<div class="px-4 pb-4">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 bg-surface-variant/30 text-primary-fixed-dim rounded-full text-[10px] font-label-caps">읽을거리</span>
+<span class="px-2 py-0.5 bg-surface-variant/30 text-primary-fixed-dim rounded-full text-[10px] font-label-caps">테크</span>
+</div>
+</div>
+</div>
+<!-- Item 3: Screenshot -->
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="aspect-square relative overflow-hidden">
+<img alt="Dashboard Reference" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASbjwBnaLansfZAlpgqkYS9c0WR4SX3X2X8QbNkA3XIwlnJxG8gommcKihzz6dR6606rZW0P01XiQ75UWV4TtKBG-oJXiGL26zUBEnKPD_HANtmmAIXNvkR6takL0V00SvjGBtdO-ZYj7Fnrf4pwVkOvhNNvafC0lPYbThsUnPjxmkFoaJgMuZLZE8HjOK1nkVLycCIX7JPx3P_2nKv1UXIK7AelXSA7LdEZgGe2LZKSM1S6Q8GbgY7fXFiHASTgq80rKteys_iLA"/>
+<div class="absolute top-2 right-2 z-10">
+<button class="w-8 h-8 rounded-full bg-surface/90 backdrop-blur flex items-center justify-center text-primary shadow-sm active:scale-90 transition-transform">
+<span class="material-symbols-outlined filled-icon" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+</div>
+<div class="p-3">
+<h3 class="font-body-md text-body-md font-semibold truncate text-on-surface">대시보드 참고자료</h3>
+<p class="text-caption font-caption text-text-muted">어제 저장됨</p>
+</div>
+</div>
+<!-- Item 4: PDF/Doc -->
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 p-4 border-l-4 border-primary">
+<div class="flex justify-between items-start mb-2">
+<div class="p-2 bg-error-container/20 rounded-lg text-error">
+<span class="material-symbols-outlined" data-icon="picture_as_pdf">picture_as_pdf</span>
+</div>
+<button class="text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined filled-icon" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<h3 class="font-body-md text-body-md font-semibold text-on-surface line-clamp-1 mb-1">계약서_최종_v2.pdf</h3>
+<p class="text-caption font-caption text-text-muted mb-4">2.4 MB • PDF 문서</p>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 bg-tertiary-container/10 text-tertiary rounded-full text-[10px] font-label-caps">업무</span>
+</div>
+</div>
+<!-- Item 5: Image -->
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="aspect-square relative overflow-hidden">
+<img alt="Night Work" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgqoNVVwMAL5iVOa8l6HHs3LUR95P9FfwJ8sHq9d9AF0-9fvvxJkYua2r2pctveH5evrgD1B_0xPMfkCOp-PY8QIpfDkf8EEuydXe4TxRLqFkA8a2axY9C-8lW7Atgvzj-P6qwe1egrQmi9kCHqM-G8vBSFbYigvDF2cYIRTRzwNUi8sHFns3_-C1aeViv9BVWNYdGQ_iwrufNxaR062C2KYjOg_V1iqJ8RROLcgYo4rS5iyy6pk9cxumYXTGPDoZg9ZA6ycyp1wM"/>
+<div class="absolute top-2 right-2 z-10">
+<button class="w-8 h-8 rounded-full bg-surface/90 backdrop-blur flex items-center justify-center text-primary shadow-sm active:scale-90 transition-transform">
+<span class="material-symbols-outlined filled-icon" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+</div>
+<div class="p-3">
+<h3 class="font-body-md text-body-md font-semibold truncate text-on-surface">야간 작업 무드</h3>
+<p class="text-caption font-caption text-text-muted">3일 전 저장됨</p>
+</div>
+</div>
+<!-- Item 6: Secret Vault Item (Backdrop Blur) -->
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="aspect-square relative">
+<img alt="Locked Content" class="w-full h-full object-cover blur-xl opacity-50 scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzjJmbeF-in23dsjDSZ69TrpSDW_ZVzpH7tuFiNlTELv5OC86HKGvrRMyGjKELA4MPw-29tDZs2THau52ouMgLgTHGGhjSYQx4nbRPawFMxVsFJygXIqQVQfeXuVIhNd4Gn82P1TkKl-hp66WklgfagrYVxw4zUee5yAFGFOQ2qbrdN9Dea_p-aSulm8br1FbnTkWP-yVoI2qRg_pLUD64qzZgEz7KXr0GuO3-ubjLFGBdmij43lTYFiqICDWQKUyc6JUlDKvCAg8"/>
+<div class="absolute inset-0 flex flex-col items-center justify-center bg-on-background/10 backdrop-blur-md">
+<span class="material-symbols-outlined text-on-background/40 text-4xl mb-2" data-icon="lock">lock</span>
+<span class="text-[10px] font-label-caps text-on-background/60">잠긴 보관함</span>
+</div>
+<div class="absolute top-2 right-2 z-10">
+<button class="w-8 h-8 rounded-full bg-surface/90 backdrop-blur flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined filled-icon" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+</div>
+<div class="p-3">
+<h3 class="font-body-md text-body-md font-semibold truncate text-on-surface">2023년 세무 기록</h3>
+<p class="text-caption font-caption text-text-muted">비공개</p>
+</div>
+</div>
+</div>
+<!-- Empty State Hint -->
+<div class="mt-stack-gap-lg p-stack-gap-md border-2 border-dashed border-outline-variant rounded-2xl flex flex-col items-center text-center py-12">
+<div class="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center text-outline mb-4">
+<span class="material-symbols-outlined text-3xl" data-icon="star_outline">star_outline</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">즐겨찾기를 추가해 보세요</h4>
+<p class="text-body-md text-text-muted max-w-xs mt-2">라이브러리나 검색에서 별표를 누른 항목은 여기에서 빠르게 확인할 수 있습니다.</p>
+</div>
+</main>
+<!-- FAB -->
+<button class="fixed right-6 bottom-28 w-14 h-14 rounded-full bg-primary text-on-primary shadow-[0_10px_20px_rgba(53,37,205,0.3)] flex items-center justify-center z-50 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl" data-icon="add">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface dark:bg-on-background shadow-[0_-2px_10px_rgba(0,0,0,0.05)] rounded-t-xl flex justify-around items-center px-4 pb-8 pt-2">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant p-2 hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-caps text-label-caps mt-1">홈</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed bg-primary-container/10 rounded-xl p-2 active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined filled-icon" data-icon="grid_view" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+<span class="font-label-caps text-label-caps mt-1">라이브러리</span>
+</button>
+<div class="w-12"></div> <!-- Spacer for FAB context -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant p-2 hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined" data-icon="auto_delete">auto_delete</span>
+<span class="font-label-caps text-label-caps mt-1">정리</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant p-2 hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-caps text-label-caps mt-1">마이</span>
+</button>
+</nav>
+<script>
+        // Simple search interaction
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.grid > div');
+            
+            cards.forEach(card => {
+                const titleElement = card.querySelector('h3');
+                if (!titleElement) return;
+                const title = titleElement.textContent.toLowerCase();
+                if (title.includes(query)) {
+                    card.style.display = 'block';
+                    card.style.opacity = '1';
+                } else {
+                    card.style.opacity = '0';
+                    setTimeout(() => {
+                        if (card.style.opacity === '0') card.style.display = 'none';
+                    }, 300);
+                }
+            });
+        });
+
+        // Hover micro-interactions for favorite buttons
+        document.querySelectorAll('button .material-symbols-outlined[data-icon="favorite"]').forEach(btn => {
+            btn.parentElement.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const icon = this.querySelector('span');
+                const isFilled = icon.style.fontVariationSettings.includes("'FILL' 1");
+                if (isFilled) {
+                    icon.style.fontVariationSettings = "'FILL' 0";
+                    this.closest('.group').style.opacity = '0.5';
+                    this.closest('.group').style.filter = 'grayscale(100%)';
+                } else {
+                    icon.style.fontVariationSettings = "'FILL' 1";
+                    this.closest('.group').style.opacity = '1';
+                    this.closest('.group').style.filter = 'none';
+                }
+            });
+        });
+    </script>
+</body></html>

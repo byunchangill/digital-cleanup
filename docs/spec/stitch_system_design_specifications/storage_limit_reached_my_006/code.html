@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>저장 공간 가득 참 - Sortmate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+        .animate-pulse-subtle {
+            animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#4edea3",
+                        "inverse-primary": "#c3c0ff",
+                        "on-surface-variant": "#464555",
+                        "surface-variant": "#d3e4fe",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#0b1c30",
+                        "on-secondary-fixed": "#002113",
+                        "surface-border": "#E2E8F0",
+                        "outline-variant": "#c7c4d8",
+                        "primary-fixed": "#e2dfff",
+                        "surface-container": "#e5eeff",
+                        "outline": "#777587",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-primary-fixed": "#0f0069",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#005236",
+                        "surface-bright": "#f8f9ff",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "primary-container": "#4f46e5",
+                        "on-tertiary-container": "#ffd4a4",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "vault-blur": "rgba(255, 255, 255, 0.4)",
+                        "surface-container-low": "#eff4ff",
+                        "on-background": "#0b1c30",
+                        "secondary-container": "#6cf8bb",
+                        "error-container": "#ffdad6",
+                        "bg-primary": "#FFFFFF",
+                        "primary": "#3525cd",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "tertiary-fixed": "#ffddb8",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#cbdbf5",
+                        "on-secondary-container": "#00714d",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-primary-container": "#dad7ff",
+                        "text-muted": "#64748B",
+                        "surface-container-high": "#dce9ff",
+                        "text-main": "#0F172A",
+                        "tertiary": "#684000",
+                        "inverse-on-surface": "#eaf1ff",
+                        "tertiary-container": "#885500",
+                        "surface-tint": "#4d44e3",
+                        "inverse-surface": "#213145",
+                        "surface": "#f8f9ff",
+                        "background": "#f8f9ff",
+                        "bg-secondary": "#F8FAFC",
+                        "secondary": "#006c49",
+                        "warning": "#f59e0b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap-md": "16px",
+                        "container-padding": "20px",
+                        "stack-gap-lg": "24px",
+                        "stack-gap-sm": "8px",
+                        "grid-gutter": "12px",
+                        "base-unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "caption": ["Hanken Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-sm": ["Hanken Grotesk"],
+                        "display-lg": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-container-padding h-16 bg-surface shadow-sm">
+<div class="flex items-center gap-2">
+<button class="material-symbols-outlined text-on-surface-variant hover:opacity-80 transition-opacity">arrow_back</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Sortmate</h1>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a young adult with a friendly expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiY1JzJ8DTL5OHfHxHCMpxcNbW7uKO_A2pta1dskuzSScGE0CxkGnJaLztik6PuC4UsbVKZfkZri__CgQNfCXS7LSE4wQ_QPKaL3CCFYQLtjZUnzR_fUYgbLNvo2iu-WSeOabR6JX_K91c-9sUyEErLbmdsM-47QvjHBopWzDuTPq7924kHPgz5aWqGyWmQElgoeLlB3EpPLIgM7oAhsCS1Smr2I2ajsy5yfkHVhDW4KAMIjqMuj9X5Zz_021PClyMEKoTpemAFc4"/>
+</div>
+</header>
+<main class="pt-20 px-container-padding flex flex-col gap-stack-gap-lg max-w-md mx-auto">
+<!-- Warning Header Card -->
+<section class="mt-4 flex flex-col gap-stack-gap-md items-center text-center">
+<div class="w-16 h-16 bg-error-container rounded-full flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-error text-4xl" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background">저장 공간이 가득 찼습니다</h2>
+<p class="font-body-md text-on-surface-variant px-4">
+            무료 플랜의 5GB 제한에 도달했습니다. 공간을 확보하기 전까지는 새로운 항목을 저장할 수 없습니다.
+        </p>
+</section>
+<!-- Storage Progress Visualization -->
+<section class="bg-surface shadow-sm border border-surface-border rounded-xl p-5 flex flex-col gap-stack-gap-sm">
+<div class="flex justify-between items-end mb-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">현재 사용량</span>
+<span class="font-headline-sm text-headline-sm text-error">5.0 / 5.0 GB</span>
+</div>
+<div class="w-full h-4 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-error rounded-full animate-pulse-subtle" style="width: 100%;"></div>
+</div>
+<div class="flex justify-between mt-2">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="text-caption font-caption text-on-surface-variant">미디어 및 파일</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary-fixed-dim"></div>
+<span class="text-caption font-caption text-on-surface-variant">링크 및 메타데이터</span>
+</div>
+</div>
+</section>
+<!-- Heavy Categories List -->
+<section class="flex flex-col gap-stack-gap-sm">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant ml-1">저장 공간 점유 항목</h3>
+<div class="flex flex-col gap-2">
+<!-- Category Item 1 -->
+<div class="flex items-center justify-between p-4 bg-surface rounded-xl shadow-sm border border-surface-border">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-low rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">screenshot</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-semibold">스크린샷</p>
+<p class="font-caption text-caption text-on-surface-variant">1,240개 항목</p>
+</div>
+</div>
+<span class="font-body-md text-body-md font-medium text-on-background">2.4 GB</span>
+</div>
+<!-- Category Item 2 -->
+<div class="flex items-center justify-between p-4 bg-surface rounded-xl shadow-sm border border-surface-border">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-low rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">movie</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-semibold">저장된 동영상</p>
+<p class="font-caption text-caption text-on-surface-variant">42개 항목</p>
+</div>
+</div>
+<span class="font-body-md text-body-md font-medium text-on-background">1.8 GB</span>
+</div>
+<!-- Category Item 3 -->
+<div class="flex items-center justify-between p-4 bg-surface rounded-xl shadow-sm border border-surface-border">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-low rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary">description</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-semibold">문서</p>
+<p class="font-caption text-caption text-on-surface-variant">312개 항목</p>
+</div>
+</div>
+<span class="font-body-md text-body-md font-medium text-on-background">0.6 GB</span>
+</div>
+</div>
+</section>
+<!-- Sticky Bottom CTAs -->
+<div class="fixed bottom-24 left-0 w-full px-container-padding flex flex-col gap-3 max-w-md mx-auto left-1/2 -translate-x-1/2">
+<button class="w-full py-4 bg-primary text-white rounded-xl font-headline-sm text-headline-sm shadow-lg shadow-primary/20 flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] transition-all" onclick="window.location.href='MY-006'">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+            플랜 업그레이드
+        </button>
+<button class="w-full py-4 bg-white border border-primary text-primary rounded-xl font-headline-sm text-headline-sm flex items-center justify-center gap-2 hover:bg-surface-container-low transition-colors" onclick="window.location.href='CLEAN-001'">
+<span class="material-symbols-outlined">auto_fix_high</span>
+            지금 정리하기
+        </button>
+</div>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 pb-8 pt-2 bg-surface shadow-[0px_-2px_10px_rgba(0,0,0,0.05)] rounded-t-xl">
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low rounded-full transition-all p-2">
+<span class="material-symbols-outlined">home</span>
+<span class="font-caption text-caption">홈</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low rounded-full transition-all p-2">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-caption text-caption">라이브러리</span>
+</div>
+<div class="flex flex-col items-center justify-center -mt-8">
+<div class="w-14 h-14 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-lg shadow-primary/30 scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-3xl">add</span>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low rounded-full transition-all p-2">
+<span class="material-symbols-outlined">auto_fix_high</span>
+<span class="font-caption text-caption">정리하기</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary font-semibold hover:bg-surface-container-low rounded-full transition-all p-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-caption text-caption">마이페이지</span>
+</div>
+</nav>
+<script>
+    // Micro-interaction: Scroll reveal for category items
+    const observerOptions = {
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.bg-surface.rounded-xl.shadow-sm').forEach((el, i) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(10px)';
+        el.style.transition = `all 0.4s ease-out ${i * 0.1}s`;
+        observer.observe(el);
+    });
+</script>
+</body></html>

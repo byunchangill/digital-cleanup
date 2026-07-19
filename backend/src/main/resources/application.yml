@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: sortmate-backend
+  datasource:
+    url: jdbc:h2:mem:sortmate;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: false
+    open-in-view: false
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+server:
+  port: 8080
+
+app:
+  seed-demo-data: true
+  jwt:
+    # HS256용 시크릿(>= 256bit). 운영에서는 환경변수로 주입 권장.
+    secret: "sortmate-dev-secret-key-please-change-in-production-0123456789abcdef"
+    access-token-ttl-seconds: 1800     # 30분
+    refresh-token-ttl-seconds: 1209600 # 14일
+  reset-token:
+    ttl-seconds: 1800                  # 30분
+  recovery-token:
+    ttl-seconds: 600                   # 10분
+
+logging:
+  level:
+    org.springframework.security: INFO

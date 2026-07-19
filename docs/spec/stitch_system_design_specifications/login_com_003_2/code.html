@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sortmate - 로그인</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#c3c0ff",
+                    "primary": "#3525cd",
+                    "on-primary-fixed": "#0f0069",
+                    "on-primary": "#ffffff",
+                    "surface": "#f8f9ff",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#4d44e3",
+                    "surface-border": "#E2E8F0",
+                    "surface-bright": "#f8f9ff",
+                    "on-background": "#0b1c30",
+                    "primary-fixed": "#e2dfff",
+                    "bg-secondary": "#F8FAFC",
+                    "inverse-surface": "#213145",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed": "#6ffbbe",
+                    "text-muted": "#64748B",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#464555",
+                    "tertiary-container": "#885500",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-container": "#e5eeff",
+                    "bg-primary": "#FFFFFF",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "inverse-primary": "#c3c0ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-container": "#dad7ff",
+                    "on-tertiary-container": "#ffd4a4",
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#eff4ff",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-error-container": "#93000a",
+                    "error-container": "#ffdad6",
+                    "background": "#f8f9ff",
+                    "surface-variant": "#d3e4fe",
+                    "secondary-container": "#6cf8bb",
+                    "secondary": "#006c49",
+                    "primary-container": "#4f46e5",
+                    "on-surface": "#0b1c30",
+                    "outline-variant": "#c7c4d8",
+                    "outline": "#777587",
+                    "on-secondary-container": "#00714d",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-high": "#dce9ff",
+                    "tertiary": "#684000",
+                    "surface-container-highest": "#d3e4fe",
+                    "secondary-fixed-dim": "#4edea3",
+                    "text-main": "#0F172A",
+                    "vault-blur": "rgba(255, 255, 255, 0.4)",
+                    "surface-dim": "#cbdbf5",
+                    "on-secondary-fixed": "#002113",
+                    "on-secondary-fixed-variant": "#005236",
+                    "tertiary-fixed": "#ffddb8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-gap-md": "16px",
+                    "base-unit": "4px",
+                    "stack-gap-lg": "24px",
+                    "grid-gutter": "12px",
+                    "stack-gap-sm": "8px",
+                    "container-padding": "20px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "label-caps": ["JetBrains Mono"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "caption": ["Hanken Grotesk"],
+                    "display-lg": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .btn-interact {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .btn-interact:active {
+            transform: scale(0.96);
+        }
+        .glass-background {
+            background: radial-gradient(circle at 20% 30%, rgba(53, 37, 205, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(53, 37, 205, 0.03) 0%, transparent 40%);
+        }
+    </style>
+<style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md min-h-screen flex flex-col items-center justify-between glass-background">
+<!-- Header / Branding Area -->
+<header class="w-full pt-20 px-container-padding flex flex-col items-center text-center">
+<div class="mb-stack-gap-lg">
+<div class="w-20 h-20 bg-primary rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20 animate-pulse">
+<span class="material-symbols-outlined text-on-primary text-5xl" style="font-variation-settings: 'FILL' 1;">auto_fix_high</span>
+</div>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight mb-2">Sortmate</h1>
+<p class="font-body-lg text-body-lg text-text-muted max-w-[280px]">
+            지능적인 큐레이션과 안전한 정리로 완성되는 당신의 디지털 세상.
+        </p>
+</header>
+<!-- Main Login Content -->
+<main class="w-full max-w-md px-container-padding pb-16 flex flex-col gap-4">
+<!-- Social Login Stack -->
+<div class="flex flex-col gap-stack-gap-md w-full">
+<!-- Kakao Login -->
+<button class="btn-interact w-full h-[56px] bg-[#FEE500] text-[#191919] rounded-xl flex items-center justify-center relative font-semibold shadow-sm overflow-hidden">
+<div class="absolute left-6 flex items-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+</div>
+                카카오로 계속하기
+            </button>
+<!-- Google Login -->
+<button class="btn-interact w-full h-[56px] bg-white text-on-surface border border-surface-border rounded-xl flex items-center justify-center relative font-semibold shadow-sm">
+<div class="absolute left-6 w-6 h-6 flex items-center justify-center overflow-hidden">
+<img class="w-5 h-5" data-alt="The Google company logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvyH3C2RGkJUNSQY6N-0_BSsUxUxyekCpIwFPjPYWto5x1iUVcV-6fQMHZKMdQKOWt8xJLMOhwbwbqs7IhsRT7POQ24JO7egrREhtaZHExDCImRpyHhlheM0remOd7ZYTLdO9acZ0KiJQttE-sQzKMgsXexaG0kCggAlquLclBzZGEOSq5PL0BhkTdoxSWaMMoHVk0Gw8BgVOY1P-MNQyEGXLO9QTfn2sBkj2jJW0ogkWmJ6jRF5iRwRLKNfyqcVdSr-rOBtxYH80"/>
+</div>
+                구글로 계속하기
+            </button>
+<!-- Apple Login -->
+<button class="btn-interact w-full h-[56px] bg-black text-white rounded-xl flex items-center justify-center relative font-semibold shadow-sm">
+<div class="absolute left-6 flex items-center">
+<span class="material-symbols-outlined text-white text-2xl" style="font-variation-settings: 'FILL' 1;">apps</span>
+</div>
+                애플로 계속하기
+            </button>
+</div>
+<!-- Divider -->
+<div class="flex items-center gap-4 my-stack-gap-sm px-4">
+<div class="h-[1px] flex-1 bg-surface-border"></div>
+<span class="font-label-caps text-label-caps text-outline">또는</span>
+<div class="h-[1px] flex-1 bg-surface-border"></div>
+</div>
+<!-- Email Sign In -->
+<button class="w-full py-2 text-primary font-body-lg text-body-lg hover:underline transition-all">
+            이메일로 로그인
+        </button>
+</main>
+<!-- Footer / Legal -->
+<footer class="w-full px-container-padding pb-10 text-center">
+<p class="font-caption text-caption text-text-muted">
+            계속 진행함으로써 Sortmate의 <br/>
+<a class="underline hover:text-primary transition-colors" href="#">서비스 약관</a> 및 <a class="underline hover:text-primary transition-colors" href="#">개인정보 처리방침</a>에 동의하게 됩니다.
+        </p>
+</footer>
+<!-- Decorative Elements (Asymmetric Glows) -->
+<div class="fixed top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/5 blur-[120px] rounded-full -z-10"></div>
+<div class="fixed bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-[300px] h-[300px] bg-secondary/5 blur-[100px] rounded-full -z-10"></div>
+<script>
+        // Simple micro-interaction for button press
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                console.log('Login action initiated');
+            });
+        });
+    </script>
+</body></html>

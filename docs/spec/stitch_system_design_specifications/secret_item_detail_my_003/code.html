@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>비밀 보관함 - 항목 상세</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#ffdad6",
+                        "bg-primary": "#FFFFFF",
+                        "tertiary-fixed": "#ffddb8",
+                        "primary": "#3525cd",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-primary-container": "#dad7ff",
+                        "text-muted": "#64748B",
+                        "surface-dim": "#cbdbf5",
+                        "on-secondary-container": "#00714d",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#dce9ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "text-main": "#0F172A",
+                        "tertiary": "#684000",
+                        "surface": "#f8f9ff",
+                        "background": "#f8f9ff",
+                        "bg-secondary": "#F8FAFC",
+                        "tertiary-container": "#885500",
+                        "surface-tint": "#4d44e3",
+                        "inverse-surface": "#213145",
+                        "secondary": "#006c49",
+                        "secondary-fixed-dim": "#4edea3",
+                        "inverse-primary": "#c3c0ff",
+                        "on-surface-variant": "#464555",
+                        "on-secondary-fixed": "#002113",
+                        "surface-border": "#E2E8F0",
+                        "surface-variant": "#d3e4fe",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#0b1c30",
+                        "surface-container": "#e5eeff",
+                        "outline-variant": "#c7c4d8",
+                        "primary-fixed": "#e2dfff",
+                        "outline": "#777587",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-primary-fixed": "#0f0069",
+                        "primary-container": "#4f46e5",
+                        "on-tertiary-container": "#ffd4a4",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8f9ff",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-background": "#0b1c30",
+                        "on-tertiary-fixed": "#2a1700",
+                        "vault-blur": "rgba(255, 255, 255, 0.4)",
+                        "surface-container-low": "#eff4ff",
+                        "secondary-container": "#6cf8bb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "20px",
+                        "stack-gap-sm": "8px",
+                        "grid-gutter": "12px",
+                        "base-unit": "4px",
+                        "stack-gap-lg": "24px",
+                        "stack-gap-md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Hanken Grotesk"],
+                        "display-lg": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "caption": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .reveal-active {
+            filter: blur(0) !important;
+            opacity: 1 !important;
+        }
+        .shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .auth-pulse {
+            animation: pulse-ring 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 0.2; }
+            100% { transform: scale(0.95); opacity: 0.5; }
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen font-body-md flex flex-auto flex-col overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky flex justify-between items-center px-container-padding h-16 w-full bg-surface/80 dark:bg-on-background/80 backdrop-blur-md z-40">
+<div class="flex items-center gap-stack-gap-md">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors active:scale-95 duration-150" onclick="window.history.back()">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-on-surface">비밀 보관함</h1>
+</div>
+<div class="flex items-center gap-stack-gap-sm">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-on-surface-variant">share</span>
+</button>
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-error">delete</span>
+</button>
+</div>
+</header>
+<main class="flex-grow px-container-padding pb-24">
+<!-- Secure Asset Area -->
+<div class="relative w-full aspect-[4/3] mt-stack-gap-md mb-stack-gap-lg overflow-hidden rounded-xl bg-on-background shadow-lg group">
+<!-- The Secret Image -->
+<div class="absolute inset-0 w-full h-full blur-[40px] opacity-40 transition-all duration-700 ease-in-out scale-110" id="secret-image-container">
+<div class="w-full h-full bg-cover bg-center" data-alt="사원증 상세 이미지" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDLbHIB-_dPwyHYTdLkJunQJ5_ydVqyOf3kEWo8Dt3XshJsCyFG_-C3h_aFxqGOxd7z5UmlYnTNNs1GJAAHRJxYpMLa9L15pyYjt7fbU8l-weUZMted4mfkdE_7hSHRLlA807WyjroHn5fQoDR0iK9mezI8OTe9A-Zjnly8GgM3V_18k7WdgFH8gYnFWhUGt02Z3DiFY1sF-bLtgUTYJnXrmEbELRgftFoJkHULEJU_3oNwFOVc1ZTonJjbrnJeaECgAF35c89h3iU')"></div>
+</div>
+<!-- Reveal Overlay -->
+<div class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-on-background/60 backdrop-blur-md transition-opacity duration-500" id="reveal-overlay">
+<div class="relative mb-stack-gap-md">
+<div class="auth-pulse absolute inset-0 bg-primary/20 rounded-full scale-150"></div>
+<button class="relative z-20 w-20 h-20 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-xl active:scale-90 transition-transform duration-200" onclick="simulateAuth()">
+<span class="material-symbols-outlined !text-[40px]">fingerprint</span>
+</button>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-primary text-center">탭하여 열기</p>
+<p class="font-caption text-caption text-on-primary-container mt-2 opacity-80">생체인증 필요</p>
+</div>
+<!-- Lock Indicator (Visible when revealed) -->
+<div class="absolute top-4 right-4 z-20 px-3 py-1 bg-emerald-500/90 text-white rounded-full flex items-center gap-1.5 opacity-0 transition-opacity duration-300" id="unlocked-badge">
+<span class="material-symbols-outlined !text-[16px]">lock_open</span>
+<span class="text-[12px] font-bold">잠금 해제됨</span>
+</div>
+</div>
+<!-- Content Details -->
+<div class="space-y-stack-gap-lg">
+<section>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 bg-tertiary-fixed text-on-tertiary-fixed font-label-caps text-label-caps rounded-sm">비밀</span>
+<span class="text-text-muted text-caption">2시간 전 추가됨</span>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-text-main">사원증</h2>
+<p class="text-text-muted mt-1">높은 중요도의 신분 확인 증명서</p>
+</section>
+<!-- AI Summary Card -->
+<div class="p-stack-gap-md bg-surface-container-highest/50 rounded-xl border border-surface-border">
+<div class="flex items-center gap-2 mb-stack-gap-sm">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-headline-sm text-[16px] text-primary">AI 분석</span>
+</div>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+                    이 문서는 기업용 신분증으로 보입니다. Sortmate가 사번(8832-X)과 만료일(2026년 12월)을 추출했습니다. 민감한 개인 정보가 포함되어 현재 비밀 보관함으로 분류되어 있습니다.
+                </p>
+</div>
+<!-- Original Info -->
+<div class="space-y-stack-gap-md">
+<h3 class="font-label-caps text-label-caps text-text-muted tracking-widest uppercase">파일 메타데이터</h3>
+<div class="grid grid-cols-2 gap-stack-gap-md">
+<div class="p-3 bg-surface-container-low rounded-lg">
+<p class="text-caption text-text-muted">형식</p>
+<p class="font-body-lg text-text-main font-medium">JPEG 이미지</p>
+</div>
+<div class="p-3 bg-surface-container-low rounded-lg">
+<p class="text-caption text-text-muted">용량</p>
+<p class="font-body-lg text-text-main font-medium">4.2 MB</p>
+</div>
+<div class="p-3 bg-surface-container-low rounded-lg">
+<p class="text-caption text-text-muted">출처</p>
+<p class="font-body-lg text-text-main font-medium">스캐너 앱</p>
+</div>
+<div class="p-3 bg-surface-container-low rounded-lg">
+<p class="text-caption text-text-muted">해상도</p>
+<p class="font-body-lg text-text-main font-medium">3264 × 2448</p>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="pt-stack-gap-lg space-y-3">
+<button class="w-full h-12 bg-primary text-on-primary rounded-xl font-headline-sm flex items-center justify-center gap-2 shadow-lg shadow-primary/20 active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined">shield_lock</span>
+                    일반 보관함으로 이동
+                </button>
+<button class="w-full h-12 bg-surface text-on-surface-variant border border-surface-border rounded-xl font-headline-sm flex items-center justify-center gap-2 hover:bg-surface-container-low active:scale-95 transition-all duration-150">
+<span class="material-symbols-outlined">edit</span>
+                    항목 상세 수정
+                </button>
+</div>
+</div>
+</main>
+<!-- Bottom Actions (Floating) -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] flex justify-between gap-4 z-30">
+<div class="flex-1 h-14 bg-on-background/90 backdrop-blur-xl rounded-full flex items-center justify-around px-4 shadow-2xl border border-white/10">
+<button class="text-on-primary flex flex-col items-center">
+<span class="material-symbols-outlined">download</span>
+<span class="text-[10px]">저장</span>
+</button>
+<div class="h-6 w-[1px] bg-white/20"></div>
+<button class="text-on-primary flex flex-col items-center">
+<span class="material-symbols-outlined">print</span>
+<span class="text-[10px]">인쇄</span>
+</button>
+<div class="h-6 w-[1px] bg-white/20"></div>
+<button class="text-on-primary flex flex-col items-center">
+<span class="material-symbols-outlined">history</span>
+<span class="text-[10px]">로그</span>
+</button>
+</div>
+</div>
+<script>
+        function simulateAuth() {
+            const overlay = document.getElementById('reveal-overlay');
+            const imgContainer = document.getElementById('secret-image-container');
+            const badge = document.getElementById('unlocked-badge');
+            
+            // Start "Processing" animation
+            const btn = overlay.querySelector('button');
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span>';
+            
+            setTimeout(() => {
+                // Success State
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                    imgContainer.style.filter = 'blur(0)';
+                    imgContainer.style.opacity = '1';
+                    imgContainer.style.transform = 'scale(1)';
+                    badge.classList.remove('opacity-0');
+                    badge.classList.add('opacity-100');
+                }, 300);
+            }, 800);
+        }
+    </script>
+<style>
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+    </style>
+</body></html>
