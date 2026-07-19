@@ -4,7 +4,9 @@ import ResetPasswordPage from './pages/auth/ResetPasswordPage';
 import SetNewPasswordPage from './pages/auth/SetNewPasswordPage';
 import AccountRecoveryPage from './pages/auth/AccountRecoveryPage';
 import OAuthCallbackPage from './pages/auth/OAuthCallbackPage';
-import EmailAuthPage from './pages/auth/EmailAuthPage';
+import EmailLoginPage from './pages/auth/EmailLoginPage';
+import SignupPage from './pages/auth/SignupPage';
+import LegalPage from './pages/legal/LegalPage';
 import HomePage from './pages/home/HomePage';
 import SearchResultsPage from './pages/home/SearchResultsPage';
 import GalleryImportPage from './pages/item/GalleryImportPage';
@@ -38,7 +40,11 @@ export default function App() {
         <Route path="/password/new" element={<SetNewPasswordPage />} />
         <Route path="/recovery" element={<AccountRecoveryPage />} />
         <Route path="/auth/callback/:provider" element={<OAuthCallbackPage />} />
-        <Route path="/auth/email" element={<EmailAuthPage />} />
+        <Route path="/login/email" element={<EmailLoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/legal" element={<LegalPage />} />
+        {/* 구 탭형 이메일 화면 → 신규 로그인 화면으로 리다이렉트 */}
+        <Route path="/auth/email" element={<Navigate to="/login/email" replace />} />
         {/* home 모듈 */}
         <Route path="/home" element={<HomePage />} />
         <Route path="/search" element={<SearchResultsPage />} />

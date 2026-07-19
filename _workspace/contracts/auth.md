@@ -1,7 +1,9 @@
 # auth (인증) API 계약
 
+> 변경: 2026-07-20 (2차) email_login_sign_up_com_004 교체(한글 회원가입 전용) 반영 — 로그인/회원가입 분리 2화면 확정. AUTH-08 유지, 신규 API 없음. 비밀번호 정책 `[상충]`(화면 "8자" vs 계약 12자) → **12자 정책 유지 권고**. passwordConfirm은 클라이언트 검증만 → AUTH-08 필드 무추가.
+> 변경: 2026-07-20 email_login_com_004_1(한글 로그인)·terms_and_policies_com_005(약관) 분석 반영 — 신규 API 없음. 한글 로그인은 기존 AUTH-02(`POST /api/auth/login`) 재사용, 비밀번호 찾기는 AUTH-04, 소셜은 AUTH-01. 약관/정책(AUTH-09)은 프론트 정적 서빙으로 백엔드 엔드포인트 없음(하단 "AUTH-09" 참조). **AUTH-02 경로는 `/api/auth/login` 확정 — 변경 금지.**
 > 변경: 2026-07-19 email_login_sign_up_com_004 분석 반영 — AUTH-02 경로는 구현 실체(`POST /api/auth/login`) 그대로 확정(2026-07-20 재확인: /login/email 정정은 오판이었음), AUTH-08(이메일 회원가입) 신규 추가. Forgot?→AUTH-04, 소셜→AUTH-01 재사용(계약 무변경).
-> 모듈: auth · 작성일: 2026-07-19 · 대상 화면: login_com_003_2, email_login_sign_up_com_004, reset_password, set_new_password_com_007, account_recovery_com_008
+> 모듈: auth · 작성일: 2026-07-20 · 대상 화면: login_com_003_2, email_login_sign_up_com_004, email_login_com_004_1, terms_and_policies_com_005, reset_password, set_new_password_com_007, account_recovery_com_008
 > 공통 규격: 응답 봉투 `{ success, data, error }`, 필드 camelCase, 날짜 ISO 8601(UTC, 예 `2026-07-19T09:00:00Z`).
 
 ## 공통 규약
@@ -218,7 +220,7 @@
 ---
 
 ### AUTH-08: 이메일 회원가입
-> 화면: email_login_sign_up_com_004 SIGN UP 탭. 이메일+비밀번호+약관동의. 기존 PasswordPolicyValidator 재사용, 중복 이메일 409. 성공 시 자동 로그인(AUTH-02와 동일 토큰 봉투).
+> 화면: email_login_sign_up_com_004 (한글 회원가입 전용 화면, `/signup`). 이메일+비밀번호+비밀번호확인+약관동의. 기존 PasswordPolicyValidator 재사용, 중복 이메일 409. 성공 시 자동 로그인(AUTH-02와 동일 토큰 봉투). 로그인은 별도 화면(com_004_1, AUTH-02).
 - **Method/Path**: `POST /api/auth/signup`
 - **인증**: 불필요
 - **Request Body**:
@@ -226,9 +228,10 @@
 {
   "email": "string(필수, 이메일 형식)",
   "password": "string(필수, PasswordPolicy: 최소 12자 + 대문자 1개 이상 + 특수문자 1개 이상, 흔한 패턴 금지)",
-  "agreedToTerms": "boolean(필수, true여야 함) — TOS 체크박스"
+  "agreedToTerms": "boolean(필수, true여야 함) — 약관+개인정보 동의 체크박스"
 }
 ```
+> **passwordConfirm 필드 없음:** 화면의 "비밀번호 확인" 입력은 클라이언트 오타 방지용이며 제출 전 `password === passwordConfirm`로 100% 검증된다. 서버는 확정된 `password` 하나만 받는다 → 계약에 `passwordConfirm` 무추가(YAGNI). 서버 재검증을 원하면 계약 변경으로 취급.
 - **Response 200** (가입 성공 → 자동 로그인, AUTH-02와 동일 구조):
 ```json
 {
@@ -242,6 +245,17 @@
 ```
 - **에러**: `400 VALIDATION_ERROR`(형식 오류), `409 EMAIL_ALREADY_EXISTS`(중복 이메일), `422 PASSWORD_POLICY_VIOLATION`, `422 TERMS_NOT_AGREED`(agreedToTerms=false), `429 RATE_LIMITED`
 - **비고**: `[가정]` 자동 로그인 — 화면에 가입→로그인 중간 단계 없음. `displayName`은 미입력 시 이메일 로컬파트로 초기화(`[가정]`). 비밀번호 정책 위반 시 `error.message`에 위반 항목 명시 권장(AUTH-05와 동일).
+- **`[상충]` 비밀번호 정책 (8자 vs 12자):** 화면 placeholder는 "8자 이상"이나 계약/구현은 **12자 + 대문자 + 특수문자**(위 Request Body 유지). **권고: 12자 정책 유지, 화면 placeholder를 정책에 맞게 수정**(frontend-dev). 근거: 재설정(AUTH-05)과 정책 통일 — 갈리면 검증 불일치·사용자 혼란. backend-dev는 기존 `PasswordPolicyValidator` 그대로 재사용(변경 없음).
+- **약관 링크:** 화면 체크박스 내 "이용 약관"/"개인정보 처리방침" → `/legal`(AUTH-09, 정적). 서버는 boolean `agreedToTerms`만 검증, 약관 콘텐츠 API 없음.
+
+---
+
+### AUTH-09: 약관/정책 열람  `[백엔드 API 없음]`
+> 화면: terms_and_policies_com_005. 이용약관/개인정보 처리방침 표시.
+- **서빙 방식**: **프론트 정적 서빙**. `docs/legal/terms-of-service.md`·`docs/legal/privacy-policy.md` 전문을 프론트 번들에 정적 포함(빌드 시 import)하여 렌더. **백엔드 엔드포인트 없음** — AI stub들과 동일하게 최소화, backend-dev 작업 0.
+- **콘텐츠 소스**: `[가정]` 화면 HTML의 조문은 요약 발췌이며 실제 노출은 docs/legal 전문. 발췌본과 전문 상충 시 전문 우선.
+- **버전 관리**: `[가정]` 현 단계는 문서 헤더 버전 문자열(`v0.9`)로 충분. **회원가입(AUTH-08) 동의 시점의 약관 버전을 서버가 기록해야 할 요건이 생기면** signup 요청에 `termsVersion`(string, 선택) 필드를 추가하는 확장 지점만 남긴다. 현재 미추가(YAGNI) — **AUTH-08 계약 변경 없음**.
+- **에러**: 없음(정적).
 
 ---
 
@@ -256,3 +270,4 @@
 | AUTH-06 | POST | `/api/auth/recovery/email` | 불필요 |
 | AUTH-07 | POST | `/api/auth/recovery/code` | 불필요 |
 | AUTH-08 | POST | `/api/auth/signup` | 불필요 |
+| AUTH-09 | — (백엔드 API 없음, 프론트 정적) | — | — |

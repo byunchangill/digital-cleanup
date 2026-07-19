@@ -5,6 +5,27 @@
 
 ---
 
+## 화면 재구성 재검증 (2026-07-20, 2차): 한글 로그인/가입/약관 3화면 → **통과**
+
+> 범위(프론트만, 백엔드 무변경): `/login/email` EmailLoginPage·`/signup` SignupPage·`/legal` LegalPage 신규, 탭형 EmailAuthPage 삭제, `/auth/email` 리다이렉트, 비밀번호 확인 클라 검증.
+> frontend `npm run build` 통과, 최신 백엔드 :8094 별도 기동으로 AUTH-02/08 동적 재확인.
+
+### 요약(화면 재구성): 통과 12 / 실패 0 / 보류 0 / 관찰 1
+
+1. **흐름 연결 정합 → 통과**: `App.jsx` `/login/email`·`/signup`·`/legal` 등록, `/auth/email`→`/login/email` `Navigate replace`. LoginPage "이메일로 로그인"→`/login/email`(:113). EmailLoginPage: 로그인→`/home`(회원가입→`/signup`, 비밀번호 찾기→`/password/reset`). SignupPage: 가입 성공→`/home`(이미 계정→`/login/email`). 죽은 링크 없음.
+2. **AUTH-02 로그인 라운드트립 → 통과(동적)**: EmailLoginPage `login()`→`client.post('/auth/login')`(경로 복구 상태 유지). 동적: demo 로그인 → 200.
+3. **AUTH-08 가입 → 통과(동적)**: SignupPage `signup({email,password,agreedToTerms})`. 동적: 신규 → 200(isNewUser:true, displayName=로컬파트), 중복 → 409, 약관미동의 → 422, 정책위반 → 422.
+4. **비밀번호 확인 클라 검증 + 서버 미전송 → 통과**: `SignupPage.jsx:38` `password !== confirm`이면 토스트 후 return(제출 차단). `:48` `signup({email,password,agreedToTerms})` — **confirm/passwordConfirm 요청 바디에 없음**. 약관 미동의도 클라 선차단(:42) + 서버 422 이중방어.
+5. **`/auth/email` 리다이렉트 + EmailAuthPage 잔재 없음 → 통과**: `App.jsx:47` `/auth/email`→`/login/email` replace. `EmailAuthPage.jsx` 파일 삭제 확인, `grep EmailAuthPage` 전 소스 참조 0건(죽은 import/라우트 없음).
+6. **src/legal ↔ docs/legal 동기화 → 통과**: `diff -q` 결과 terms-of-service.md·privacy-policy.md **양쪽 IDENTICAL**. LegalPage가 `?raw`로 번들 포함(빌드 성공으로 렌더 경로 확인), 탭 전환/확인·뒤로(navigate(-1)).
+7. **소셜 stub 폴백 회귀 → 없음**: 두 신규 화면 `handleSocial`가 기존 로직(config+!mock이면 beginOAuth, 아니면 stub) 재사용. 동적: kakao stub 200, fail-코드 502.
+8. **전 모듈 회귀 스모크 → 없음**: items/home/cleanup/vault/my/categories 전부 200, 무인증 401. 빌드 통과.
+
+### 관찰(저우선)
+- **OBS-A-scr1**: `SignupPage.jsx:106-113` 약관 링크 버튼(`이용 약관`/`개인정보 처리방침`)이 `<label htmlFor="terms">` 내부에 중첩. 링크 클릭 시 `/legal` 이동은 정상이나, 라벨 연결로 체크박스가 함께 토글될 수 있음(브라우저별). `type="button"`이라 폼 제출은 막히나, 링크와 체크박스 토글 영역 분리를 권장(선택, frontend-dev). 기능 자체(약관 열람·동의)는 동작.
+
+---
+
 ## 확장 재검증 (2026-07-20): 소셜 실연동 + 이메일 로그인/가입 + 경로 사고 복구 → **통과**
 
 > 범위: 소셜 OAuth 실연동(Kakao/Google/Composite 폴백), AUTH-08 회원가입 신규, AUTH-02 경로 사고(`/login/email` 오정정) 복구.

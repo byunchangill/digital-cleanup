@@ -110,7 +110,7 @@ export default function LoginPage() {
         {/* Email Sign In — 이메일 로그인 폼 화면이 설계에 미제공([가정]).
             임의 라우트를 만들지 않고 안내 토스트만 노출(추후 폼 화면 확보 시 연결). */}
         <button
-          onClick={() => navigate('/auth/email')}
+          onClick={() => navigate('/login/email')}
           className="w-full py-2 text-primary font-body-lg text-body-lg hover:underline transition-all"
         >
           이메일로 로그인

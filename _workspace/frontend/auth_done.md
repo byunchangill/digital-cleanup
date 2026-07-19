@@ -153,3 +153,25 @@ LOGIN/SIGN UP 탭 단일 화면. `npm run build` 통과.
 ### [가정]/한계
 - 소셜 버튼: 설계는 Google/Apple 아이콘 이미지. 외부 이미지 URL 대신 텍스트 라벨(Google/Apple)로 대체(CSP/오프라인 안정성). 동작은 기존 handleSocial 재사용으로 동일.
 - 비밀번호 정책(12자+대문자+특수문자)은 서버 검증 신뢰. 클라이언트 사전검증은 미적용 — 필요 시 PasswordField 하위에 정책 힌트 추가 가능.
+
+## 12. 한글 로그인/회원가입/약관 3종 (2026-07-20) — 탭형 대체
+
+기존 탭형 EmailAuthPage를 2화면 구조로 대체 + 약관 화면 추가. `npm run build` 통과.
+
+### 신규/변경 파일
+- `src/pages/auth/EmailLoginPage.jsx` (신규): `/login/email` — 한글 이메일 로그인. AUTH-02 login, 비밀번호 찾기→/password/reset, 회원가입→/signup, 소셜(카카오/구글) handleSocial 재사용.
+- `src/pages/auth/SignupPage.jsx` (신규): `/signup` — 이메일/비밀번호/비밀번호 확인. **비밀번호 확인은 클라이언트 검증(password===confirm), 서버 미전송**. 약관 체크박스(이용약관/개인정보 링크→/legal). AUTH-08 signup → 자동 로그인 → /home. 소셜(구글/카카오).
+- `src/pages/legal/LegalPage.jsx` (신규): `/legal` — 이용약관/개인정보 탭 + 하단 "확인"(뒤로가기). 콘텐츠는 `src/legal/*.md` 전문을 `?raw`로 번들에 정적 포함, 라인 기반 최소 md 변환(제목/목록/인용/표행/문단, 신규 의존성 0).
+- `src/legal/terms-of-service.md`, `privacy-policy.md`: `docs/legal/` 전문 복사(번들 포함용). `[YYYY-MM-DD]`/`[상호 또는 법인명]` placeholder 원문 그대로 노출.
+- `src/pages/auth/EmailAuthPage.jsx`: **삭제**(탭형 폐기).
+- `src/App.jsx`: `/login/email`, `/signup`, `/legal` 라우트 추가. 구 `/auth/email` → `/login/email` 리다이렉트.
+- `src/pages/auth/LoginPage.jsx`: "이메일로 로그인" → `/login/email`.
+
+### 계약/정책
+- 신규 백엔드 API 없음. LOGIN=AUTH-02(`/auth/login/email`), SIGN UP=AUTH-08(`/auth/signup`), 소셜=AUTH-01 전부 기존 재사용.
+- [상충 해소] 회원가입 비밀번호 placeholder를 설계의 "8자 이상" → **"12자 이상, 대문자·특수문자 포함"**(기존 정책 유지, 정책 변경 없음). 실제 정책 검증은 서버.
+
+### [가정]/한계
+- 소셜 아이콘: 외부 이미지/SVG 대신 텍스트/Material 아이콘 대체(CSP·오프라인 안정성). 동작은 handleSocial 그대로.
+- md 렌더러는 라인 단위 최소 변환 — 표는 monospace 행으로 표시(정식 표 파서 아님). `?raw` import가 빌드에 포함되는 것으로 렌더 경로 검증(별도 테스트 러너 없음).
+- legal placeholder 확정은 사용자 몫(원문 유지).
