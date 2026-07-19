@@ -32,6 +32,15 @@ export async function login({ email, password }) {
   return data;
 }
 
+// AUTH-08: POST /api/auth/signup  (성공 시 자동 로그인 — AUTH-02와 동일 토큰 봉투)
+export async function signup({ email, password, agreedToTerms }) {
+  const data = USE_MOCK
+    ? await mock.mockSignup({ email })
+    : await client.post('/auth/signup', { email, password, agreedToTerms });
+  persistAuth(data.auth);
+  return data;
+}
+
 // AUTH-03: POST /api/auth/token/refresh
 export async function refreshToken(refresh) {
   const data = USE_MOCK

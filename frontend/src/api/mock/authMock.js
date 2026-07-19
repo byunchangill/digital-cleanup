@@ -38,6 +38,19 @@ export async function mockEmailLogin({ email }) {
   };
 }
 
+export async function mockSignup({ email }) {
+  await delay();
+  return {
+    auth: {
+      accessToken: 'mock.jwt.access',
+      refreshToken: 'mock.refresh',
+      tokenType: 'Bearer',
+      expiresIn: 1800,
+    },
+    user: { id: 1, email, displayName: email.split('@')[0], provider: 'EMAIL', isNewUser: true },
+  };
+}
+
 export async function mockRefreshToken() {
   await delay(300);
   return {

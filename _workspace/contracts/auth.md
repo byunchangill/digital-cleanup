@@ -1,6 +1,7 @@
 # auth (인증) API 계약
 
-> 모듈: auth · 작성일: 2026-07-19 · 대상 화면: login_com_003_2, reset_password, set_new_password_com_007, account_recovery_com_008
+> 변경: 2026-07-19 email_login_sign_up_com_004 분석 반영 — AUTH-02 경로는 구현 실체(`POST /api/auth/login`) 그대로 확정(2026-07-20 재확인: /login/email 정정은 오판이었음), AUTH-08(이메일 회원가입) 신규 추가. Forgot?→AUTH-04, 소셜→AUTH-01 재사용(계약 무변경).
+> 모듈: auth · 작성일: 2026-07-19 · 대상 화면: login_com_003_2, email_login_sign_up_com_004, reset_password, set_new_password_com_007, account_recovery_com_008
 > 공통 규격: 응답 봉투 `{ success, data, error }`, 필드 camelCase, 날짜 ISO 8601(UTC, 예 `2026-07-19T09:00:00Z`).
 
 ## 공통 규약
@@ -32,7 +33,9 @@
 | 401 | `TOKEN_INVALID` | 토큰 서명/형식 오류 |
 | 401 | `RESET_TOKEN_INVALID` | 재설정/복구 토큰 무효·만료·사용됨 |
 | 401 | `RECOVERY_CODE_INVALID` | 복구 코드 불일치·사용됨 |
+| 409 | `EMAIL_ALREADY_EXISTS` | 회원가입 시 이미 가입된 이메일 |
 | 422 | `PASSWORD_POLICY_VIOLATION` | 비밀번호 정책 미충족 |
+| 422 | `TERMS_NOT_AGREED` | 회원가입 약관 미동의 |
 | 422 | `PASSWORD_MISMATCH` | 새 비밀번호 ≠ 확인 |
 | 429 | `RATE_LIMITED` | 발송/시도 횟수 초과 |
 | 502 | `SOCIAL_AUTH_FAILED` | 소셜 provider 인증 실패 |
@@ -75,8 +78,9 @@
 
 ---
 
-### AUTH-02: 이메일 로그인  `[가정]`
-> 화면 근거: login_com_003_2 "이메일로 로그인" 버튼. 입력 폼 화면 미제공으로 필드는 표준 관행 기준 `[가정]`.
+### AUTH-02: 이메일 로그인
+> 화면: email_login_sign_up_com_004 LOGIN 탭(이메일+비밀번호). 필드 화면으로 확정.
+> **경로 확정:** 구현·QA 통과된 실제 엔드포인트는 `POST /api/auth/login` (AuthController 확인, 2026-07-20).
 - **Method/Path**: `POST /api/auth/login`
 - **인증**: 불필요
 - **Request Body**:
@@ -213,6 +217,34 @@
 
 ---
 
+### AUTH-08: 이메일 회원가입
+> 화면: email_login_sign_up_com_004 SIGN UP 탭. 이메일+비밀번호+약관동의. 기존 PasswordPolicyValidator 재사용, 중복 이메일 409. 성공 시 자동 로그인(AUTH-02와 동일 토큰 봉투).
+- **Method/Path**: `POST /api/auth/signup`
+- **인증**: 불필요
+- **Request Body**:
+```json
+{
+  "email": "string(필수, 이메일 형식)",
+  "password": "string(필수, PasswordPolicy: 최소 12자 + 대문자 1개 이상 + 특수문자 1개 이상, 흔한 패턴 금지)",
+  "agreedToTerms": "boolean(필수, true여야 함) — TOS 체크박스"
+}
+```
+- **Response 200** (가입 성공 → 자동 로그인, AUTH-02와 동일 구조):
+```json
+{
+  "success": true,
+  "data": {
+    "auth": { "accessToken": "string(JWT)", "refreshToken": "string", "tokenType": "Bearer", "expiresIn": 1800 },
+    "user": { "id": "number", "email": "string", "displayName": "string", "provider": "EMAIL", "isNewUser": true }
+  },
+  "error": null
+}
+```
+- **에러**: `400 VALIDATION_ERROR`(형식 오류), `409 EMAIL_ALREADY_EXISTS`(중복 이메일), `422 PASSWORD_POLICY_VIOLATION`, `422 TERMS_NOT_AGREED`(agreedToTerms=false), `429 RATE_LIMITED`
+- **비고**: `[가정]` 자동 로그인 — 화면에 가입→로그인 중간 단계 없음. `displayName`은 미입력 시 이메일 로컬파트로 초기화(`[가정]`). 비밀번호 정책 위반 시 `error.message`에 위반 항목 명시 권장(AUTH-05와 동일).
+
+---
+
 ## 엔드포인트 요약
 | ID | Method | Path | 인증 |
 |---|---|---|---|
@@ -223,3 +255,4 @@
 | AUTH-05 | POST | `/api/auth/password/reset` | 불필요(token) |
 | AUTH-06 | POST | `/api/auth/recovery/email` | 불필요 |
 | AUTH-07 | POST | `/api/auth/recovery/code` | 불필요 |
+| AUTH-08 | POST | `/api/auth/signup` | 불필요 |

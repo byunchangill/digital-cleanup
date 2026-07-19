@@ -104,3 +104,52 @@ frontend/
 - Vite 프록시 target `http://localhost:8080` 가정(백엔드 포트 확정 시 `vite.config.js` 조정).
 - 미제공 화면 2건(이메일 로그인 폼, 24자리 복구코드 입력)은 spec-analyst/설계에서 화면 확보 시 라우트 추가 필요. 관련 API 함수는 이미 구현되어 있어 화면만 붙이면 됨.
 - `npm audit` 2건 경고(개발 의존성) — 빌드 무관.
+
+## 10. 소셜 로그인 실연동 (OAuth 인가 코드 플로우) — 추가
+
+카카오/구글 실연동. 애플은 stub 유지. `npm run build` 통과.
+
+### 신규/변경 파일
+- `src/api/oauth.js` (신규): provider 인가 URL 빌더 + state 생성/검증(sessionStorage). `hasOAuthConfig`, `beginOAuth`, `consumeState`, `redirectUriFor`.
+- `src/pages/auth/OAuthCallbackPage.jsx` (신규): `/auth/callback/:provider`. code/state 파싱 → state 검증 → `socialLogin(provider, {authorizationCode, redirectUri})` → `/home`. 취소/에러/검증실패 → 토스트 후 `/login`. StrictMode 이중 실행은 useRef 가드.
+- `src/pages/auth/LoginPage.jsx`: `handleSocial` — 카카오/구글은 client_id 있고 mock 아니면 `beginOAuth`로 리다이렉트, 아니면 기존 stub. stub 성공 이동 `/` → `/home`으로 정정.
+- `src/App.jsx`: `/auth/callback/:provider` 라우트 추가.
+- `.env.example`: `VITE_KAKAO_CLIENT_ID`, `VITE_GOOGLE_CLIENT_ID` 추가.
+
+### 플로우
+1. 버튼 클릭 → state(`crypto.randomUUID`) sessionStorage 저장 → provider 인가 URL 이동
+   - 카카오: `https://kauth.kakao.com/oauth/authorize?client_id=..&redirect_uri={origin}/auth/callback/kakao&response_type=code&state=..`
+   - 구글: `https://accounts.google.com/o/oauth2/v2/auth?..&scope=openid email profile`
+2. 복귀 `/auth/callback/:provider` → state 일치 검증 → 계약대로 `POST /api/auth/social/{provider}` 호출 → 토큰 저장(persistAuth) → `/home`.
+
+### 설정 방법
+- `.env`에 `VITE_KAKAO_CLIENT_ID` / `VITE_GOOGLE_CLIENT_ID` 채움.
+- provider 콘솔에 Redirect URI 등록: `{origin}/auth/callback/kakao`, `{origin}/auth/callback/google` (개발: `http://localhost:5173/...`).
+- 구글은 scope `openid email profile` 사용.
+
+### 분기 (키 없이도 데모 가능)
+- client_id 비어있음 / `VITE_USE_MOCK=true` / 애플 → 기존 stub(빈 코드) 유지. 실제 리다이렉트는 키 있고 mock 아닐 때만.
+
+### [가정]/한계
+- redirect_uri는 `window.location.origin` 기준 자동 생성(별도 env 불필요). 배포 도메인이 다르면 provider 콘솔 등록만 맞추면 됨.
+- state만 CSRF 방지에 사용(PKCE 미적용). 서버가 code로 토큰 교환하는 표준 플로우 전제 — PKCE 필요 시 code_verifier/challenge 추가 필요.
+
+## 11. 이메일 로그인/회원가입 (email_login_sign_up_com_004) — 추가
+
+LOGIN/SIGN UP 탭 단일 화면. `npm run build` 통과.
+
+### 신규/변경 파일
+- `src/pages/auth/EmailAuthPage.jsx` (신규): `/auth/email`. mode(login|signup) state로 탭 전환. LOGIN→AUTH-02, SIGN UP→AUTH-08(약관 동의 필수)→자동 로그인→/home. Forgot?는 LOGIN 탭만(→/password/reset), 약관 체크박스는 SIGN UP 탭만. PasswordField 재사용, 소셜 버튼은 LoginPage와 동일 handleSocial(OAuth 실연동 반영).
+- `src/api/authApi.js`: (1) AUTH-02 login 경로 `/auth/login` → `/auth/login/email`로 정정(계약 오기 반영). (2) `signup({email,password,agreedToTerms})` 추가 — AUTH-08 `POST /api/auth/signup`, 성공 시 persistAuth(자동 로그인).
+- `src/api/mock/authMock.js`: `mockSignup` 추가(auth 봉투 + user.isNewUser=true, displayName=이메일 로컬파트).
+- `src/pages/auth/LoginPage.jsx`: "이메일로 로그인" 버튼 → 준비중 토스트에서 `/auth/email` 이동으로 교체.
+- `src/App.jsx`: `/auth/email` 라우트 추가.
+
+### 계약 매핑
+- AUTH-02: `POST /api/auth/login/email` (경로 정정 반영).
+- AUTH-08: `POST /api/auth/signup {email, password, agreedToTerms}` → 성공 시 AUTH-02와 동일 토큰 봉투. 에러 409 EMAIL_ALREADY_EXISTS / 422 TERMS_NOT_AGREED / 422 PASSWORD_POLICY_VIOLATION은 client.js 인터셉터가 error.message로 정규화 → 토스트 노출.
+- 약관 미동의 제출은 클라이언트에서 선차단(서버 422 TERMS_NOT_AGREED와 이중 방어).
+
+### [가정]/한계
+- 소셜 버튼: 설계는 Google/Apple 아이콘 이미지. 외부 이미지 URL 대신 텍스트 라벨(Google/Apple)로 대체(CSP/오프라인 안정성). 동작은 기존 handleSocial 재사용으로 동일.
+- 비밀번호 정책(12자+대문자+특수문자)은 서버 검증 신뢰. 클라이언트 사전검증은 미적용 — 필요 시 PasswordField 하위에 정책 힌트 추가 가능.

@@ -92,3 +92,60 @@ cd backend
 - 실제 이메일 발송 어댑터(SMTP/SES) 및 provider별 OAuth 클라이언트 구현 필요(현재 스텁).
 - RATE_LIMITED(429): 코드/상태는 정의되어 있으나 실제 횟수 제한 로직 미구현 → Bucket4j 등으로 발송/시도 제한 추가 권장.
 - 만료 토큰 정리 스케줄러(PasswordResetToken/RefreshToken) 추가 권장.
+
+---
+
+## 9. 소셜 로그인 실연동 (2026-07-19 추가)
+
+카카오 + 구글 Authorization Code 실연동. 애플은 유료 개발자 계정 필요로 Stub 유지. **계약 변경 없음** (기존 인가 코드 플로우와 일치).
+
+### 구조
+- `SocialOAuthProperties` (@ConfigurationProperties `sortmate.oauth`) — kakao.client-id, google.client-id/client-secret. `kakaoConfigured()`/`googleConfigured()`로 키 존재 판정.
+- `KakaoAuthClient`, `GoogleAuthClient` (@Component, `SocialAuthClient` 구현) — Spring `RestClient`(spring-web 기본, **신규 의존성 없음**)로 표준 토큰 교환 → 프로필 조회. 실패는 전부 `SOCIAL_AUTH_FAILED`.
+  - 카카오: POST `kauth.kakao.com/oauth/token` → GET `kapi.kakao.com/v2/user/me`. providerId=`id`, email=`kakao_account.email`(미동의 시 `kakao_{id}@kakao.sortmate.app` 합성), displayName=`properties.nickname`.
+  - 구글: POST `oauth2.googleapis.com/token` → GET `googleapis.com/oauth2/v3/userinfo`. providerId=`sub`, email=`email`, displayName=`name`.
+- `CompositeSocialAuthClient` (@Primary) — provider별 라우팅. 키 미설정 provider는 **기존 `StubSocialAuthClient`로 폴백**(로그 warn 1줄). 애플은 항상 Stub. AuthService는 이 @Primary 빈을 주입받음(코드 변경 없음).
+
+### 설정 방법
+`application.yml`에 환경변수 placeholder(기본 빈값) 등록됨:
+```yaml
+sortmate:
+  oauth:
+    kakao:  { client-id: ${KAKAO_CLIENT_ID:} }
+    google: { client-id: ${GOOGLE_CLIENT_ID:}, client-secret: ${GOOGLE_CLIENT_SECRET:} }
+```
+- **키 미주입(기본)**: 카카오/구글 모두 Stub 폴백 → 데모 소셜 로그인 그대로 동작.
+- **실연동 활성화**: 해당 환경변수 주입 시 자동으로 실 클라이언트 라우팅. 예)
+  ```
+  KAKAO_CLIENT_ID=... GOOGLE_CLIENT_ID=... GOOGLE_CLIENT_SECRET=... ./gradlew.bat bootRun
+  ```
+  (redirect_uri는 요청 바디의 `redirectUri`를 그대로 사용 — provider 콘솔에 등록된 값과 일치해야 함.)
+
+### 테스트
+`CompositeSocialAuthClientTest` 5케이스 — 카카오/구글 실클라이언트 라우팅, 키 미설정/구글 secret 누락 시 Stub 폴백, 애플 항상 Stub. 외부 HTTP는 호출하지 않고 라우팅 결정만 검증.
+
+### 남은 것 / 한계
+- `RestClient`는 각 클라이언트가 `RestClient.create()`로 생성(기본 타임아웃). 운영 시 커넥션/read 타임아웃 설정 권장. `// ponytail: 기본 RestClient, 타임아웃 필요 시 RestClient.Builder 주입`
+- 구글 토큰 검증을 id_token(JWT) 대신 userinfo 조회로 처리(더 단순, 추가 검증 라이브러리 불필요). 서명 검증이 필요하면 후속.
+- `gradlew.bat build` BUILD SUCCESSFUL(전체 테스트 통과, @Primary 컨텍스트 로딩 정상).
+
+---
+
+## 10. AUTH-08 이메일 회원가입 (2026-07-19 추가)
+
+`POST /api/auth/signup` — `{email, password, agreedToTerms}`. 성공 시 자동 로그인(AUTH-02와 동일 토큰 봉투, isNewUser:true).
+
+### 구현
+- `SignupRequest` DTO — `@Email`/`@NotBlank`/`@NotNull` 검증.
+- `AuthService.signup`: 검증 순서 = 약관 미동의(`TERMS_NOT_AGREED` 422) → 중복 이메일(`existsByEmail` → `EMAIL_ALREADY_EXISTS` 409) → 비밀번호 정책(`PasswordPolicyValidator.validate` 재사용 → `PASSWORD_POLICY_VIOLATION` 422). 통과 시 User(provider=EMAIL, passwordHash=BCrypt, displayName=이메일 로컬파트) 저장 후 `authTokenService.issue` → `LoginResponse(auth, UserResponse.of(user, true))`.
+- `AuthController`: `POST /api/auth/signup`.
+- `ErrorCode` 신규 2종: `EMAIL_ALREADY_EXISTS(409)`, `TERMS_NOT_AGREED(422)`. (`PASSWORD_POLICY_VIOLATION`는 기존 재사용.)
+- **SecurityConfig 변경 없음** — `/api/auth/**`가 이미 permitAll이라 `/api/auth/signup` 자동 커버.
+
+### 테스트 (`AuthServiceTest` 4건 추가)
+성공(자동 로그인+isNewUser+displayName=로컬파트) / 약관 미동의 422 / 중복 이메일 409 / 정책 위반 422.
+
+### 한계
+- `429 RATE_LIMITED`는 계약에 명시되나 미구현(auth 전반 레이트리밋 부재와 동일 — 8번 섹션 후속 항목).
+- displayName 커스텀 입력 없음(화면에 필드 없음, 로컬파트 초기화). 프로필 편집은 my 모듈 소관.
+- `gradlew.bat build` BUILD SUCCESSFUL.

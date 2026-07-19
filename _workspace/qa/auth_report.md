@@ -1,7 +1,31 @@
-# auth QA 리포트 (2026-07-19)
+# auth QA 리포트 (2026-07-19, 확장 재검증 2026-07-20)
 
 > 검증자: qa-validator · 대상 모듈: auth · 방식: integration-qa 4단 체크리스트(계약↔백엔드 / 계약↔프론트 / 프론트 내부 / 동적)
 > 입력: contracts/auth.md, specs/auth.md, backend/auth_done.md, frontend/auth_done.md
+
+---
+
+## 확장 재검증 (2026-07-20): 소셜 실연동 + 이메일 로그인/가입 + 경로 사고 복구 → **통과**
+
+> 범위: 소셜 OAuth 실연동(Kakao/Google/Composite 폴백), AUTH-08 회원가입 신규, AUTH-02 경로 사고(`/login/email` 오정정) 복구.
+> 최신 빌드를 :8093 별도 기동(스테일 8080 회피), frontend `npm run build` 통과. **하드 실패 0 / 신규 항목 전부 정합.**
+
+### 요약(확장분): 통과 15 / 실패 0 / 보류 0
+
+1. **[핵심] AUTH-02 경로 사고 복구 → 통과(동적 실증)**: 3자 정합 재확인 — 계약 `POST /api/auth/login`(L84), 백엔드 `AuthController:40 @PostMapping("/login")`, 프론트 `authApi.js:30 client.post('/auth/login')`. `/login/email`(오정정) 흔적 없음. **동적 로그인 라운드트립**: `POST /api/auth/login {demo}` → `200` + `auth{accessToken,refreshToken,tokenType,expiresIn}` + `user{email,provider:EMAIL}`. 잘못된 비번 → `401 INVALID_CREDENTIALS`. 로그인 실동작 확인.
+2. **AUTH-08 회원가입 → 통과(동적)**: 신규 이메일 → `200` 자동로그인(토큰 봉투 + `user.isNewUser:true`, `displayName`=이메일 로컬파트, `provider:EMAIL`). 중복(demo) → `409 EMAIL_ALREADY_EXISTS`. 약관 미동의 → `422 TERMS_NOT_AGREED`. 약한 비번 → `422 PASSWORD_POLICY_VIOLATION`(위반 항목 메시지 포함). **검증 순서**(약관→중복→정책) 확인: demo+terms:false → `422 TERMS`(중복보다 약관 우선). DTO 검증(@Email/@NotBlank/@NotNull), ErrorCode 409/422 등재.
+3. **소셜 stub 폴백(키 미설정) → 통과(동적)**: `CompositeSocialAuthClient(@Primary)`가 키 미설정 kakao/google을 `StubSocialAuthClient`로 폴백, apple 항상 stub. `POST /api/auth/social/kakao {정상코드}` → `200`(provider KAKAO, isNewUser). google/apple → `200`. `fail-` 접두 코드 → `502 SOCIAL_AUTH_FAILED`. 미지원 provider(naver) → `400 VALIDATION_ERROR`. 코드 누락 → `400`. 기존 데모 소셜 동작 유지(계약 AUTH-01 무변경).
+4. **OAuth 프론트 플로우 정적 검토 → 통과**: `oauth.js` state=`crypto.randomUUID` sessionStorage 저장, `consumeState`가 1회성 제거+대조(CSRF). `redirectUriFor(provider)`=`{origin}/auth/callback/{provider}`를 **인가 요청(beginOAuth)과 토큰교환(콜백 socialLogin) 양쪽에 동일 사용** → redirectUri 일치성 확보(provider 콘솔 등록값과 매칭 전제). `OAuthCallbackPage`: code/state 파싱→검증→`socialLogin({authorizationCode:code, redirectUri})`→/home, 취소/에러/검증실패→/login, StrictMode useRef 가드. `LoginPage/EmailAuthPage.handleSocial`: kakao·google + `hasOAuthConfig` + `!useMock`이면 `beginOAuth` 리다이렉트, 아니면 stub 호출. 라우트 `App.jsx` `/auth/email`·`/auth/callback/:provider` 등록. (실 키 없어 리다이렉트 자체는 코드 검토로만 — 표준 code 교환 플로우 정합)
+5. **회귀 스모크 → 없음**: 로그인 토큰으로 items/home/cleanup/vault/my/categories 전부 200, 무인증 items → 401. SecurityConfig `/api/auth/**` permitAll이 `/signup` 자동 커버(별도 변경 없음). 소셜 실클라이언트 추가(@Primary)로 컨텍스트 로딩 정상(기동 성공).
+
+### 확장분 관찰(저우선)
+- **OBS-A-ext1**: `POST /api/auth/login/email`(존재하지 않는 경로) 호출 시 500 반환(no-handler가 catch-all Exception 핸들러→INTERNAL_ERROR). 복구된 실제 경로(`/api/auth/login`)와 무관한 사전존재 동작이며 프론트는 해당 경로를 호출하지 않음. 원한다면 no-handler를 404로 매핑 가능(전 모듈 공통, auth 한정 아님). 조치 불요.
+- **OBS-A-ext2**: 프론트 소셜 버튼이 디자인의 provider 아이콘 이미지 대신 텍스트 라벨(Google/Apple)로 대체(CSP/오프라인 안정성, frontend_done 11절 명시). 동작 동일, 무해.
+
+---
+
+## (초기 검증 2026-07-19)
+
 > 동적 검증: `java -jar build/libs/sortmate-backend-0.0.1-SNAPSHOT.jar` 백그라운드 기동(포트 8080, H2 in-memory, 데모 시딩 확인) → curl 실호출 → 검증 후 프로세스 종료. 프론트 `npm run build` 통과.
 
 ## 요약: 통과 4개 영역(계약 위반 0) / 실패 0 / 보류·관찰 3

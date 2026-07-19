@@ -37,6 +37,15 @@ app:
   recovery-token:
     ttl-seconds: 600                   # 10분
 
+# 소셜 OAuth 실연동 키(비어 있으면 provider별 Stub 폴백 → 데모 계속 동작).
+sortmate:
+  oauth:
+    kakao:
+      client-id: ${KAKAO_CLIENT_ID:}
+    google:
+      client-id: ${GOOGLE_CLIENT_ID:}
+      client-secret: ${GOOGLE_CLIENT_SECRET:}
+
 logging:
   level:
     org.springframework.security: INFO

@@ -15,6 +15,8 @@ public enum ErrorCode {
     RECOVERY_CODE_INVALID(HttpStatus.UNAUTHORIZED, "복구 코드가 올바르지 않습니다."),
     PASSWORD_POLICY_VIOLATION(HttpStatus.UNPROCESSABLE_ENTITY, "비밀번호가 정책을 충족하지 않습니다."),
     PASSWORD_MISMATCH(HttpStatus.UNPROCESSABLE_ENTITY, "새 비밀번호와 확인이 일치하지 않습니다."),
+    EMAIL_ALREADY_EXISTS(HttpStatus.CONFLICT, "이미 가입된 이메일입니다."),
+    TERMS_NOT_AGREED(HttpStatus.UNPROCESSABLE_ENTITY, "약관에 동의해야 가입할 수 있습니다."),
     RATE_LIMITED(HttpStatus.TOO_MANY_REQUESTS, "요청 횟수가 초과되었습니다."),
     SOCIAL_AUTH_FAILED(HttpStatus.BAD_GATEWAY, "소셜 인증에 실패했습니다."),
 

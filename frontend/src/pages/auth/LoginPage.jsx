@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { socialLogin } from '../../api/authApi';
+import { beginOAuth, hasOAuthConfig } from '../../api/oauth';
 import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
 
@@ -12,14 +13,19 @@ export default function LoginPage() {
   const { toast, show } = useToast();
   const [busy, setBusy] = useState('');
 
-  // AUTH-01: 소셜 로그인. 실제 OAuth 인가코드는 provider SDK 리다이렉트에서 수급 →
-  // [자율결정] provider 리다이렉트 플로우가 별도 화면/모듈로 미제공이라, 여기서는
-  // 계약대로 socialLogin(provider)를 호출하는 훅만 연결한다(authorizationCode는 연동 시점 주입).
+  // AUTH-01: 소셜 로그인.
+  // 카카오/구글은 client_id 환경변수가 있으면 실제 인가 코드 플로우(provider 리다이렉트 → /auth/callback).
+  // 키 없음 / mock 모드 / 애플은 기존 stub(빈 코드) 유지 — 키 없이도 데모가 굴러가야 함.
+  const useMock = import.meta.env.VITE_USE_MOCK === 'true';
   const handleSocial = async (provider) => {
+    if ((provider === 'kakao' || provider === 'google') && hasOAuthConfig(provider) && !useMock) {
+      beginOAuth(provider); // provider 인가 URL로 이탈
+      return;
+    }
     setBusy(provider);
     try {
       await socialLogin(provider, {});
-      navigate('/'); // 홈은 auth 모듈 밖
+      navigate('/home');
     } catch (e) {
       show(e.message || '로그인에 실패했습니다.', { icon: 'error' });
     } finally {
@@ -104,7 +110,7 @@ export default function LoginPage() {
         {/* Email Sign In — 이메일 로그인 폼 화면이 설계에 미제공([가정]).
             임의 라우트를 만들지 않고 안내 토스트만 노출(추후 폼 화면 확보 시 연결). */}
         <button
-          onClick={() => show('이메일 로그인 화면은 준비 중입니다.', { icon: 'info' })}
+          onClick={() => navigate('/auth/email')}
           className="w-full py-2 text-primary font-body-lg text-body-lg hover:underline transition-all"
         >
           이메일로 로그인

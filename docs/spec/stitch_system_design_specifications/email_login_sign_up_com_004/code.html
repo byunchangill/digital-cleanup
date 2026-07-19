@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="ko" style="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      try {
+        tailwind.config = {
+          darkMode: 'class',
+          theme: {
+            extend: {
+              colors: {
+                'surface-dim': '#cbdbf5',
+                'on-primary-fixed-variant': '#3323cc',
+                'on-primary-fixed': '#0f0069',
+                'bg-primary': '#FFFFFF',
+                primary: '#3525cd',
+                'on-background': '#0b1c30',
+                'primary-container': '#4f46e5',
+                'surface-container-highest': '#d3e4fe',
+                background: '#f8f9ff',
+                'on-tertiary-fixed': '#2a1700',
+                secondary: '#006c49',
+                'primary-fixed-dim': '#c3c0ff',
+                'primary-fixed': '#e2dfff',
+                'on-secondary-fixed-variant': '#005236',
+                'surface-border': '#E2E8F0',
+                'secondary-container': '#6cf8bb',
+                'on-primary': '#ffffff',
+                'surface-container-high': '#dce9ff',
+                'on-secondary-container': '#00714d',
+                outline: '#777587',
+                'on-surface': '#0b1c30',
+                'outline-variant': '#c7c4d8',
+                'surface-bright': '#f8f9ff',
+                'surface-variant': '#d3e4fe',
+                'on-error-container': '#93000a',
+                surface: '#f8f9ff',
+                error: '#ba1a1a',
+                'error-container': '#ffdad6',
+                'on-tertiary-container': '#ffd4a4',
+                'on-error': '#ffffff',
+                'bg-secondary': '#F8FAFC',
+                'text-muted': '#64748B',
+                'surface-tint': '#4d44e3',
+                'on-primary-container': '#dad7ff',
+                'surface-container': '#e5eeff',
+                'on-tertiary': '#ffffff',
+                'tertiary-container': '#885500',
+                'secondary-fixed-dim': '#4edea3',
+                'inverse-on-surface': '#eaf1ff',
+                'inverse-surface': '#213145',
+                'surface-container-lowest': '#ffffff',
+                'text-main': '#0F172A',
+                'surface-container-low': '#eff4ff',
+                'secondary-fixed': '#6ffbbe',
+                'on-surface-variant': '#464555',
+                'on-secondary': '#ffffff',
+                'tertiary-fixed-dim': '#ffb95f',
+                tertiary: '#684000',
+                'on-tertiary-fixed-variant': '#653e00',
+                'on-secondary-fixed': '#002113',
+                'inverse-primary': '#c3c0ff',
+                'vault-blur': 'rgba(255, 255, 255, 0.4)',
+              },
+              borderRadius: {
+                DEFAULT: '0.25rem',
+                lg: '0.5rem',
+                xl: '0.75rem',
+                full: '9999px',
+              },
+              spacing: {
+                'container-padding': '20px',
+                'base-unit': '4px',
+                'stack-gap-md': '16px',
+                'stack-gap-lg': '24px',
+                'stack-gap-sm': '8px',
+                'grid-gutter': '12px',
+              },
+              fontFamily: {
+                'headline-sm': ['Manrope'],
+                'label-caps': ['JetBrains Mono'],
+                'headline-md': ['Manrope'],
+                'headline-lg-mobile': ['Manrope'],
+                'display-lg': ['Manrope'],
+                caption: ['Hanken Grotesk'],
+                'body-lg': ['Hanken Grotesk'],
+                'body-md': ['Hanken Grotesk'],
+              },
+              fontSize: {
+                'headline-sm': [
+                  '20px',
+                  { lineHeight: '28px', fontWeight: '600' },
+                ],
+                'label-caps': [
+                  '12px',
+                  {
+                    lineHeight: '16px',
+                    letterSpacing: '0.05em',
+                    fontWeight: '500',
+                  },
+                ],
+                'headline-md': [
+                  '24px',
+                  {
+                    lineHeight: '32px',
+                    letterSpacing: '-0.01em',
+                    fontWeight: '600',
+                  },
+                ],
+                'headline-lg-mobile': [
+                  '28px',
+                  { lineHeight: '36px', fontWeight: '700' },
+                ],
+                'display-lg': [
+                  '32px',
+                  {
+                    lineHeight: '40px',
+                    letterSpacing: '-0.02em',
+                    fontWeight: '700',
+                  },
+                ],
+                caption: ['12px', { lineHeight: '16px', fontWeight: '400' }],
+                'body-lg': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+                'body-md': ['14px', { lineHeight: '20px', fontWeight: '400' }],
+              },
+            },
+          },
+        };
+      } catch (_e) {}
+    </script>
+  </head>
+  <body
+    class="flex flex-col min-h-screen text-on-surface font-body-md text-body-md overflow-x-hidden"
+  >
+    <!-- Top AppBar (Simplified for Auth Flow - Suppressed based on UI rules) -->
+    <header
+      class="fixed top-0 w-full z-50 flex justify-center items-center px-container-padding h-16 bg-white"
+    >
+      <h1
+        class="font-headline-md text-headline-md font-bold text-primary tracking-tight"
+      >
+        Sortmate
+      </h1>
+    </header>
+
+    <main
+      class="flex-grow flex items-center justify-center pt-24 pb-12 px-container-padding"
+    >
+      <div class="w-full max-w-md space-y-stack-gap-lg">
+        <!-- Headline Section -->
+        <div class="text-center space-y-2">
+          <h2
+            class="font-headline-lg-mobile text-headline-lg-mobile text-on-background"
+          >
+            새로운 시작
+          </h2>
+          <p class="font-body-lg text-body-lg text-on-surface-variant">
+            디지털 클러터를 정리하고 스마트한 라이브러리를 만드세요.
+          </p>
+        </div>
+
+        <!-- Sign Up Form Card -->
+        <div
+          class="auth-card bg-white p-6 rounded-xl border border-surface-border"
+        >
+          <form
+            id="signup-form"
+            class="space-y-stack-gap-md"
+            onsubmit="return false;"
+          >
+            <!-- Email Field -->
+            <div class="space-y-base-unit">
+              <label
+                for="email"
+                class="block font-body-md text-body-md font-semibold text-on-surface ml-1"
+                >이메일 주소</label
+              >
+              <div
+                class="relative flex items-center input-focus-ring rounded-lg bg-surface-container-low transition-all border border-transparent focus-within:border-primary"
+              >
+                <span
+                  class="material-symbols-outlined absolute left-4 text-outline"
+                  >mail</span
+                >
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="example@sortmate.com"
+                  class="w-full bg-transparent border-none py-3.5 pl-11 pr-4 rounded-lg focus:ring-0 font-body-md text-body-md text-on-surface placeholder:text-outline-variant"
+                />
+              </div>
+            </div>
+
+            <!-- Password Field -->
+            <div class="space-y-base-unit">
+              <label
+                for="password"
+                class="block font-body-md text-body-md font-semibold text-on-surface ml-1"
+                >비밀번호</label
+              >
+              <div
+                class="relative flex items-center input-focus-ring rounded-lg bg-surface-container-low transition-all border border-transparent focus-within:border-primary"
+              >
+                <span
+                  class="material-symbols-outlined absolute left-4 text-outline"
+                  >lock</span
+                >
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="8자 이상 입력해주세요"
+                  class="w-full bg-transparent border-none py-3.5 pl-11 pr-12 rounded-lg focus:ring-0 font-body-md text-body-md text-on-surface placeholder:text-outline-variant"
+                />
+                <button
+                  type="button"
+                  class="absolute right-4 text-outline hover:text-primary transition-colors"
+                >
+                  <span class="material-symbols-outlined">visibility_off</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Password Confirmation Field -->
+            <div class="space-y-base-unit">
+              <label
+                for="password_confirm"
+                class="block font-body-md text-body-md font-semibold text-on-surface ml-1"
+                >비밀번호 확인</label
+              >
+              <div
+                class="relative flex items-center input-focus-ring rounded-lg bg-surface-container-low transition-all border border-transparent focus-within:border-primary"
+              >
+                <span
+                  class="material-symbols-outlined absolute left-4 text-outline"
+                  >verified_user</span
+                >
+                <input
+                  type="password"
+                  id="password_confirm"
+                  placeholder="비밀번호를 한번 더 입력하세요"
+                  class="w-full bg-transparent border-none py-3.5 pl-11 pr-4 rounded-lg focus:ring-0 font-body-md text-body-md text-on-surface placeholder:text-outline-variant"
+                />
+              </div>
+            </div>
+
+            <!-- Terms & Conditions -->
+            <div class="flex items-start gap-3 py-2 px-1">
+              <div class="relative flex items-center h-5">
+                <input
+                  id="terms"
+                  type="checkbox"
+                  class="h-5 w-5 text-primary border-outline-variant rounded-md focus:ring-primary transition-all cursor-pointer"
+                />
+              </div>
+              <div class="text-caption font-caption text-on-surface-variant">
+                <label for="terms" class="cursor-pointer">
+                  <span class="text-primary font-semibold">이용 약관</span> 및
+                  <span class="text-primary font-semibold"
+                    >개인정보 처리방침</span
+                  >에 동의합니다.
+                </label>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              class="w-full py-4 bg-primary text-on-primary font-body-lg text-body-lg font-bold rounded-xl shadow-lg shadow-primary/20 hover:opacity-90 active:scale-[0.98] transition-all duration-200"
+            >
+              회원가입 하기
+            </button>
+          </form>
+
+          <!-- Social Sign Up Divider -->
+          <div class="relative my-8">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t border-surface-border"></div>
+            </div>
+            <div class="relative flex justify-center text-caption font-caption">
+              <span class="px-4 bg-white text-outline"
+                >또는 다음으로 시작하기</span
+              >
+            </div>
+          </div>
+
+          <!-- Social Options -->
+          <div class="grid grid-cols-2 gap-grid-gutter">
+            <button
+              class="flex items-center justify-center gap-2 py-3 px-4 border border-surface-border rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-lowest transition-colors"
+            >
+              <svg class="w-6 h-6" viewBox="0 0 24 24">
+                <path
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                  fill="#4285F4"
+                ></path>
+                <path
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                  fill="#34A853"
+                  class=""
+                ></path>
+                <path
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                  fill="#FBBC05"
+                  class=""
+                ></path>
+                <path
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 12-4.53z"
+                  fill="#EA4335"
+                ></path>
+              </svg>
+              Google
+            </button>
+            <button
+              class="flex items-center justify-center gap-2 py-3 px-4 border border-surface-border rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-lowest transition-colors"
+            >
+              <img
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCo-HbmgwVV5MAvepNWgriIVzQ6UniFLu4ltxy0PHjsBkWvjtWoRZi4oppzPY-V6UNAE13XnHA7Be2xllGhE56RbwOkVqdE865jzxyOP0i4lotEiZgLg1tThpZbqHfN1uuPBLVbCr-63mn3h_o66vVkhTQypplyserIhHiRbhFtBnxIOsiTyKqSBtSuf8eMvD4ZHJx5SqER3JMnpVeSQ5IpuIHb8HTUKac4sVPyNjV6zg-7BVM3TMFZWrpIrbbHUPYmHFd9G6DRE1M"
+                alt="Kakao"
+                class="w-6 h-6 object-contain"
+              />
+              카카오
+            </button>
+          </div>
+        </div>
+
+        <!-- Login Link -->
+        <div class="text-center pt-4">
+          <p class="font-body-md text-body-md text-on-surface-variant">
+            이미 계정이 있으신가요?
+            <a href="#" class="text-primary font-bold hover:underline ml-1"
+              >로그인</a
+            >
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Visual Decoration (Subtle Blobs) -->
+    <div
+      class="fixed top-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-primary/5 rounded-full blur-[100px] pointer-events-none -z-10"
+    ></div>
+    <div
+      class="fixed bottom-[-5%] left-[-5%] w-[30vw] h-[30vw] bg-secondary-container/10 rounded-full blur-[80px] pointer-events-none -z-10"
+    ></div>
+
+    <script>
+      // Password Visibility Toggle Interaction
+      const toggleButtons = document.querySelectorAll(
+        'button span.material-symbols-outlined',
+      );
+      toggleButtons.forEach((btn) => {
+        btn.parentElement.addEventListener('click', () => {
+          const input = btn.parentElement.previousElementSibling;
+          if (input.type === 'password') {
+            input.type = 'text';
+            btn.textContent = 'visibility';
+          } else {
+            input.type = 'password';
+            btn.textContent = 'visibility_off';
+          }
+        });
+      });
+
+      // Simple Form Interaction Simulation
+      const signupForm = document.getElementById('signup-form');
+      signupForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const submitBtn = signupForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = '처리 중...';
+        submitBtn.classList.add('opacity-70');
+
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+          submitBtn.classList.remove('opacity-70');
+          // Mock success behavior could be added here
+        }, 1500);
+      });
+
+      // Micro-interaction for inputs
+      //   const
+    </script>
+  </body>
+</html>

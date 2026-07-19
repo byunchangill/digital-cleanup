@@ -104,6 +104,29 @@ public class AuthService {
         return new LoginResponse(auth, UserResponse.of(user));
     }
 
+    // ── AUTH-08 이메일 회원가입 (성공 시 자동 로그인) ──────────────────────
+    @Transactional
+    public LoginResponse signup(com.sortmate.auth.dto.SignupRequest request) {
+        if (!Boolean.TRUE.equals(request.agreedToTerms())) {
+            throw new BusinessException(ErrorCode.TERMS_NOT_AGREED);
+        }
+        if (userRepository.existsByEmail(request.email())) {
+            throw new BusinessException(ErrorCode.EMAIL_ALREADY_EXISTS);
+        }
+        passwordPolicyValidator.validate(request.password()); // 위반 시 PASSWORD_POLICY_VIOLATION
+
+        String local = request.email().substring(0, request.email().indexOf('@'));
+        User user = userRepository.save(User.builder()
+                .email(request.email())
+                .displayName(local) // [가정] 미입력 → 이메일 로컬파트
+                .provider(AuthProvider.EMAIL)
+                .passwordHash(passwordEncoder.encode(request.password()))
+                .build());
+
+        AuthTokenResponse auth = authTokenService.issue(user);
+        return new LoginResponse(auth, UserResponse.of(user, true));
+    }
+
     // ── AUTH-03 액세스 토큰 갱신 ───────────────────────────────────────────
     @Transactional
     public AuthTokenResponse refresh(TokenRefreshRequest request) {

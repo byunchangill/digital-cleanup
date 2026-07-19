@@ -3,6 +3,8 @@ import LoginPage from './pages/auth/LoginPage';
 import ResetPasswordPage from './pages/auth/ResetPasswordPage';
 import SetNewPasswordPage from './pages/auth/SetNewPasswordPage';
 import AccountRecoveryPage from './pages/auth/AccountRecoveryPage';
+import OAuthCallbackPage from './pages/auth/OAuthCallbackPage';
+import EmailAuthPage from './pages/auth/EmailAuthPage';
 import HomePage from './pages/home/HomePage';
 import SearchResultsPage from './pages/home/SearchResultsPage';
 import GalleryImportPage from './pages/item/GalleryImportPage';
@@ -35,6 +37,8 @@ export default function App() {
         <Route path="/password/reset" element={<ResetPasswordPage />} />
         <Route path="/password/new" element={<SetNewPasswordPage />} />
         <Route path="/recovery" element={<AccountRecoveryPage />} />
+        <Route path="/auth/callback/:provider" element={<OAuthCallbackPage />} />
+        <Route path="/auth/email" element={<EmailAuthPage />} />
         {/* home 모듈 */}
         <Route path="/home" element={<HomePage />} />
         <Route path="/search" element={<SearchResultsPage />} />

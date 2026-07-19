@@ -118,6 +118,56 @@ class AuthServiceTest {
                 .extracting("errorCode").isEqualTo(ErrorCode.INVALID_CREDENTIALS);
     }
 
+    // ── AUTH-08 회원가입 ───────────────────────────────────────
+    @Test
+    @DisplayName("회원가입: 성공 시 자동 로그인 토큰 + isNewUser=true, displayName=이메일 로컬파트")
+    void signupSuccess() {
+        when(userRepository.existsByEmail("new@sortmate.app")).thenReturn(false);
+        when(userRepository.save(any())).thenAnswer(inv -> {
+            User u = inv.getArgument(0);
+            ReflectionTestUtils.setField(u, "id", 1L);
+            return u;
+        });
+        when(passwordEncoder.encode(anyString())).thenReturn("$2a$new");
+        when(authTokenService.issue(any())).thenReturn(ISSUED);
+
+        LoginResponse res = authService.signup(
+                new com.sortmate.auth.dto.SignupRequest("new@sortmate.app", "GreenPine!Harbor42", true));
+
+        assertThat(res.auth().accessToken()).isEqualTo("access.jwt");
+        assertThat(res.user().isNewUser()).isTrue();
+        assertThat(res.user().displayName()).isEqualTo("new");
+    }
+
+    @Test
+    @DisplayName("회원가입: 약관 미동의면 TERMS_NOT_AGREED")
+    void signupTermsNotAgreed() {
+        assertThatThrownBy(() -> authService.signup(
+                new com.sortmate.auth.dto.SignupRequest("new@sortmate.app", "GreenPine!Harbor42", false)))
+                .isInstanceOf(BusinessException.class)
+                .extracting("errorCode").isEqualTo(ErrorCode.TERMS_NOT_AGREED);
+    }
+
+    @Test
+    @DisplayName("회원가입: 중복 이메일이면 EMAIL_ALREADY_EXISTS")
+    void signupDuplicate() {
+        when(userRepository.existsByEmail("dup@sortmate.app")).thenReturn(true);
+        assertThatThrownBy(() -> authService.signup(
+                new com.sortmate.auth.dto.SignupRequest("dup@sortmate.app", "GreenPine!Harbor42", true)))
+                .isInstanceOf(BusinessException.class)
+                .extracting("errorCode").isEqualTo(ErrorCode.EMAIL_ALREADY_EXISTS);
+    }
+
+    @Test
+    @DisplayName("회원가입: 정책 위반이면 PASSWORD_POLICY_VIOLATION")
+    void signupPolicyViolation() {
+        when(userRepository.existsByEmail("new@sortmate.app")).thenReturn(false);
+        assertThatThrownBy(() -> authService.signup(
+                new com.sortmate.auth.dto.SignupRequest("new@sortmate.app", "short", true)))
+                .isInstanceOf(BusinessException.class)
+                .extracting("errorCode").isEqualTo(ErrorCode.PASSWORD_POLICY_VIOLATION);
+    }
+
     // ── AUTH-03 ────────────────────────────────────────────────
     @Test
     @DisplayName("토큰 갱신: 저장된 토큰 없으면 TOKEN_INVALID")

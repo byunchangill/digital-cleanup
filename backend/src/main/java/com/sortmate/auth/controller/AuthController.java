@@ -42,6 +42,12 @@ public class AuthController {
         return ApiResponse.success(authService.emailLogin(request));
     }
 
+    /** AUTH-08 이메일 회원가입 (성공 시 자동 로그인) */
+    @PostMapping("/signup")
+    public ApiResponse<LoginResponse> signup(@Valid @RequestBody com.sortmate.auth.dto.SignupRequest request) {
+        return ApiResponse.success(authService.signup(request));
+    }
+
     /** AUTH-03 액세스 토큰 갱신 */
     @PostMapping("/token/refresh")
     public ApiResponse<AuthTokenResponse> refresh(@Valid @RequestBody TokenRefreshRequest request) {
