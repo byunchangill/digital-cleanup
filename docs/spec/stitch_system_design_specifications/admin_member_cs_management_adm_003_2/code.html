@@ -1,22 +1,115 @@
 <!DOCTYPE html>
 
-<html class="light" lang="ko"><head>
+<html lang="ko"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Sortmate 관리자 - 회원 및 CS 관리</title>
+<title>Sortmate Admin - Member &amp; CS Management</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#f8f9ff",
+                    "on-secondary-container": "#00714d",
+                    "on-tertiary-container": "#ffd4a4",
+                    "bg-primary": "#FFFFFF",
+                    "vault-blur": "rgba(255, 255, 255, 0.4)",
+                    "on-primary-container": "#dad7ff",
+                    "surface-border": "#E2E8F0",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "secondary-container": "#6cf8bb",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-container-low": "#eff4ff",
+                    "surface-bright": "#f8f9ff",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#213145",
+                    "on-secondary-fixed-variant": "#005236",
+                    "secondary-fixed-dim": "#4edea3",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-variant": "#d3e4fe",
+                    "on-primary-fixed": "#0f0069",
+                    "tertiary-container": "#885500",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "text-main": "#0F172A",
+                    "bg-secondary": "#F8FAFC",
+                    "on-secondary-fixed": "#002113",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "tertiary-fixed": "#ffddb8",
+                    "tertiary": "#684000",
+                    "on-background": "#0b1c30",
+                    "surface-dim": "#cbdbf5",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-surface-variant": "#464555",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-tertiary-fixed": "#2a1700",
+                    "text-muted": "#64748B",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-primary": "#ffffff",
+                    "outline-variant": "#c7c4d8",
+                    "surface-container-high": "#dce9ff",
+                    "primary-fixed": "#e2dfff",
+                    "primary": "#3525cd",
+                    "background": "#f8f9ff",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#4d44e3",
+                    "inverse-primary": "#c3c0ff",
+                    "secondary": "#006c49",
+                    "surface-container": "#e5eeff",
+                    "outline": "#777587",
+                    "on-surface": "#0b1c30",
+                    "primary-container": "#4f46e5",
+                    "on-primary-fixed-variant": "#3323cc"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-gap-lg": "24px",
+                    "stack-gap-md": "16px",
+                    "stack-gap-sm": "8px",
+                    "grid-gutter": "12px",
+                    "container-padding": "20px",
+                    "base-unit": "4px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Hanken Grotesk"],
+                    "label-caps": ["JetBrains Mono"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "headline-sm": ["Hanken Grotesk"],
+                    "caption": ["Hanken Grotesk"],
+                    "display-lg": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"]
+            }
+          },
+        },
+      }
+    </script>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        body {
+            font-family: 'Hanken Grotesk', sans-serif;
+            background-color: #F8FAFC;
         }
-        .vault-blur-effect {
-            backdrop-filter: blur(20px);
-            background: var(--vault-blur);
+        .sidebar-item-active {
+            background-color: #4f46e5;
+            color: #ffffff;
         }
-        /* Custom scrollbar for high-density lists */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
         .custom-scrollbar::-webkit-scrollbar {
             width: 4px;
         }
@@ -24,349 +117,293 @@
             background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: #E2E8F0;
             border-radius: 10px;
         }
     </style>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "on-tertiary-fixed-variant": "#653e00",
-                        "on-secondary-fixed": "#002113",
-                        "background": "#f8f9ff",
-                        "outline-variant": "#c7c4d8",
-                        "tertiary-fixed-dim": "#ffb95f",
-                        "surface-dim": "#cbdbf5",
-                        "primary-fixed-dim": "#c3c0ff",
-                        "bg-primary": "#FFFFFF",
-                        "secondary-container": "#6cf8bb",
-                        "text-muted": "#64748B",
-                        "inverse-surface": "#213145",
-                        "surface-container-high": "#dce9ff",
-                        "surface-border": "#E2E8F0",
-                        "on-surface": "#0b1c30",
-                        "surface-container": "#e5eeff",
-                        "surface-bright": "#f8f9ff",
-                        "on-primary": "#ffffff",
-                        "on-primary-fixed": "#0f0069",
-                        "on-error": "#ffffff",
-                        "outline": "#777587",
-                        "surface-container-lowest": "#ffffff",
-                        "on-background": "#0b1c30",
-                        "surface-container-low": "#eff4ff",
-                        "on-surface-variant": "#464555",
-                        "vault-blur": "rgba(255, 255, 255, 0.4)",
-                        "primary-fixed": "#e2dfff",
-                        "surface-container-highest": "#d3e4fe",
-                        "secondary": "#006c49",
-                        "on-secondary-container": "#00714d",
-                        "on-secondary": "#ffffff",
-                        "on-tertiary-container": "#ffd4a4",
-                        "on-primary-fixed-variant": "#3323cc",
-                        "inverse-primary": "#c3c0ff",
-                        "surface-tint": "#4d44e3",
-                        "surface-variant": "#d3e4fe",
-                        "on-tertiary": "#ffffff",
-                        "text-main": "#0F172A",
-                        "inverse-on-surface": "#eaf1ff",
-                        "secondary-fixed": "#6ffbbe",
-                        "error-container": "#ffdad6",
-                        "primary-container": "#4f46e5",
-                        "error": "#ba1a1a",
-                        "on-tertiary-fixed": "#2a1700",
-                        "on-secondary-fixed-variant": "#005236",
-                        "bg-secondary": "#F8FAFC",
-                        "tertiary-container": "#885500",
-                        "on-error-container": "#93000a",
-                        "surface": "#f8f9ff",
-                        "secondary-fixed-dim": "#4edea3",
-                        "on-primary-container": "#dad7ff",
-                        "tertiary": "#684000",
-                        "tertiary-fixed": "#ffddb8",
-                        "primary": "#3525cd"
-                    },
-                    "spacing": {
-                        "stack-gap-lg": "24px",
-                        "base-unit": "4px",
-                        "container-padding": "20px",
-                        "stack-gap-md": "16px",
-                        "grid-gutter": "12px",
-                        "stack-gap-sm": "8px"
-                    },
-                    "fontFamily": {
-                        "display-lg": ["Hanken Grotesk"],
-                        "label-caps": ["JetBrains Mono"],
-                        "caption": ["Hanken Grotesk"],
-                        "body-md": ["Hanken Grotesk"],
-                        "headline-md": ["Hanken Grotesk"],
-                        "headline-lg-mobile": ["Hanken Grotesk"],
-                        "body-lg": ["Hanken Grotesk"],
-                        "headline-sm": ["Hanken Grotesk"]
-                    },
-                    "fontSize": {
-                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
-                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
-                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
-                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
-                    }
-                }
-            }
-        }
-    </script>
 <style>
     body {
       min-height: max(884px, 100dvh);
     }
   </style>
-</head>
-<body class="bg-background text-on-background font-body-md min-h-screen">
-<!-- Top Navigation Bar -->
-<header class="fixed top-0 w-full z-50 flex justify-between items-center px-container-padding h-16 bg-surface dark:bg-on-background shadow-sm">
+  </head>
+<body class="text-on-surface overflow-hidden">
+<!-- Shell Layout -->
+<div class="flex h-screen w-full">
+<!-- Sidebar Navigation -->
+<aside class="w-64 bg-surface border-r border-surface-border flex flex-col hidden md:flex shrink-0">
+<div class="h-16 flex items-center px-6 mb-6">
+<span class="font-headline-md text-headline-md font-extrabold text-primary tracking-tight">Sortmate Admin</span>
+</div>
+<nav class="flex-1 px-4 space-y-2 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors rounded-xl font-medium" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>대시보드</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 sidebar-item-active shadow-lg shadow-indigo-100 rounded-xl font-medium" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span>회원 관리</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors rounded-xl font-medium" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span>CS 관리</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors rounded-xl font-medium" href="#">
+<span class="material-symbols-outlined">security</span>
+<span>보안 로그</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors rounded-xl font-medium" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>시스템 설정</span>
+</a>
+</nav>
+<div class="p-4 border-t border-surface-border">
+<div class="flex items-center gap-3 px-2">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary font-bold">A</div>
+<div class="flex flex-col">
+<span class="text-body-md font-semibold">관리자 마스터</span>
+<span class="text-caption text-text-muted">admin@sortmate.io</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col min-w-0 bg-bg-secondary relative">
+<!-- Top AppBar -->
+<header class="h-16 flex items-center justify-between px-container-padding bg-white shadow-sm z-10">
 <div class="flex items-center gap-4">
-<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Sortmate</h1>
-<span class="bg-primary/10 text-primary px-3 py-1 rounded-full font-label-caps text-[10px]">관리자 콘솔</span>
+<button class="md:hidden p-2 text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm font-semibold">회원 관리</h1>
 </div>
-<div class="flex items-center gap-6">
-<div class="hidden md:flex items-center bg-surface-container rounded-full px-4 py-1.5 gap-2 border border-outline-variant/30">
-<span class="material-symbols-outlined text-on-surface-variant text-sm">search</span>
-<input class="bg-transparent border-none focus:ring-0 text-body-md w-64 p-0" placeholder="회원 이메일 또는 ID 검색" type="text"/>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-lowest border border-surface-border rounded-full w-64 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all" placeholder="회원 이름, 이메일 검색..." type="text"/>
 </div>
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container overflow-hidden border-2 border-primary/20">
-<img class="w-full h-full object-cover" data-alt="A professional corporate headshot of a female administrator with a friendly expression. She has short dark hair and is wearing a sleek navy blazer. The background is a blurred high-end office interior with soft indigo lighting, maintaining a clean and authoritative visual tone consistent with a secure digital assistant app's admin portal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLFtg9I-xUa8jJor5mPe_hFtg6jXELt6cc5fiaFYJLFFlsvZ7AzBz9NFxaSAK0VWOu1Dtd7X7iu67ZAWJxLxGunB4-29f5-nvySZO0q9zfamBliGx_DtQFuLBGIgFI5le_FdG3HHtcuxpR4JC7b9rPaZC2To4tFEhYO69nFzZGtvhy9GCY4h3vVf_kN2_LDqQcOpUVxkbziUpPSbKXEUl_nXV-fCLKwMtNE2TMho7gu2B4kJx3gn64V9C7uoPKyXfS8n3KekZab6E"/>
-</div>
+<button class="p-2 text-on-surface-variant relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-surface-border">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a technology administrator, dressed in a sleek charcoal suit with a friendly yet professional expression. The background is a clean, softly lit corporate office with hints of modern digital interfaces. The overall atmosphere is secure, trustworthy, and high-end modern professional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4rtSK6WJotPifz0JhELe590LjVhHvnbHUieMQzKl6TbjGxq8omw1a45AWWnzZqOG9BkJPLEt7l97UP1sLVrRIR9jWSJFIsPL3qfe3AKlBxl83Ph34hsH-fV-lI3rCYfJ60H8StreeWslTSnObmS0vCu9A7ZMO7Y5sBVvpfBCAAN62g6Vnq847iTJaZibrOjOufBaqlKs0bGK22sa1bWLf7XAo92RKhC24JQOIR7hGgSj8TFePmyHpDyzWTm8oA0CvxkXQhHjv3Xg"/>
 </div>
 </div>
 </header>
-<!-- Side Navigation (Desktop Only) -->
-<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-20 md:w-64 bg-surface border-r border-outline-variant/20 hidden md:flex flex-col py-6">
-<nav class="flex-1 px-4 space-y-2">
-<a class="flex items-center gap-3 p-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low transition-colors" href="#">
-<span class="material-symbols-outlined">dashboard</span>
-<span class="hidden md:block">대시보드</span>
-</a>
-<a class="flex items-center gap-3 p-3 rounded-xl bg-primary-container text-on-primary-container font-semibold" href="#">
-<span class="material-symbols-outlined">group</span>
-<span class="hidden md:block">회원 관리</span>
-</a>
-<a class="flex items-center gap-3 p-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low transition-colors" href="#">
-<span class="material-symbols-outlined">support_agent</span>
-<span class="hidden md:block">CS 관리</span>
-</a>
-<a class="flex items-center gap-3 p-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low transition-colors" href="#">
-<span class="material-symbols-outlined">security</span>
-<span class="hidden md:block">보안 로그</span>
-</a>
-<a class="flex items-center gap-3 p-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low transition-colors" href="#">
-<span class="material-symbols-outlined">settings</span>
-<span class="hidden md:block">시스템 설정</span>
-</a>
-</nav>
-</aside>
-<!-- Main Content Canvas -->
-<main class="pt-24 pb-12 px-container-padding md:ml-64 min-h-screen">
-<div class="max-w-7xl mx-auto space-y-stack-gap-lg">
-<!-- Dashboard Stats Summary -->
-<div class="grid grid-cols-1 md:grid-cols-4 gap-grid-gutter">
-<div class="bg-surface p-5 rounded-2xl shadow-sm border border-outline-variant/10 flex flex-col">
-<span class="text-on-surface-variant font-body-md">총 회원 수</span>
-<div class="flex items-end justify-between mt-2">
-<span class="text-headline-md font-bold text-on-surface">24,592</span>
-<span class="text-secondary text-caption flex items-center font-semibold bg-secondary-container/20 px-2 py-0.5 rounded-full">
-<span class="material-symbols-outlined text-[14px]">arrow_upward</span> 12%
-                        </span>
+<!-- Content Area Scrollable -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-container-padding space-y-stack-gap-lg pb-24">
+<!-- Metrics Bento Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-grid-gutter">
+<!-- Metric Card 1 -->
+<div class="bg-white p-6 rounded-xl shadow-sm border border-surface-border flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-primary-fixed text-primary rounded-lg">
+<span class="material-symbols-outlined">groups</span>
+</span>
+<span class="text-on-secondary-container bg-secondary-container px-2 py-0.5 rounded-full text-[10px] font-bold">+12%</span>
+</div>
+<div>
+<p class="text-caption text-text-muted mb-1">총 회원 수</p>
+<h3 class="text-headline-md font-bold tracking-tight">24,592</h3>
 </div>
 </div>
-<div class="bg-surface p-5 rounded-2xl shadow-sm border border-outline-variant/10 flex flex-col">
-<span class="text-on-surface-variant font-body-md">활성 세션</span>
-<div class="flex items-end justify-between mt-2">
-<span class="text-headline-md font-bold text-on-surface">1,204</span>
-<div class="flex -space-x-2">
-<div class="w-6 h-6 rounded-full border-2 border-surface bg-slate-200"></div>
-<div class="w-6 h-6 rounded-full border-2 border-surface bg-slate-300"></div>
-<div class="w-6 h-6 rounded-full border-2 border-surface bg-slate-400"></div>
-</div>
-</div>
-</div>
-<div class="bg-surface p-5 rounded-2xl shadow-sm border border-outline-variant/10 flex flex-col">
-<span class="text-on-surface-variant font-body-md">미처리 CS</span>
-<div class="flex items-end justify-between mt-2">
-<span class="text-headline-md font-bold text-error">42</span>
-<span class="text-on-surface-variant text-caption">긴급 5건</span>
-</div>
-</div>
-<div class="bg-surface p-5 rounded-2xl shadow-sm border border-outline-variant/10 flex flex-col">
-<span class="text-on-surface-variant font-body-md">시스템 상태</span>
-<div class="flex items-end justify-between mt-2">
-<span class="text-headline-md font-bold text-secondary">정상</span>
+<!-- Metric Card 2 -->
+<div class="bg-white p-6 rounded-xl shadow-sm border border-surface-border flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-secondary-fixed text-secondary rounded-lg">
+<span class="material-symbols-outlined">sensors</span>
+</span>
 <div class="flex items-center gap-1">
-<div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
-<span class="text-caption text-on-surface-variant">Live</span>
+<span class="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
+<span class="text-caption text-secondary font-medium">실시간</span>
+</div>
+</div>
+<div>
+<p class="text-caption text-text-muted mb-1">활성 세션</p>
+<h3 class="text-headline-md font-bold tracking-tight">1,204</h3>
+</div>
+</div>
+<!-- Metric Card 3 -->
+<div class="bg-white p-6 rounded-xl shadow-sm border border-surface-border flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-error-container text-error rounded-lg">
+<span class="material-symbols-outlined">priority_high</span>
+</span>
+<span class="text-error font-semibold text-caption">긴급 5건</span>
+</div>
+<div>
+<p class="text-caption text-text-muted mb-1">미처리 CS</p>
+<h3 class="text-headline-md font-bold tracking-tight">42</h3>
+</div>
+</div>
+<!-- Metric Card 4 -->
+<div class="bg-white p-6 rounded-xl shadow-sm border border-surface-border flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-surface-container-highest text-on-surface-variant rounded-lg">
+<span class="material-symbols-outlined">check_circle</span>
+</span>
+</div>
+<div>
+<p class="text-caption text-text-muted mb-1">시스템 상태</p>
+<h3 class="text-headline-md font-bold tracking-tight text-secondary">정상 (Normal)</h3>
 </div>
 </div>
 </div>
+<!-- Member List Section -->
+<div class="bg-white rounded-xl shadow-sm border border-surface-border overflow-hidden">
+<!-- Table Header / Filters -->
+<div class="p-6 border-b border-surface-border flex flex-wrap items-center justify-between gap-4">
+<h2 class="font-headline-sm text-headline-sm font-bold">회원 목록 관리</h2>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-surface border border-surface-border rounded-lg text-body-md font-medium hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+                                필터
+                            </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-body-md font-medium shadow-lg shadow-indigo-100 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                                CSV 내보내기
+                            </button>
 </div>
-<!-- Member List Table -->
-<div class="bg-surface rounded-3xl shadow-sm border border-outline-variant/10 overflow-hidden">
-<div class="p-6 border-b border-outline-variant/10 flex justify-between items-center bg-surface-container-lowest">
-<h2 class="font-headline-sm text-headline-sm text-on-surface">회원 목록 관리</h2>
-<div class="flex gap-2">
-<button class="px-4 py-2 bg-surface border border-outline-variant/30 rounded-xl flex items-center gap-2 text-body-md hover:bg-surface-container-low transition-colors">
-<span class="material-symbols-outlined text-[20px]">filter_list</span> 필터
-                        </button>
-<button class="px-4 py-2 bg-primary text-on-primary rounded-xl flex items-center gap-2 text-body-md font-semibold hover:opacity-90 transition-opacity">
-<span class="material-symbols-outlined text-[20px]">file_download</span> CSV 내보내기
-                        </button>
 </div>
-</div>
+<!-- Table Content -->
 <div class="overflow-x-auto">
 <table class="w-full text-left border-collapse">
-<thead>
-<tr class="bg-surface-container-low/50 text-on-surface-variant font-label-caps text-[12px] border-b border-outline-variant/10">
-<th class="px-6 py-4 font-medium">사용자 정보</th>
-<th class="px-6 py-4 font-medium">가입일</th>
-<th class="px-6 py-4 font-medium">저장 용량</th>
-<th class="px-6 py-4 font-medium">최근 접속</th>
-<th class="px-6 py-4 font-medium">상태</th>
-<th class="px-6 py-4 font-medium text-right">관리</th>
+<thead class="bg-surface text-caption font-semibold text-text-muted uppercase tracking-wider">
+<tr>
+<th class="px-6 py-4 border-b border-surface-border">회원 정보</th>
+<th class="px-6 py-4 border-b border-surface-border">이메일</th>
+<th class="px-6 py-4 border-b border-surface-border">가입일</th>
+<th class="px-6 py-4 border-b border-surface-border">저장공간 사용량</th>
+<th class="px-6 py-4 border-b border-surface-border">상태</th>
+<th class="px-6 py-4 border-b border-surface-border text-right">관리</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-outline-variant/10">
-<!-- Table Row 1 -->
-<tr class="hover:bg-surface-container-low/30 transition-colors cursor-pointer group" onclick="openMemberDetail('김철수', 'chulsoo@example.com')">
+<tbody class="text-body-md divide-y divide-slate-50">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
 <td class="px-6 py-4">
 <div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-primary font-bold">KC</div>
-<div>
-<div class="text-on-surface font-semibold">김철수</div>
-<div class="text-on-surface-variant text-caption">chulsoo@example.com</div>
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a Korean man in his 30s with a warm, friendly smile, clean-cut hairstyle, wearing a minimalist white shirt. The lighting is soft and natural, suggesting a high-quality user profile photograph for a premium digital service. The background is a soft, blurred office environment with cool tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2eXjjjm1oUWqLwnZBm1SMHRNtdSSlKBBpI9aPYCdeGdlvLpWPzpU0GWdb94g-uVPpIGZHRr5ZAqjUsWOrwiSuGv_7gKd2hOMwTjC99hi-NV0BE1WkSECsF77IfNwsGeVYaqMIzZuezImx26aYU07hkROnuRy0vs9TRaT1zl-Ty5Vbt6aQ-bD966E1364qYcduqpNnp72F7-x9mo3iEJzA1yufFxDO6kR9uDV2cgJBKPdffJdW6iWLPiFE0gGABacCV_j3K7TUM0c"/>
 </div>
+<span class="font-semibold">김철수</span>
 </div>
 </td>
-<td class="px-6 py-4 text-on-surface-variant text-body-md">2023.10.12</td>
+<td class="px-6 py-4 text-text-muted">chulsoo.kim@email.com</td>
+<td class="px-6 py-4 text-text-muted">2023.11.15</td>
 <td class="px-6 py-4">
-<div class="w-32">
+<div class="w-48">
 <div class="flex justify-between text-[10px] mb-1">
-<span>42.5 GB</span>
-<span>85%</span>
+<span>42.5 GB / 50 GB</span>
+<span class="text-error font-bold">85%</span>
 </div>
-<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
-<div class="h-full bg-primary rounded-full" style="width: 85%"></div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-error rounded-full" style="width: 85%;"></div>
 </div>
 </div>
 </td>
-<td class="px-6 py-4 text-on-surface-variant text-body-md">2시간 전</td>
 <td class="px-6 py-4">
-<span class="px-2 py-1 rounded-full bg-secondary-container/20 text-secondary text-[11px] font-semibold">정상</span>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[12px] font-medium bg-secondary-container text-on-secondary-container">활성</span>
 </td>
 <td class="px-6 py-4 text-right">
-<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-outline hover:text-primary transition-colors">
 <span class="material-symbols-outlined">more_vert</span>
 </button>
 </td>
 </tr>
-<!-- Table Row 2 -->
-<tr class="hover:bg-surface-container-low/30 transition-colors cursor-pointer group" onclick="openMemberDetail('이영희', 'yh.lee@corp.kr')">
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
 <td class="px-6 py-4">
 <div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-teal-50 border border-teal-100 flex items-center justify-center text-secondary font-bold">LY</div>
-<div>
-<div class="text-on-surface font-semibold">이영희</div>
-<div class="text-on-surface-variant text-caption">yh.lee@corp.kr</div>
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Studio portrait of a professional Korean woman in her late 20s, with elegant styling and a serene, confident expression. She is wearing a modern navy blazer over a light cream top. High-end editorial lighting, crisp details, and a neutral minimalist studio background consistent with a corporate management interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvrYlwvcQGuESKyj647e8IEKmGCzMBSNoEwvFGzCGYew_C40i0Oqfp3rt-WhbI6ep5G6W2EMsK8KFdJ0ZJ-w4DxZHCQ5jdoGx0PHUPwF8pvWuQEk-5tBJvwJo2c7RmDDsDrUmrb-VsWT3J1JBiToUfW40Ko8l-Px450DP64aEygNrtT8Edaob4onF495a_21d_zaiZ7WSeFAhd-RUKRfJRFlctxy_pTsUGh5Plga0jT5_QaT_g1kjVsREqtq5UiPvZ2CY4VHtl3CU"/>
 </div>
+<span class="font-semibold">이영희</span>
 </div>
 </td>
-<td class="px-6 py-4 text-on-surface-variant text-body-md">2023.11.05</td>
+<td class="px-6 py-4 text-text-muted">younghee.lee@provider.net</td>
+<td class="px-6 py-4 text-text-muted">2023.12.02</td>
 <td class="px-6 py-4">
-<div class="w-32">
+<div class="w-48">
 <div class="flex justify-between text-[10px] mb-1">
-<span>12.1 GB</span>
-<span>24%</span>
+<span>12.8 GB / 50 GB</span>
+<span class="text-primary font-bold">25.6%</span>
 </div>
-<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
-<div class="h-full bg-secondary rounded-full" style="width: 24%"></div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 25.6%;"></div>
 </div>
 </div>
 </td>
-<td class="px-6 py-4 text-on-surface-variant text-body-md">15분 전</td>
 <td class="px-6 py-4">
-<span class="px-2 py-1 rounded-full bg-secondary-container/20 text-secondary text-[11px] font-semibold">정상</span>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[12px] font-medium bg-secondary-container text-on-secondary-container">활성</span>
 </td>
 <td class="px-6 py-4 text-right">
-<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-outline hover:text-primary transition-colors">
 <span class="material-symbols-outlined">more_vert</span>
 </button>
 </td>
 </tr>
-<!-- Table Row 3 (Restricted) -->
-<tr class="hover:bg-surface-container-low/30 transition-colors cursor-pointer group" onclick="openMemberDetail('박지민', 'jimin.p@cloud.com')">
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
 <td class="px-6 py-4">
 <div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-red-50 border border-red-100 flex items-center justify-center text-error font-bold">PJ</div>
-<div>
-<div class="text-on-surface font-semibold">박지민</div>
-<div class="text-on-surface-variant text-caption">jimin.p@cloud.com</div>
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Portrait of a creative professional Korean male in his 40s, wearing trendy glasses and a simple black turtleneck. He has a thoughtful, intelligent expression. The lighting is focused and warm, creating a high-contrast but clean aesthetic. Background is a blurred bookshelf in a modern home office space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAT4XmOrnN1psqDCU_wKQXZL9wqF0scJ54dfV46oVlPvRSH4hnGAdDtJVcPlYrFs7G7jGNHuFL6ht3chDeWF6XriCpcO8ssn5s5GscRw0vxk-L4fS0mozvieDWD94abDk4Xol1cGklVNb9A1SKbmoECcSRv1f1BQbCaVKo-mNyvLHutCVY59bYy89eWULZtSQ4C8LabA01grfcNGjOzAYoOGYRpoPdy6My0rjIddgOtiubpvsoVAKWJr_1giOERcDp1OSscfM1RnW0"/>
 </div>
+<span class="font-semibold">박지민</span>
 </div>
 </td>
-<td class="px-6 py-4 text-on-surface-variant text-body-md">2023.09.28</td>
+<td class="px-6 py-4 text-text-muted">jimin.park@works.com</td>
+<td class="px-6 py-4 text-text-muted">2024.01.10</td>
 <td class="px-6 py-4">
-<div class="w-32">
+<div class="w-48">
 <div class="flex justify-between text-[10px] mb-1">
-<span>5.0 GB</span>
-<span>10%</span>
+<span>48.9 GB / 50 GB</span>
+<span class="text-error font-bold">97.8%</span>
 </div>
-<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
-<div class="h-full bg-outline rounded-full" style="width: 10%"></div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-error rounded-full" style="width: 97.8%;"></div>
 </div>
 </div>
 </td>
-<td class="px-6 py-4 text-on-surface-variant text-body-md">14일 전</td>
 <td class="px-6 py-4">
-<span class="px-2 py-1 rounded-full bg-error-container/20 text-error text-[11px] font-semibold">정지됨</span>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[12px] font-medium bg-tertiary-fixed text-on-tertiary-fixed">휴면</span>
 </td>
 <td class="px-6 py-4 text-right">
-<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-outline hover:text-primary transition-colors">
 <span class="material-symbols-outlined">more_vert</span>
 </button>
 </td>
 </tr>
 <!-- Row 4 -->
-<tr class="hover:bg-surface-container-low/30 transition-colors cursor-pointer group" onclick="openMemberDetail('한소희', 'sohee_h@web.com')">
+<tr class="hover:bg-surface-container-lowest transition-colors group">
 <td class="px-6 py-4">
 <div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center text-tertiary font-bold">HS</div>
-<div>
-<div class="text-on-surface font-semibold">한소희</div>
-<div class="text-on-surface-variant text-caption">sohee_h@web.com</div>
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Detailed close-up profile photo of a young Korean woman in her early 20s, laughing naturally. She is wearing a soft pastel lavender sweater. The style is bright and airy, with high-key lighting that emphasizes a clean and positive user experience. The background is a soft-focus garden with bright daylight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEKlYfTgYDQVeFdQyh1OmC62SdE0wH_7eqQcLF0ANe71bC4fEgOopOmnAHrwsB73ahj4iAqmx3w0AKxhh8AWMocACK4Uz0teDNmhoEsNXWkZaOzysR8bP7gmgzKB-AubCQwrA4GIofqhC2bH13xpdqqYuUN0jh0PkPSQuUU67dN5m7-n65FSt7tBS-RU8TmGFbFoMsaP44inb8PYtCviBioqWhughdxx1GRfHpHjYMu_FANH2zFiHyo3VnYY0olCC3jNUvoehvFnc"/>
 </div>
+<span class="font-semibold">최서연</span>
 </div>
 </td>
-<td class="px-6 py-4 text-on-surface-variant text-body-md">2024.01.20</td>
+<td class="px-6 py-4 text-text-muted">seoyeon.choi@campus.edu</td>
+<td class="px-6 py-4 text-text-muted">2024.02.22</td>
 <td class="px-6 py-4">
-<div class="w-32">
+<div class="w-48">
 <div class="flex justify-between text-[10px] mb-1">
-<span>49.8 GB</span>
-<span>99%</span>
+<span>5.2 GB / 50 GB</span>
+<span class="text-primary font-bold">10.4%</span>
 </div>
-<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
-<div class="h-full bg-error rounded-full" style="width: 99%"></div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 10.4%;"></div>
 </div>
 </div>
 </td>
-<td class="px-6 py-4 text-on-surface-variant text-body-md">방금 전</td>
 <td class="px-6 py-4">
-<span class="px-2 py-1 rounded-full bg-tertiary-container/20 text-tertiary text-[11px] font-semibold">휴면예정</span>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[12px] font-medium bg-secondary-container text-on-secondary-container">활성</span>
 </td>
 <td class="px-6 py-4 text-right">
-<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-outline hover:text-primary transition-colors">
 <span class="material-symbols-outlined">more_vert</span>
 </button>
 </td>
@@ -374,156 +411,81 @@
 </tbody>
 </table>
 </div>
-<div class="px-6 py-4 border-t border-outline-variant/10 flex items-center justify-between bg-surface-container-low/20">
-<span class="text-caption text-on-surface-variant">24,592명 중 1-4번 표시 중</span>
-<div class="flex gap-1">
-<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container text-on-surface-variant">
+<!-- Pagination -->
+<div class="px-6 py-4 bg-surface border-t border-surface-border flex items-center justify-between">
+<span class="text-caption text-text-muted">전체 24,592명 중 1-10 표시</span>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-surface-border bg-white text-outline hover:text-primary transition-colors">
 <span class="material-symbols-outlined text-[18px]">chevron_left</span>
 </button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-on-primary font-bold text-[12px]">1</button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container text-on-surface-variant text-[12px]">2</button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container text-on-surface-variant text-[12px]">3</button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container text-on-surface-variant">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-white text-body-md font-bold">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-surface-border bg-white text-body-md hover:bg-surface-container transition-colors">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-surface-border bg-white text-body-md hover:bg-surface-container transition-colors">3</button>
+<span class="px-1 text-outline">...</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-surface-border bg-white text-body-md hover:bg-surface-container transition-colors">2459</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-surface-border bg-white text-outline hover:text-primary transition-colors">
 <span class="material-symbols-outlined text-[18px]">chevron_right</span>
 </button>
 </div>
 </div>
 </div>
 </div>
+<!-- Floating Action Layer -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center relative hover:scale-105 active:scale-95 transition-transform duration-200 group">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="absolute -top-1 -right-1 w-6 h-6 bg-error text-white text-[11px] font-bold rounded-full flex items-center justify-center ring-4 ring-white">5</span>
+<!-- Tooltip hint -->
+<div class="absolute right-16 px-4 py-2 bg-inverse-surface text-white text-caption rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                        새로운 CS 문의가 있습니다
+                    </div>
+</button>
+</div>
 </main>
-<!-- Member Detail Side Panel (Initially Hidden) -->
-<div class="fixed inset-0 bg-on-surface/40 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-all duration-300 flex justify-end" id="memberDetailOverlay">
-<div class="w-full max-w-lg bg-surface h-full shadow-2xl translate-x-full transition-transform duration-300 ease-out flex flex-col" id="memberDetailPanel">
-<!-- Panel Header -->
-<div class="p-6 border-b border-outline-variant/10 flex items-center justify-between">
-<div class="flex items-center gap-4">
-<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant" onclick="closeMemberDetail()">
-<span class="material-symbols-outlined">close</span>
-</button>
-<h3 class="font-headline-sm text-headline-sm text-on-surface">회원 상세 정보</h3>
 </div>
-<div class="flex gap-2">
-<button class="px-3 py-1.5 rounded-lg border border-error text-error text-caption font-semibold hover:bg-error/5 transition-colors">계정 정지</button>
-<button class="px-3 py-1.5 rounded-lg bg-primary text-on-primary text-caption font-semibold hover:opacity-90 transition-opacity">정보 수정</button>
-</div>
-</div>
-<!-- Panel Content -->
-<div class="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-stack-gap-lg">
-<!-- Profile Section -->
-<div class="flex items-center gap-6 p-6 bg-surface-container-low rounded-2xl border border-outline-variant/10">
-<div class="w-20 h-20 rounded-2xl bg-primary text-on-primary flex items-center justify-center text-display-lg" id="detailAvatar">KC</div>
-<div>
-<div class="text-headline-md font-bold text-on-surface" id="detailName">김철수</div>
-<div class="text-body-md text-on-surface-variant mb-2" id="detailEmail">chulsoo@example.com</div>
-<div class="flex gap-2">
-<span class="px-2 py-0.5 rounded bg-secondary-container/30 text-secondary text-[10px] font-bold">프리미엄</span>
-<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant text-[10px] font-bold">UID: 948201</span>
-</div>
-</div>
-</div>
-<!-- Stats Grid -->
-<div class="grid grid-cols-2 gap-grid-gutter">
-<div class="p-4 bg-surface rounded-xl border border-outline-variant/10">
-<div class="text-caption text-on-surface-variant mb-1">총 보관 아이템</div>
-<div class="text-headline-sm font-bold text-on-surface">1,402개</div>
-</div>
-<div class="p-4 bg-surface rounded-xl border border-outline-variant/10">
-<div class="text-caption text-on-surface-variant mb-1">보관함 용량</div>
-<div class="text-headline-sm font-bold text-on-surface">42.5 GB</div>
-</div>
-<div class="p-4 bg-surface rounded-xl border border-outline-variant/10">
-<div class="text-caption text-on-surface-variant mb-1">최근 보안 검사</div>
-<div class="text-headline-sm font-bold text-on-surface">어제 14:20</div>
-</div>
-<div class="p-4 bg-surface rounded-xl border border-outline-variant/10">
-<div class="text-caption text-on-surface-variant mb-1">신고 누적</div>
-<div class="text-headline-sm font-bold text-error">0건</div>
-</div>
-</div>
-<!-- CS History Section -->
-<div class="space-y-stack-gap-md">
-<div class="flex justify-between items-center">
-<h4 class="font-headline-sm text-on-surface">문의 내역</h4>
-<button class="text-primary text-caption font-semibold hover:underline">전체 보기</button>
-</div>
-<div class="space-y-3">
-<div class="p-4 bg-surface border border-outline-variant/10 rounded-xl hover:border-primary/30 transition-colors cursor-pointer group">
-<div class="flex justify-between mb-2">
-<span class="bg-amber-100 text-tertiary-fixed-variant px-2 py-0.5 rounded text-[10px] font-bold">답변 대기</span>
-<span class="text-[11px] text-on-surface-variant">2024.03.15 09:12</span>
-</div>
-<div class="text-body-md font-semibold text-on-surface group-hover:text-primary transition-colors">비밀 보관함 PIN 번호를 잊어버렸습니다.</div>
-<div class="text-caption text-on-surface-variant line-clamp-1 mt-1">기존에 설정한 6자리 핀 번호가 기억나지 않아 접근이 불가능합니다. 초기화 방법이...</div>
-</div>
-<div class="p-4 bg-surface border border-outline-variant/10 rounded-xl">
-<div class="flex justify-between mb-2">
-<span class="bg-secondary-container/20 text-secondary px-2 py-0.5 rounded text-[10px] font-bold">해결됨</span>
-<span class="text-[11px] text-on-surface-variant">2024.02.20 18:45</span>
-</div>
-<div class="text-body-md font-semibold text-on-surface">구독 결제 수단 변경 문의</div>
-<div class="text-caption text-on-surface-variant line-clamp-1 mt-1">자동 결제 카드를 변경하고 싶습니다. 앱 내 설정에서 어디로 들어가야 하나요?</div>
-</div>
-</div>
-</div>
-<!-- Admin Memo -->
-<div class="space-y-stack-gap-md pb-8">
-<h4 class="font-headline-sm text-on-surface">관리자 메모</h4>
-<div class="relative">
-<textarea class="w-full bg-surface-container-low border border-outline-variant/30 rounded-2xl p-4 text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none" placeholder="이 사용자에 대한 특이사항을 기록하세요..." rows="4"></textarea>
-<button class="absolute bottom-3 right-3 px-3 py-1 bg-on-surface text-surface rounded-lg text-caption font-semibold">저장</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Floating Action Button for Support -->
-<div class="fixed bottom-6 right-6 z-40">
-<button class="w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-transform">
-<span class="material-symbols-outlined text-[28px]">chat_bubble</span>
-<div class="absolute -top-1 -right-1 w-5 h-5 bg-error text-on-error text-[10px] flex items-center justify-center rounded-full border-2 border-surface font-bold">5</div>
-</button>
+<!-- Mobile Bottom Nav (Simulated Shell for Small Screens) -->
+<div class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-surface-border grid grid-cols-5 h-16 px-2 z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+<span class="text-[10px]">대시보드</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold" href="#">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="text-[10px]">회원</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined text-[24px]">support_agent</span>
+<span class="text-[10px]">CS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined text-[24px]">security</span>
+<span class="text-[10px]">보안</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined text-[24px]">settings</span>
+<span class="text-[10px]">설정</span>
+</a>
 </div>
 <script>
-        function openMemberDetail(name, email) {
-            const overlay = document.getElementById('memberDetailOverlay');
-            const panel = document.getElementById('memberDetailPanel');
-            const detailName = document.getElementById('detailName');
-            const detailEmail = document.getElementById('detailEmail');
-            const detailAvatar = document.getElementById('detailAvatar');
-
-            detailName.innerText = name;
-            detailEmail.innerText = email;
-            detailAvatar.innerText = name.substring(0, 2);
-
-            overlay.classList.remove('pointer-events-none', 'opacity-0');
-            panel.classList.remove('translate-x-full');
-            document.body.classList.add('overflow-hidden');
-        }
-
-        function closeMemberDetail() {
-            const overlay = document.getElementById('memberDetailOverlay');
-            const panel = document.getElementById('memberDetailPanel');
-
-            overlay.classList.add('pointer-events-none', 'opacity-0');
-            panel.classList.add('translate-x-full');
-            document.body.classList.remove('overflow-hidden');
-        }
-
-        // Close on clicking overlay
-        document.getElementById('memberDetailOverlay').addEventListener('click', function(e) {
-            if (e.target === this) closeMemberDetail();
+        // Micro-interaction: Update storage color based on percentage
+        document.querySelectorAll('.h-full').forEach(bar => {
+            const width = parseInt(bar.style.width);
+            if (width < 50) {
+                bar.className = 'h-full bg-secondary rounded-full';
+            } else if (width < 80) {
+                bar.className = 'h-full bg-primary rounded-full';
+            } else {
+                bar.className = 'h-full bg-error rounded-full';
+            }
         });
 
-        // Add some interaction to table rows
-        document.querySelectorAll('tbody tr').forEach(row => {
-            row.addEventListener('mouseenter', () => {
-                const btn = row.querySelector('button');
-                if (btn) btn.style.opacity = '1';
-            });
-            row.addEventListener('mouseleave', () => {
-                const btn = row.querySelector('button');
-                if (btn) btn.style.opacity = '0';
-            });
+        // Search Bar Focus Effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.classList.add('w-80');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.classList.remove('w-80');
         });
     </script>
 </body></html>

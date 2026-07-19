@@ -23,6 +23,10 @@ import CleanupSettingsPage from './pages/cleanup/CleanupSettingsPage';
 import PinEntryPage from './pages/vault/PinEntryPage';
 import SecretItemDetailPage from './pages/vault/SecretItemDetailPage';
 import PrivacyControlsPage from './pages/vault/PrivacyControlsPage';
+import AdminGuard from './components/AdminGuard';
+import AdminDashboardPage from './pages/admin/AdminDashboardPage';
+import AdminMembersPage from './pages/admin/AdminMembersPage';
+import ClassificationQualityPage from './pages/admin/ClassificationQualityPage';
 import MyHomePage from './pages/my/MyHomePage';
 import NotificationsPage from './pages/my/NotificationsPage';
 import ExportPage from './pages/my/ExportPage';
@@ -72,6 +76,11 @@ export default function App() {
         <Route path="/my/storage" element={<StoragePage />} />
         <Route path="/my/plan" element={<PlanPage />} />
         <Route path="/my/delete-account" element={<AccountDeletePage />} />
+        {/* admin 모듈 (role=ADMIN 게이팅) */}
+        <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+        <Route path="/admin/dashboard" element={<AdminGuard><AdminDashboardPage /></AdminGuard>} />
+        <Route path="/admin/members" element={<AdminGuard><AdminMembersPage /></AdminGuard>} />
+        <Route path="/admin/quality" element={<AdminGuard><ClassificationQualityPage /></AdminGuard>} />
         {/* 미정의 경로는 로그인으로 */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sortmate Admin Dashboard - ADM-001</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#2a1700",
+                    "bg-primary": "#FFFFFF",
+                    "bg-secondary": "#F8FAFC",
+                    "outline-variant": "#c7c4d8",
+                    "surface": "#f8f9ff",
+                    "on-background": "#0b1c30",
+                    "surface-bright": "#f8f9ff",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#464555",
+                    "surface-container-low": "#eff4ff",
+                    "on-secondary-fixed-variant": "#005236",
+                    "text-muted": "#64748B",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "on-secondary-fixed": "#002113",
+                    "background": "#f8f9ff",
+                    "on-primary-container": "#dad7ff",
+                    "on-error": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-dim": "#cbdbf5",
+                    "surface-container-highest": "#d3e4fe",
+                    "outline": "#777587",
+                    "inverse-surface": "#213145",
+                    "on-secondary-container": "#00714d",
+                    "tertiary-container": "#885500",
+                    "vault-blur": "rgba(255, 255, 255, 0.4)",
+                    "surface-container": "#e5eeff",
+                    "primary-fixed": "#e2dfff",
+                    "surface-variant": "#d3e4fe",
+                    "secondary-fixed-dim": "#4edea3",
+                    "surface-container-high": "#dce9ff",
+                    "secondary-container": "#6cf8bb",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "on-primary-fixed": "#0f0069",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-container": "#ffd4a4",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "text-main": "#0F172A",
+                    "primary": "#3525cd",
+                    "secondary-fixed": "#6ffbbe",
+                    "surface-tint": "#4d44e3",
+                    "surface-border": "#E2E8F0",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#0b1c30",
+                    "primary-container": "#4f46e5",
+                    "inverse-primary": "#c3c0ff",
+                    "tertiary-fixed": "#ffddb8",
+                    "secondary": "#006c49",
+                    "tertiary": "#684000"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-gap-md": "16px",
+                    "grid-gutter": "12px",
+                    "base-unit": "4px",
+                    "container-padding": "20px",
+                    "stack-gap-sm": "8px",
+                    "stack-gap-lg": "24px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Hanken Grotesk"],
+                    "caption": ["Hanken Grotesk"],
+                    "headline-sm": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "label-caps": ["JetBrains Mono"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Hanken Grotesk', sans-serif;
+            background-color: #f8f9ff;
+            color: #0b1c30;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
+        .card-shadow {
+            box-shadow: 0px 2px 4px rgba(0,0,0,0.05), 0px 10px 20px rgba(0,0,0,0.02);
+        }
+        .nav-active {
+            font-weight: 700;
+        }
+        @media (max-width: 768px) {
+            .mobile-padding-bottom {
+                padding-bottom: 100px;
+            }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="bg-surface/80 backdrop-blur-md fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-padding h-16">
+<div class="flex items-center gap-3">
+<span class="font-display-lg text-display-lg font-bold text-primary">Sortmate</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">ADMIN</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary hover:opacity-80 transition-opacity">search</button>
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center overflow-hidden border border-primary/10">
+<img class="w-full h-full object-cover" data-alt="A professional close-up portrait of a tech administrator, wearing minimalist glasses, set against a clean studio background with soft indigo and white lighting. The aesthetic is corporate and modern, reflecting trust and intelligence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY3BJoA_A-bfLoER7KwM_snXfpxb-sLqqGn-W5q5A-ahfjZg9h-qPn6c8qdbsKPfcz-a2bBIfr18Lz_JvFPqVKldzCpNFH_je_kDTwtTySOriFxkXfaUX8w-LnVoP_czl9DnWDAJepnztxh7ung2FQktI3sw4opZJaNf2lqJBS-BPVzPqnEnx2eKTMxzfAOStAuIzibOCKynw1vTjIuV2RX5P7k1BM927x3u-5jqPGw5yyNiH4zQNDvNt16GWhDe3U_Ctp5oujYJw"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 px-container-padding mobile-padding-bottom max-w-7xl mx-auto">
+<!-- Welcome Section -->
+<section class="mb-stack-gap-lg">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-text-main">운영 대시보드</h1>
+<p class="font-body-md text-body-md text-text-muted mt-1">IA Code: ADM-001 | 실시간 플랫폼 현황</p>
+</section>
+<!-- KPI Grid (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-grid-gutter mb-stack-gap-lg">
+<!-- Total Users Card -->
+<div class="bg-surface-container-lowest p-6 rounded-xl card-shadow border border-surface-border group hover:scale-[1.02] transition-transform duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">group</span>
+</div>
+<span class="font-label-caps text-label-caps text-secondary font-bold">+12.5%</span>
+</div>
+<p class="font-label-caps text-label-caps text-text-muted uppercase tracking-wider">총 가입자 수</p>
+<h2 class="font-display-lg text-display-lg text-text-main mt-1">24,892</h2>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full mt-4 overflow-hidden">
+<div class="bg-primary h-full w-[78%] rounded-full"></div>
+</div>
+</div>
+<!-- Data Count Card -->
+<div class="bg-surface-container-lowest p-6 rounded-xl card-shadow border border-surface-border group hover:scale-[1.02] transition-transform duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-secondary/10 rounded-lg text-secondary">
+<span class="material-symbols-outlined">database</span>
+</div>
+<span class="font-label-caps text-label-caps text-secondary font-bold">+842 today</span>
+</div>
+<p class="font-label-caps text-label-caps text-text-muted uppercase tracking-wider">오늘 저장된 자료</p>
+<h2 class="font-display-lg text-display-lg text-text-main mt-1">1,452,091</h2>
+<div class="flex gap-1 mt-4 items-end h-8">
+<div class="bg-secondary/40 w-full h-[40%] rounded-sm"></div>
+<div class="bg-secondary/40 w-full h-[60%] rounded-sm"></div>
+<div class="bg-secondary/40 w-full h-[30%] rounded-sm"></div>
+<div class="bg-secondary/40 w-full h-[80%] rounded-sm"></div>
+<div class="bg-secondary w-full h-full rounded-sm"></div>
+</div>
+</div>
+<!-- AI Success Rate Card -->
+<div class="bg-surface-container-lowest p-6 rounded-xl card-shadow border border-surface-border group hover:scale-[1.02] transition-transform duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-tertiary/10 rounded-lg text-tertiary">
+<span class="material-symbols-outlined">psychology</span>
+</div>
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-[16px]">bolt</span>
+<span class="font-label-caps text-label-caps font-bold">Stable</span>
+</div>
+</div>
+<p class="font-label-caps text-label-caps text-text-muted uppercase tracking-wider">AI 분석 성공률</p>
+<h2 class="font-display-lg text-display-lg text-text-main mt-1">99.4%</h2>
+<p class="font-caption text-caption text-text-muted mt-4">평균 응답 속도: <span class="text-tertiary font-bold">1.2s</span></p>
+</div>
+</div>
+<!-- Asymmetric Insights Section -->
+<div class="grid grid-cols-1 lg:grid-cols-5 gap-grid-gutter mb-stack-gap-lg">
+<!-- Recent Subscribers List (3 columns) -->
+<div class="lg:col-span-3 bg-surface-container-lowest rounded-xl card-shadow border border-surface-border overflow-hidden">
+<div class="p-5 border-b border-surface-border flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-text-main">최근 가입자 현황</h3>
+<button class="text-primary font-label-caps text-label-caps hover:underline">모두 보기</button>
+</div>
+<div class="divide-y divide-surface-border">
+<!-- User Item 1 -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-lowest/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center font-bold text-primary">JD</div>
+<div>
+<p class="font-body-md text-body-md text-text-main font-semibold">정다은 (daeun.j)</p>
+<p class="font-caption text-caption text-text-muted">Premium Plan • 2분 전</p>
+</div>
+</div>
+<span class="px-2 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-bold rounded-full uppercase">Active</span>
+</div>
+<!-- User Item 2 -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-lowest/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center font-bold text-primary">MS</div>
+<div>
+<p class="font-body-md text-body-md text-text-main font-semibold">Min-su Kim</p>
+<p class="font-caption text-caption text-text-muted">Free Plan • 15분 전</p>
+</div>
+</div>
+<span class="px-2 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-bold rounded-full uppercase">Active</span>
+</div>
+<!-- User Item 3 -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-lowest/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center font-bold text-primary">LC</div>
+<div>
+<p class="font-body-md text-body-md text-text-main font-semibold">Lee Chae-won</p>
+<p class="font-caption text-caption text-text-muted">Basic Plan • 1시간 전</p>
+</div>
+</div>
+<span class="px-2 py-1 bg-amber-100 text-amber-700 text-[10px] font-bold rounded-full uppercase">Pending</span>
+</div>
+<!-- User Item 4 -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-lowest/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center font-bold text-primary">KW</div>
+<div>
+<p class="font-body-md text-body-md text-text-main font-semibold">Kevin Wong</p>
+<p class="font-caption text-caption text-text-muted">Premium Plan • 3시간 전</p>
+</div>
+</div>
+<span class="px-2 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-bold rounded-full uppercase">Active</span>
+</div>
+</div>
+</div>
+<!-- Inquiry Summary (2 columns) -->
+<div class="lg:col-span-2 space-y-grid-gutter">
+<div class="bg-surface-container-lowest p-5 rounded-xl card-shadow border border-surface-border">
+<h3 class="font-headline-sm text-headline-sm text-text-main mb-4">문의 내역 요약</h3>
+<div class="space-y-3">
+<div class="p-3 bg-error-container/20 border border-error/10 rounded-lg flex gap-3">
+<span class="material-symbols-outlined text-error">priority_high</span>
+<div>
+<p class="font-body-md text-body-md text-text-main font-medium">결제 오류 신고</p>
+<p class="font-caption text-caption text-text-muted">ID: 29384 • 긴급</p>
+</div>
+</div>
+<div class="p-3 bg-surface-container-low border border-surface-border rounded-lg flex gap-3">
+<span class="material-symbols-outlined text-text-muted">chat_bubble</span>
+<div>
+<p class="font-body-md text-body-md text-text-main font-medium">기능 제안: 폴더 공유</p>
+<p class="font-caption text-caption text-text-muted">ID: 29381 • 일반</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-4 py-2 bg-primary text-on-primary rounded-lg font-body-md text-body-md hover:opacity-90 transition-all">전체 문의 대응하기</button>
+</div>
+<!-- Server Status Widget -->
+<div class="bg-on-background p-5 rounded-xl card-shadow relative overflow-hidden group">
+
+<div class="relative z-10">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-caps text-label-caps text-primary-fixed">서버 상태</span>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-emerald-400">Normal</span>
+</div>
+</div>
+<div class="text-white">
+<p class="font-display-lg text-display-lg">99.98%</p>
+<p class="font-caption text-caption text-outline-variant mt-1">Uptime (Last 30 Days)</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Mobile Viewport) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-8 pt-2 bg-surface shadow-[0_-2px_10px_rgba(0,0,0,0.05)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-primary bg-primary-container/10 rounded-xl p-2 scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-caps text-label-caps mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-caps text-label-caps mt-1">Library</span>
+</a>
+<button class="flex flex-col items-center justify-center -mt-8">
+<div class="w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg shadow-primary/20 flex items-center justify-center active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[32px]">add</span>
+</div>
+</button>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">auto_delete</span>
+<span class="font-label-caps text-label-caps mt-1">Cleanup</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps mt-1">My</span>
+</a>
+</nav>
+<!-- Desktop Side Navigation (Simulated for MD+) -->
+<div class="hidden md:flex fixed left-0 top-16 bottom-0 w-20 flex-col items-center py-8 gap-8 bg-surface-container-lowest border-r border-surface-border">
+<span class="material-symbols-outlined text-primary text-[28px] cursor-pointer" style="font-variation-settings: 'FILL' 1;" title="Dashboard">dashboard</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[28px] cursor-pointer hover:text-primary transition-colors" title="Users">group</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[28px] cursor-pointer hover:text-primary transition-colors" title="Data Analytics">analytics</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[28px] cursor-pointer hover:text-primary transition-colors" title="Support">help_center</span>
+<span class="mt-auto material-symbols-outlined text-on-surface-variant text-[28px] cursor-pointer hover:text-primary transition-colors" title="Settings">settings</span>
+</div>
+<script>
+        // Simple micro-interactions
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Current navigation highlight logic (Semantic Mapping)
+        // Since we are on the Home/Dashboard, "Home" or "Dashboard" icon is active.
+    </script>
+</body></html>

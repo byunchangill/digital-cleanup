@@ -1,5 +1,6 @@
 import client, { TOKEN_KEYS } from './client';
 import * as mock from './mock/authMock';
+import { setRole } from '../lib/role';
 
 /**
  * auth 모듈 API 함수. 경로/필드는 _workspace/contracts/auth.md와 글자 단위로 일치.
@@ -14,12 +15,18 @@ export function persistAuth(auth) {
   if (auth.refreshToken) localStorage.setItem(TOKEN_KEYS.refresh, auth.refreshToken);
 }
 
+/** 로그인 응답 user.role 저장 (admin 라우트 가드용). role 미포함 시 no-op → 비관리자 취급. */
+function persistRole(data) {
+  setRole(data?.user?.role);
+}
+
 // AUTH-01: POST /api/auth/social/{provider}  provider = kakao | google | apple
 export async function socialLogin(provider, { authorizationCode, redirectUri } = {}) {
   const data = USE_MOCK
     ? await mock.mockSocialLogin(provider)
     : await client.post(`/auth/social/${provider}`, { authorizationCode, redirectUri });
   persistAuth(data.auth);
+  persistRole(data);
   return data;
 }
 
@@ -29,6 +36,7 @@ export async function login({ email, password }) {
     ? await mock.mockEmailLogin({ email, password })
     : await client.post('/auth/login', { email, password });
   persistAuth(data.auth);
+  persistRole(data);
   return data;
 }
 
@@ -38,6 +46,7 @@ export async function signup({ email, password, agreedToTerms }) {
     ? await mock.mockSignup({ email })
     : await client.post('/auth/signup', { email, password, agreedToTerms });
   persistAuth(data.auth);
+  persistRole(data);
   return data;
 }
 

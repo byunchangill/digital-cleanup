@@ -39,4 +39,15 @@ public interface ItemRepository extends JpaRepository<Item, Long>, JpaSpecificat
 
         long getCnt();
     }
+
+    // ── admin 전역 집계(소유자 필터 없음) ──────────────────────
+    /** ADM-01 오늘 저장 자료 수: savedAt >= 오늘 00:00 KST(전역). */
+    long countBySavedAtGreaterThanEqual(java.time.Instant from);
+
+    /** ADM-01/05 AI 분석 성공률 근사: aiClassified=true 전역 개수. */
+    long countByAiClassifiedTrue();
+
+    /** ADM-02/03 회원 저장공간: 소유자별 fileSize 합(null→0). */
+    @Query("select coalesce(sum(i.fileSize), 0) from Item i where i.ownerId = :ownerId")
+    long sumFileSizeByOwnerId(Long ownerId);
 }

@@ -13,6 +13,7 @@ public record UserResponse(
         String email,
         String displayName,
         String provider,
+        String role,
         Boolean isNewUser
 ) {
     public static UserResponse of(User user, Boolean isNewUser) {
@@ -21,6 +22,7 @@ public record UserResponse(
                 user.getEmail(),
                 user.getDisplayName(),
                 user.getProvider().name(),
+                user.getRole().name(),
                 isNewUser
         );
     }

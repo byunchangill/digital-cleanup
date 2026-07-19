@@ -59,6 +59,17 @@ body {
   75% { transform: translateX(-8px); }
 }
 
+/* admin 모듈: 카드 그림자 (admin_dashboard code.html의 .card-shadow) */
+.card-shadow {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05), 0px 10px 20px rgba(0, 0, 0, 0.02);
+}
+
+/* admin 모듈: 얇은 스크롤바 (member/quality code.html의 .custom-scrollbar) */
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 10px; }
+.sidebar-item-active { background-color: #4f46e5; color: #ffffff; }
+
 /* 가로 스크롤 필터 칩 바 스크롤바 숨김 (favorites / bulk code.html의 .no-scrollbar) */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

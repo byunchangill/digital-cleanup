@@ -27,6 +27,8 @@ export async function mockSocialLogin(provider) {
 
 export async function mockEmailLogin({ email }) {
   await delay();
+  // admin@sortmate.app 데모 계정은 ADMIN role → /admin 접근 허용 (그 외 USER)
+  const role = email === 'admin@sortmate.app' ? 'ADMIN' : 'USER';
   return {
     auth: {
       accessToken: 'mock.jwt.access',
@@ -34,7 +36,7 @@ export async function mockEmailLogin({ email }) {
       tokenType: 'Bearer',
       expiresIn: 1800,
     },
-    user: { id: 1, email, displayName: 'Sortmate 사용자', provider: 'EMAIL' },
+    user: { id: 1, email, displayName: 'Sortmate 사용자', provider: 'EMAIL', role },
   };
 }
 

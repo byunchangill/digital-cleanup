@@ -45,6 +45,21 @@ public class User {
     @Column
     private String passwordHash;
 
+    /** 권한(admin 인가 축). 기본 USER. */
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 16)
+    private Role role;
+
+    /** 표시용 플랜 배지(admin). 기본 FREE. */
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 16)
+    private UserPlan plan;
+
+    /** 회원 상태(admin). 기본 ACTIVE. */
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 16)
+    private UserStatus status;
+
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
 
@@ -53,12 +68,16 @@ public class User {
 
     @Builder
     public User(String email, String displayName, AuthProvider provider,
-                String providerId, String passwordHash) {
+                String providerId, String passwordHash,
+                Role role, UserPlan plan, UserStatus status) {
         this.email = email;
         this.displayName = displayName;
         this.provider = provider;
         this.providerId = providerId;
         this.passwordHash = passwordHash;
+        this.role = role != null ? role : Role.USER;
+        this.plan = plan != null ? plan : UserPlan.FREE;
+        this.status = status != null ? status : UserStatus.ACTIVE;
     }
 
     @PrePersist

@@ -1,10 +1,11 @@
-<html class="light" lang="ko"><head></head><body class="bg-background text-on-surface min-h-screen pb-32">```html
+<!DOCTYPE html>
 
-
+<html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Sortmate 관리자 - 분류 품질</title>
+<title>Sortmate Admin - Classification Quality</title>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
@@ -118,13 +119,15 @@
       min-height: max(884px, 100dvh);
     }
   </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-32">
 <!-- TopAppBar -->
-<header class="w-full top-0 sticky z-50 bg-surface/80 backdrop-blur-md flex justify-between items-center px-container-padding h-16">
+<header class="w-full top-0 sticky z-50 bg-surface/80 backdrop-blur-md flex justify-between items-center px-container-padding h-16 w-full">
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="A professional headshot of a female technology administrator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3fsj1TYLXTjQOI_5cbOamyPIm_K3C5ceIBLKU436iXl-zY7HLnz38aGKpZdn4TwpcofBbS-lWxD4ezADhoVGOC6yQ_kb5YTlrg2X1VclO5JcEEPz5RdEYR-nywWqpg74bUTk4SJ2C0XO18zVj5Hbt1NldBjiRRzGMYLV5bD3UalPgIk1AhKaOZRk29EMA5MtvE3fmFd2fC_6NWHqCqKMLFR2TQ-_Ppa1BbQ57vF6vc4o5_ql_QZBuaKXYSkiO9erRnmpHPneCnEY"/>
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a female technology administrator in a corporate office, featuring soft studio lighting, a neutral blurred background, and a sharp, clean business aesthetic using a palette of soft whites and indigo tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3fsj1TYLXTjQOI_5cbOamyPIm_K3C5ceIBLKU436iXl-zY7HLnz38aGKpZdn4TwpcofBbS-lWxD4ezADhoVGOC6yQ_kb5YTlrg2X1VclO5JcEEPz5RdEYR-nywWqpg74bUTk4SJ2C0XO18zVj5Hbt1NldBjiRRzGMYLV5bD3UalPgIk1AhKaOZRk29EMA5MtvE3fmFd2fC_6NWHqCqKMLFR2TQ-_Ppa1BbQ57vF6vc4o5_ql_QZBuaKXYSkiO9erRnmpHPneCnEY"/>
 </div>
-<h1 class="font-headline-sm text-headline-sm text-on-surface">관리자: 품질 관리</h1>
+<h1 class="font-headline-sm text-headline-sm text-on-surface">Admin: Quality Control</h1>
 </div>
 <button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-low rounded-full transition-colors active:scale-95 duration-150">
 <span class="material-symbols-outlined text-on-surface-variant">search</span>
@@ -135,8 +138,8 @@
 <section class="space-y-stack-gap-sm">
 <div class="flex items-end justify-between">
 <div>
-<span class="font-label-caps text-label-caps text-text-muted uppercase tracking-wider">지표 ID: ADM-002</span>
-<h2 class="font-headline-md text-headline-md text-on-surface">분류 품질</h2>
+<span class="font-label-caps text-label-caps text-text-muted uppercase tracking-wider">Metric ID: ADM-002</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Classification Quality</h2>
 </div>
 <div class="flex items-center gap-1 bg-secondary-container/20 text-on-secondary-container px-3 py-1 rounded-full border border-secondary/10">
 <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">trending_up</span>
@@ -148,12 +151,12 @@
 <section class="bg-surface-container-lowest rounded-xl p-stack-gap-md shadow-[0px_2px_4px_rgba(0,0,0,0.05),0px_10px_20px_rgba(0,0,0,0.02)] border border-surface-border">
 <div class="flex justify-between items-start mb-6">
 <div>
-<h3 class="font-body-lg text-body-lg font-bold text-on-surface">AI 분류 정확도</h3>
-<p class="font-caption text-caption text-text-muted">최근 30일 (평균: 94.2%)</p>
+<h3 class="font-body-lg text-body-lg font-bold text-on-surface">AI Categorization Accuracy</h3>
+<p class="font-caption text-caption text-text-muted">Last 30 Days (Avg: 94.2%)</p>
 </div>
 <div class="flex gap-2">
-<button class="px-2 py-1 bg-surface-container-low text-primary rounded-lg text-[10px] font-bold">30일</button>
-<button class="px-2 py-1 text-text-muted rounded-lg text-[10px] font-bold">90일</button>
+<button class="px-2 py-1 bg-surface-container-low text-primary rounded-lg text-[10px] font-bold">30D</button>
+<button class="px-2 py-1 text-text-muted rounded-lg text-[10px] font-bold">90D</button>
 </div>
 </div>
 <!-- Simple SVG Chart Mockup -->
@@ -171,22 +174,22 @@
 <circle cx="320" cy="25" fill="#3525cd" r="4" stroke="white" stroke-width="2"></circle>
 </svg>
 <!-- Tooltip -->
-<div class="absolute top-2 left-[75%] -translate-x-1/2 bg-on-background text-surface-container-lowest px-2 py-1 rounded text-[10px] font-bold shadow-xl">
-                    98.1% (5월 24일)
+<div class="absolute top-2 left-[75%] -translate-x-1/2 bg-on-background text-surface-lowest px-2 py-1 rounded text-[10px] font-bold shadow-xl">
+                    98.1% (May 24)
                 </div>
 </div>
 <!-- X-Axis Labels -->
 <div class="flex justify-between px-1">
-<span class="font-caption text-[10px] text-text-muted">4월 28일</span>
-<span class="font-caption text-[10px] text-text-muted">5월 14일</span>
-<span class="font-caption text-[10px] text-text-muted">오늘</span>
+<span class="font-caption text-[10px] text-text-muted">Apr 28</span>
+<span class="font-caption text-[10px] text-text-muted">May 14</span>
+<span class="font-caption text-[10px] text-text-muted">Today</span>
 </div>
 </section>
 <!-- Top Misclassified Categories -->
 <section class="space-y-stack-gap-md">
 <div class="flex justify-between items-center">
-<h3 class="font-headline-sm text-headline-sm text-on-surface">오분류 클러스터</h3>
-<span class="font-caption text-caption text-primary font-bold">모두 보기</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Misclassified Clusters</h3>
+<span class="font-caption text-caption text-primary font-bold">View All</span>
 </div>
 <div class="space-y-3">
 <!-- Misclassification Item 1 -->
@@ -196,15 +199,15 @@
 </div>
 <div class="flex-grow">
 <div class="flex justify-between items-start">
-<span class="font-body-md text-body-md font-bold text-on-surface">쇼핑 <span class="text-text-muted font-normal mx-1">vs</span> 영수증</span>
-<span class="font-label-caps text-[10px] bg-error-container text-on-error-container px-2 py-0.5 rounded-full">높은 편향</span>
+<span class="font-body-md text-body-md font-bold text-on-surface">Shopping <span class="text-text-muted font-normal mx-1">vs</span> Receipts</span>
+<span class="font-label-caps text-[10px] bg-error-container text-on-error-container px-2 py-0.5 rounded-full">High Bias</span>
 </div>
 <div class="mt-2 w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
 <div class="bg-error h-full w-[42%] rounded-full"></div>
 </div>
 <div class="flex justify-between mt-1.5">
-<span class="font-caption text-caption text-text-muted">보정률: <span class="text-on-surface font-semibold">42%</span></span>
-<span class="font-caption text-caption text-error font-bold">1.2k 이벤트</span>
+<span class="font-caption text-caption text-text-muted">Correction Rate: <span class="text-on-surface font-semibold">42%</span></span>
+<span class="font-caption text-caption text-error font-bold">1.2k events</span>
 </div>
 </div>
 </div>
@@ -215,15 +218,15 @@
 </div>
 <div class="flex-grow">
 <div class="flex justify-between items-start">
-<span class="font-body-md text-body-md font-bold text-on-surface">밈 <span class="text-text-muted font-normal mx-1">vs</span> 스크린샷</span>
-<span class="font-label-caps text-[10px] bg-tertiary-fixed text-on-tertiary-fixed-variant px-2 py-0.5 rounded-full">중간 편향</span>
+<span class="font-body-md text-body-md font-bold text-on-surface">Memes <span class="text-text-muted font-normal mx-1">vs</span> Screenshots</span>
+<span class="font-label-caps text-[10px] bg-tertiary-fixed text-on-tertiary-fixed-variant px-2 py-0.5 rounded-full">Med Bias</span>
 </div>
 <div class="mt-2 w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
 <div class="bg-tertiary h-full w-[28%] rounded-full"></div>
 </div>
 <div class="flex justify-between mt-1.5">
-<span class="font-caption text-caption text-text-muted">보정률: <span class="text-on-surface font-semibold">28%</span></span>
-<span class="font-caption text-caption text-tertiary font-bold">840 이벤트</span>
+<span class="font-caption text-caption text-text-muted">Correction Rate: <span class="text-on-surface font-semibold">28%</span></span>
+<span class="font-caption text-caption text-tertiary font-bold">840 events</span>
 </div>
 </div>
 </div>
@@ -234,15 +237,15 @@
 </div>
 <div class="flex-grow">
 <div class="flex justify-between items-start">
-<span class="font-body-md text-body-md font-bold text-on-surface">여행 <span class="text-text-muted font-normal mx-1">vs</span> 비즈니스</span>
-<span class="font-label-caps text-[10px] bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full">낮은 편향</span>
+<span class="font-body-md text-body-md font-bold text-on-surface">Travel <span class="text-text-muted font-normal mx-1">vs</span> Business</span>
+<span class="font-label-caps text-[10px] bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full">Low Bias</span>
 </div>
 <div class="mt-2 w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
 <div class="bg-secondary h-full w-[12%] rounded-full"></div>
 </div>
 <div class="flex justify-between mt-1.5">
-<span class="font-caption text-caption text-text-muted">보정률: <span class="text-on-surface font-semibold">12%</span></span>
-<span class="font-caption text-caption text-secondary font-bold">310 이벤트</span>
+<span class="font-caption text-caption text-text-muted">Correction Rate: <span class="text-on-surface font-semibold">12%</span></span>
+<span class="font-caption text-caption text-secondary font-bold">310 events</span>
 </div>
 </div>
 </div>
@@ -253,25 +256,25 @@
 <div class="relative z-10 flex flex-col gap-2">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-[20px]">lightbulb</span>
-<span class="font-label-caps text-[10px] uppercase tracking-widest opacity-80">AI 제안</span>
+<span class="font-label-caps text-[10px] uppercase tracking-widest opacity-80">AI Suggestion</span>
 </div>
-<h4 class="font-headline-sm text-headline-sm leading-tight">OCR 비중이 높은 문서의 샘플링 속도를 높이세요.</h4>
-<p class="font-body-md text-body-md opacity-90">대부분의 "영수증" 분류 실패는 수직 레이아웃에서의 낮은 텍스트 인식 신뢰도 때문입니다.</p>
-<button class="mt-4 bg-on-primary text-primary font-bold py-3 rounded-xl active:scale-[0.97] transition-transform">검증 팩 실행</button>
+<h4 class="font-headline-sm text-headline-sm leading-tight">Increase sampling rate for OCR-heavy documents.</h4>
+<p class="font-body-md text-body-md opacity-90">Most "Receipts" are failing because of low-confidence text detection in vertical layouts.</p>
+<button class="mt-4 bg-on-primary text-primary font-bold py-3 rounded-xl active:scale-[0.97] transition-transform">Run Validation Pack</button>
 </div>
 <!-- Decorative element -->
 <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-on-primary-container rounded-full opacity-10"></div>
 </section>
 </main>
 <!-- BottomNavBar -->
-<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface shadow-[0px_-2px_10px_rgba(0,0,0,0.05)] flex justify-around items-end pb-8 pt-2 px-2">
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface shadow-[0px_-2px_10px_rgba(0,0,0,0.05)] flex justify-around items-end pb-8 pt-2 px-2 w-full">
 <a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-opacity" href="#">
 <span class="material-symbols-outlined">home</span>
-<span class="font-caption text-caption">홈</span>
+<span class="font-caption text-caption">Home</span>
 </a>
 <a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-opacity" href="#">
 <span class="material-symbols-outlined">grid_view</span>
-<span class="font-caption text-caption">라이브러리</span>
+<span class="font-caption text-caption">Library</span>
 </a>
 <div class="relative -top-6">
 <button class="w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center shadow-lg shadow-primary/40 active:scale-90 duration-200">
@@ -280,11 +283,11 @@
 </div>
 <a class="flex flex-col items-center justify-center text-primary font-bold active:scale-90 duration-200" href="#">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">delete_sweep</span>
-<span class="font-caption text-caption">정리</span>
+<span class="font-caption text-caption">Cleanup</span>
 </a>
 <a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-opacity" href="#">
 <span class="material-symbols-outlined">person</span>
-<span class="font-caption text-caption">마이</span>
+<span class="font-caption text-caption">My</span>
 </a>
 </nav>
 <script>
@@ -299,4 +302,4 @@
             });
         });
     </script>
-```</body></html>
+</body></html>

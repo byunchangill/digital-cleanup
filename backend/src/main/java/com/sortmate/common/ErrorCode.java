@@ -47,6 +47,9 @@ public enum ErrorCode {
     PLAN_ALREADY_ACTIVE(HttpStatus.CONFLICT, "이미 해당 플랜을 사용 중입니다."),
     PAYMENT_NOT_IMPLEMENTED(HttpStatus.NOT_IMPLEMENTED, "결제/복원이 아직 지원되지 않습니다."),
 
+    // ── admin 모듈 (contracts/admin.md) ────────────────────────
+    ADMIN_REQUIRED(HttpStatus.FORBIDDEN, "관리자 권한이 필요합니다."),
+
     INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류가 발생했습니다.");
 
     private final HttpStatus status;
